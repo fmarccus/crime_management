@@ -10,7 +10,7 @@
 </script>
 @endif
 <div class="row">
-    <h3 class="mb-3">Edit </h3>
+    <h3 class="mb-3">Edit {{$user->name}} </h3>
     <div class="col-sm-9">
         <div class="card">
             <div class="card-body">
