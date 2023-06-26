@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
     use HasFactory;
+    public function police()
+    {
+        return $this->hasOne(Police::class);
+    }
 }
