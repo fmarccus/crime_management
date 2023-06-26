@@ -22,7 +22,7 @@
                         <label for="police_id" class="form-label">Police Officer</label>
                         <select class="form-select @error('police_id') is-invalid @enderror" name="police_id" id="police_id">
                             @foreach ($officers as $officer)
-                            <option value="{{$officer->id}}">{{$officer->name}}</option>
+                            <option value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
                             @endforeach
                         </select>
                     </div>
