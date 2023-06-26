@@ -10,6 +10,6 @@ class Issue extends Model
     use HasFactory;
     public function police()
     {
-        return $this->hasOne(Police::class);
+        return $this->belongsTo(Police::class);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IssueController;
 use App\Http\Controllers\PoliceController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,16 @@ Route::controller(AuthController::class)->prefix('users/')->group(function () {
     Route::get('edit/{id}', 'edit')->name('users.edit');
     Route::post('update/{id}', 'update')->name('users.update');
     Route::post('delete/{id}', 'delete')->name('users.delete');
+});
 
+Route::controller(IssueController::class)->prefix('issues/')->group(function () {
+    Route::get('index', 'index')->name('issues.index');
+    Route::get('create', 'create')->name('issues.create');
+    Route::post('store', 'store')->name('issues.store');
+    Route::get('edit/{id}', 'edit')->name('issues.edit');
+    Route::post('update/{id}', 'update')->name('issues.update');
 
+    Route::post('delete/{id}', 'delete')->name('issues.delete');
 
 });
+

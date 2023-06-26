@@ -32,6 +32,12 @@
                     <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">User Management</span>
                 </a>
             </li>
+
+            <li class="sidebar-item {{ (request()->is('issues/*')) ? 'active':'' }}">
+                <a class="sidebar-link" href="{{route('issues.index')}}">
+                    <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">Issues/Complaints</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

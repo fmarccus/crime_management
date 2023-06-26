@@ -21,24 +21,32 @@ class IssueController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'officer_id' => 'required|exists:police,id',
+            'police_id' => 'required|exists:police,id',
             'complainant' => 'required|max:255',
             'phone' => 'required|min:11|max:11',
             'issue' => 'required|max:15000',
             'severity' => 'required|in:Normal,Severe,Critical'
         ]);
         $issue = new Issue();
-        $issue->officer_id = $request->officer_id;
+        $issue->police_id = $request->police_id;
         $issue->complainant = $request->complainant;
         $issue->phone = $request->phone;
+        $issue->issue = $request->issue;
+
         $issue->severity = $request->severity;
         $issue->save();
         return back()->with('success', '');
     }
+    public function edit($id)
+    {
+        $issue = Issue::findOrFail($id);
+        $officers = Police::all();
+        return view('issues.edit', compact('issue','officers'));
+    }
     public function update(Request $request, $id)
     {
         $request->validate([
-            'officer_id' => 'required|exists:police,id',
+            'police_id' => 'required|exists:police,id',
             'complainant' => 'required|max:255',
             'phone' => 'required|min:11|max:11',
             'issue' => 'required|max:15000',
@@ -46,17 +54,20 @@ class IssueController extends Controller
             'status' => 'required|in:Open,Processing,Completed'
         ]);
         $issue = Issue::findOrFail($id);
-        $issue->officer_id = $request->officer_id;
+        $issue->police_id = $request->police_id;
         $issue->complainant = $request->complainant;
         $issue->phone = $request->phone;
+        $issue->issue = $request->issue;
         $issue->severity = $request->severity;
         $issue->status = $request->status;
         $issue->save();
         return back()->with('success', '');
     }
-    public function edit($id)
+
+    public function delete($id)
     {
-        $issue = Issue::findOrFail($id)->with('police')->get();
-        return view('issues.edit', compact('issue'));
+        $issue = Issue::findOrFail($id);
+        $issue->delete();
+        return back()->with('deleted', '');
     }
 }
