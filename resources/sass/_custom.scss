@@ -1,0 +1,39 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/variables-dark";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "bootstrap/scss/utilities";
+
+$enable-shadows: true;
+
+$theme-colors: (
+    "primary": #3F51B5,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark
+);
+
+// cards
+$card-box-shadow: $box-shadow;
+$card-border-color: $light;
+
+// buttons
+.btn-link {
+    color: map-get($map: $theme-colors, $key: primary) !important;
+}
+
+// forms
+$input-focus-box-shadow: none;
+$input-focus-border-color: tint-color(map-get($theme-colors, "primary"), 50%);
+
+// check field
+$form-check-input-focus-box-shadow: none;
+$form-check-input-checked-color: $component-active-color;
+$form-check-input-checked-bg-color: map-get($theme-colors, "primary");
+$form-check-input-checked-border-color: map-get($theme-colors, "primary");
