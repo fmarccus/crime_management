@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="/home">
-            <span class="align-middle">Home</span>
+            <span class="align-middle">Crime Reporting</span>
         </a>
 
         <ul class="sidebar-nav">
