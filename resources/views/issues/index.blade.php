@@ -10,13 +10,20 @@
 </script>
 @endif
 <div class="row justify-content-center">
+    @if (auth()->user()->user_type==0)
     <h3 class="mb-3">Issues</h3>
-
+    @else
+    <h3 class="mb-3">Issues Assigned To You</h3>
+    @endif
     <div class="card">
         <div class="card-body">
+            @if (auth()->user()->user_type==0)
             <div class="text-end">
                 <a href="{{route('issues.create')}}" class="btn btn-primary mb-3">Add A New Issue</a>
             </div>
+
+            @endif
+
             <table id="issues" class="table" style="width:100%">
                 <thead>
                     <th>Assigned Police Officer</th>
@@ -28,7 +35,7 @@
                 <tbody>
                     @foreach ($issues as $issue)
                     <tr>
-                        <td>{{$issue->police->name}} {{$issue->police->surname}}</td>
+                        <td>{{$issue->user->name}} {{$issue->user->surname}}</td>
                         <td>{{substr($issue->issue, 0, 50)}}...</td>
                         <td>
                             @if($issue->severity=='Normal')
@@ -61,6 +68,8 @@
                             @endif
                         </td>
                         <td>
+                            @if (auth()->user()->user_type==0)
+
                             <div class="d-flex">
                                 <a class="btn btn-secondary me-3" href="{{route('issues.edit', $issue->id)}}">Edit</a>
                                 <form action="{{route('issues.delete',$issue->id)}}" method="post">
@@ -68,6 +77,11 @@
                                     <button onclick="return confirm('Delete this issue?')" type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </div>
+                            @else
+                            <a class="btn btn-light me-3" href="{{route('issues.view', $issue->id)}}">View</a>
+
+                            @endif
+
                         </td>
                     </tr>
                     @endforeach

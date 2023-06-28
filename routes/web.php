@@ -23,14 +23,14 @@ Route::view('/home', 'home')->middleware(['auth', 'verified']);
 Route::view('/profile/edit', 'profile.edit')->middleware(['auth', 'verified'])->name('profile.edit');
 Route::view('/profile/password', 'profile.password')->middleware(['auth', 'verified']);
 
-Route::controller(PoliceController::class)->prefix('police/')->group(function () {
-    Route::get('index', 'index')->name('police.index');
-    Route::get('create', 'create')->name('police.create');
-    Route::post('store', 'store')->name('police.store');
-    Route::get('edit/{id}', 'edit')->name('police.edit');
-    Route::post('update/{id}', 'update')->name('police.update');
-    Route::post('delete/{id}', 'delete')->name('police.delete');
-});
+// Route::controller(PoliceController::class)->prefix('police/')->group(function () {
+//     Route::get('index', 'index')->name('police.index');
+//     Route::get('create', 'create')->name('police.create');
+//     Route::post('store', 'store')->name('police.store');
+//     Route::get('edit/{id}', 'edit')->name('police.edit');
+//     Route::post('update/{id}', 'update')->name('police.update');
+//     Route::post('delete/{id}', 'delete')->name('police.delete');
+// });
 
 Route::controller(AuthController::class)->prefix('users/')->group(function () {
     Route::get('index', 'index')->name('users.index');
@@ -43,12 +43,10 @@ Route::controller(AuthController::class)->prefix('users/')->group(function () {
 
 Route::controller(IssueController::class)->prefix('issues/')->group(function () {
     Route::get('index', 'index')->name('issues.index');
-    Route::get('create', 'create')->name('issues.create');
-    Route::post('store', 'store')->name('issues.store');
-    Route::get('edit/{id}', 'edit')->name('issues.edit');
-    Route::post('update/{id}', 'update')->name('issues.update');
-
-    Route::post('delete/{id}', 'delete')->name('issues.delete');
-
+    Route::get('view/{id}', 'view')->name('issues.view');
+    Route::get('create', 'create')->name('issues.create')->middleware('admin');
+    Route::post('store', 'store')->name('issues.store')->middleware('admin');
+    Route::get('edit/{id}', 'edit')->name('issues.edit')->middleware('admin');
+    Route::post('update/{id}', 'update')->name('issues.update')->middleware('admin');
+    Route::post('delete/{id}', 'delete')->name('issues.delete')->middleware('admin');
 });
-

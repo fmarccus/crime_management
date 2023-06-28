@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
     public function index()
     {
         $users = User::all();
@@ -20,12 +24,26 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             'name' => 'required|max:255',
+            'surname' => 'required|max:255',
+            'gender' => 'required|in:M,F',
+            'phone' => 'required|min:11|max:11',
+            'user_type' => 'integer|in:0,1',
+            'rank' => 'required|in:n/a,Police General,Police Lieutenant General,Police Major General,Police Brigadier General,Police Colonel,Police Lieutenant Colonel,Police Major,Police Captain,Police Lieutenant,Police Executive Master Sergeant,Police Chief Master Sergeant,Police Senior Master Sergeant,Police Master Sergeant,Police Staff Sergeant,Police Corporal,Patrolman/Patrolwoman',
             'email' => 'required|max:255|email|unique:users,email',
             'password' => 'required|min:8|max:55|confirmed'
         ]);
         $user = new User();
+        $imageName = time() . '.' . $request->photo->extension();
+        $request->photo->move(public_path('images'), $imageName);
+        $user->photo = $imageName;
         $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->gender = $request->gender;
+        $user->phone = $request->phone;
+        $user->user_type = $request->user_type;
+        $user->rank = $request->rank;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
@@ -40,11 +58,25 @@ class AuthController extends Controller
     {
         $user = User::findOrFail($id);
         $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             'name' => 'required|max:255',
+            'surname' => 'required|max:255',
+            'gender' => 'required|in:M,F',
+            'phone' => 'required|min:11|max:11',
+            'user_type' => 'integer|in:0,1',
+            'rank' => 'required|in:n/a,Police General,Police Lieutenant General,Police Major General,Police Brigadier General,Police Colonel,Police Lieutenant Colonel,Police Major,Police Captain,Police Lieutenant,Police Executive Master Sergeant,Police Chief Master Sergeant,Police Senior Master Sergeant,Police Master Sergeant,Police Staff Sergeant,Police Corporal,Patrolman/Patrolwoman',
             'email' => 'required|max:255|email|unique:users,email,' . $user->id,
             'password' => 'required|min:8|max:55|confirmed'
         ]);
+        $imageName = time() . '.' . $request->photo->extension();
+        $request->photo->move(public_path('images'), $imageName);
+        $user->photo = $imageName;
         $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->gender = $request->gender;
+        $user->phone = $request->phone;
+        $user->user_type = $request->user_type;
+        $user->rank = $request->rank;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();

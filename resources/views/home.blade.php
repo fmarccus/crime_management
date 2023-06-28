@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col mt-0">
-                        <h5 class="card-title">System Users</h5>
+                        <h5 class="card-title">System Users/Administrators</h5>
                     </div>
 
                     <div class="col-auto">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <h1 class="mt-1 mb-3">{{\App\Models\User::count()}}</h1>
+                <h1 class="mt-1 mb-3">{{\App\Models\User::where('user_type',0)->count()}}</h1>
                 <div class="mb-0">
                     <!-- <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
                     <span class="text-muted">Since last week</span> -->
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <h1 class="mt-1 mb-3">{{\App\Models\Police::count()}}</h1>
+                <h1 class="mt-1 mb-3">{{\App\Models\User::where('user_type',1)->count()}}</h1>
                 <div class="mb-0">
                     <!-- <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
                     <span class="text-muted">Since last week</span> -->

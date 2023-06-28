@@ -16,12 +16,87 @@
             <div class="card-body">
                 <a href="{{route('users.index')}}" class="btn btn-light mb-3">Back</a>
 
-                <form action="{{route('users.store')}}" method="post">
+                <form action="{{route('users.store')}}" enctype="multipart/form-data" method="post">
                     @csrf
+                    <p class="card-title">Personal Information</p>
+                    <div class="mb-3">
+                        <label for="photo" class="form-label">Photo</label>
+                        <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
+                        @error('photo')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" aria-describedby="helpId" placeholder="" value="{{old('name')}}">
                         @error('name')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname</label>
+                        <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" id="surname" aria-describedby="helpId" placeholder="" value="{{old('surname')}}">
+                        @error('surname')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-select @error('gender') is-invalid @enderror" name="gender" id="gender">
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" aria-describedby="helpId" placeholder="" value="{{old('phone')}}">
+                        @error('phone')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <p class="card-title">Account Credentials</p>
+                    <div class="mb-3">
+                        <label for="user_type" class="form-label">User Type</label>
+                        <select class="form-select @error('user_type') is-invalid @enderror" name="user_type" id="user_type">
+                            <option value="1">Police Officer/System User</option>
+                            <option value="0">Admin/Master</option>
+                        </select>
+                        @error('user_type')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="rank" class="form-label">Police Rank</label>
+                        <select class="form-select @error('rank') is-invalid @enderror" name="rank" id="rank">
+                            <option>n/a</option>
+                            <option>Police General</option>
+                            <option>Police Lieutenant General</option>
+                            <option>Police Major General</option>
+                            <option>Police Brigadier General</option>
+                            <option>Police Colonel</option>
+                            <option>Police Lieutenant Colonel</option>
+                            <option>Police Major</option>
+                            <option>Police Captain</option>
+                            <option>Police Lieutenant</option>
+                            <option>Police Executive Master Sergeant</option>
+                            <option>Police Chief Master Sergeant</option>
+                            <option>Police Senior Master Sergeant</option>
+                            <option>Police Master Sergeant</option>
+                            <option>Police Staff Sergeant</option>
+                            <option>Police Corporal</option>
+                            <option>Patrolman/Patrolwoman</option>
+                        </select>
+                        @error('rank')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>

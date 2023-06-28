@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('police_id')->nullable()->constrained()->cascadeOnUpdate();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate();
             $table->string('complainant');
             $table->string('phone');
             $table->text('issue');

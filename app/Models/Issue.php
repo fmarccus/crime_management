@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
     use HasFactory;
-    public function police()
+    public function user()
     {
-        return $this->belongsTo(Police::class);
+        return $this->belongsTo(User::class);
     }
 }

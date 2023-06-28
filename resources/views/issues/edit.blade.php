@@ -19,12 +19,14 @@
                 <form action="{{route('issues.update',$issue->id)}}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <label for="police_id" class="form-label">Police Officer</label>
-                        <select class="form-select @error('police_id') is-invalid @enderror" name="police_id" id="police_id">
+                        <label for="user_id" class="form-label">Police Officer Assigned: <a href="{{route('users.edit', $issue->user->id)}}">({{$issue->user->name}} {{$issue->user->surname}})</a></label>
+                        <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id">
+                        <datalist id="officers">
                             @foreach ($officers as $officer)
-                            <option value="{{$officer->id}}"> {{$officer->name}} {{$officer->surname}}</option>
+                            <option value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
                             @endforeach
-                        </select>
+                        </datalist>
+
                     </div>
                     <div class="mb-3">
                         <label for="complainant" class="form-label">Complainant</label>

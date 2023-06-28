@@ -20,7 +20,11 @@
             </div>
             <table id="users" class="table" style="width:100%">
                 <thead>
-                    <th>Name</th>
+                    <th>Photo</th>
+                    <th>Gender</th>
+                    <th>Full Name</th>
+                    <th>Rank</th>
+                    <th>Phone</th>
                     <th>Email</th>
                     <th>Last Updated</th>
                     <th>Actions</th>
@@ -28,7 +32,11 @@
                 <tbody>
                     @foreach ($users as $user)
                     <tr>
-                        <td>{{$user->name}}</td>
+                        <td><img class="img-fluid rounded" width="50" height="50" src="{{asset('images/'.$user->photo)}}" alt="n/a"></td>
+                        <td>{{$user->gender}}</td>
+                        <td>{{$user->name}} {{$user->surname}}</td>
+                        <td>{{$user->rank}}</td>
+                        <td>{{$user->phone}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->updated_at->format('M d, Y h:i A')}}</td>
 
