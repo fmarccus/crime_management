@@ -19,14 +19,23 @@
                 <form action="{{route('issues.update',$issue->id)}}" method="post">
                     @csrf
                     <div class="mb-3">
+                        @if ($issue->user === null)
+                        <label for="user_id" class="form-label">No Police Officer Assigned For This Issue, <span class="text-danger fw-bold">Select Below</span></label>
+                        @else
                         <label for="user_id" class="form-label">Police Officer Assigned: <a href="{{route('users.edit', $issue->user->id)}}">({{$issue->user->name}} {{$issue->user->surname}})</a></label>
+                        @endif
                         <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id">
                         <datalist id="officers">
+                            <option value="">Remove The Assigned Officer</option>
                             @foreach ($officers as $officer)
                             <option value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
                             @endforeach
                         </datalist>
-
+                        @error('user_id')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="complainant" class="form-label">Complainant</label>

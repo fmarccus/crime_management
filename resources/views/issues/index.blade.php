@@ -35,7 +35,13 @@
                 <tbody>
                     @foreach ($issues as $issue)
                     <tr>
-                        <td>{{$issue->user->name}} {{$issue->user->surname}}</td>
+                        <td>
+                            @if ($issue->user === null)
+                            <span class="fw-bold text-muted"> No Police Officer Assigned Yet!</span>
+                            @else
+                            {{$issue->user->name}} {{$issue->user->surname}}
+                            @endif
+                        </td>
                         <td>{{substr($issue->issue, 0, 50)}}...</td>
                         <td>
                             @if($issue->severity=='Normal')

@@ -31,7 +31,7 @@ class IssueController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'complainant' => 'required|max:255',
             'phone' => 'required|min:11|max:11',
             'issue' => 'required|max:15000',
@@ -56,7 +56,7 @@ class IssueController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'complainant' => 'required|max:255',
             'phone' => 'required|min:11|max:11',
             'issue' => 'required|max:15000',

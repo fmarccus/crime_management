@@ -25,9 +25,12 @@
                             @foreach ($officers as $officer)
                             <option value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
                             @endforeach
-
                         </datalist>
-                    
+                        @error('user_id')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="complainant" class="form-label">Complainant</label>
