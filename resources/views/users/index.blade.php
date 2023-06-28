@@ -18,41 +18,45 @@
             <div class="text-end">
                 <a href="{{route('users.create')}}" class="btn btn-primary mb-3">Add A New User</a>
             </div>
-            <table id="users" class="table" style="width:100%">
-                <thead>
-                    <th>Photo</th>
-                    <th>Gender</th>
-                    <th>Full Name</th>
-                    <th>Rank</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Last Updated</th>
-                    <th>Actions</th>
-                </thead>
-                <tbody>
-                    @foreach ($users as $user)
-                    <tr>
-                        <td><img class="img-fluid rounded" width="50" height="50" src="{{asset('images/'.$user->photo)}}" alt="n/a"></td>
-                        <td>{{$user->gender}}</td>
-                        <td>{{$user->name}} {{$user->surname}}</td>
-                        <td>{{$user->rank}}</td>
-                        <td>{{$user->phone}}</td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->updated_at->format('M d, Y h:i A')}}</td>
+            <div class="table-responsive">
 
-                        <td>
-                            <div class="d-flex">
-                                <a class="btn btn-secondary me-3" href="{{route('users.edit',$user->id)}}">Edit</a>
-                                <form action="{{route('users.delete',$user->id)}}" method="post">
-                                    @csrf
-                                    <button onclick="return confirm('Delete this user account?')" type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+
+                <table id="users" class="table" style="width:100%">
+                    <thead>
+                        <th>Photo</th>
+                        <th>Gender</th>
+                        <th>Full Name</th>
+                        <th>Rank</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                        <tr>
+                            <td><img class="img-fluid rounded" width="50" height="50" src="{{asset('images/'.$user->photo)}}" alt="n/a"></td>
+                            <td>{{$user->gender}}</td>
+                            <td>{{$user->name}} {{$user->surname}}</td>
+                            <td>{{$user->rank}}</td>
+                            <td>{{$user->phone}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->updated_at->format('M d, Y h:i A')}}</td>
+
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-secondary me-3" href="{{route('users.edit',$user->id)}}">Edit</a>
+                                    <form action="{{route('users.delete',$user->id)}}" method="post">
+                                        @csrf
+                                        <button onclick="return confirm('Delete this user account?')" type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
