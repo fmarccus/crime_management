@@ -19,8 +19,6 @@
                 <a href="{{route('users.create')}}" class="btn btn-primary mb-3">Add A New User</a>
             </div>
             <div class="table-responsive">
-
-
                 <table id="users" class="table" style="width:100%">
                     <thead>
                         <th>Photo</th>

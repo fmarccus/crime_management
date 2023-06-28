@@ -42,8 +42,10 @@ class IssueController extends Controller
         $issue->complainant = $request->complainant;
         $issue->phone = $request->phone;
         $issue->issue = $request->issue;
-
         $issue->severity = $request->severity;
+        if($request->user_id != NULL) {
+            $issue->status = "Processing";
+        }
         $issue->save();
         return back()->with('success', '');
     }
