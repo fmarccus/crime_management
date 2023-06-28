@@ -26,6 +26,11 @@
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">User Management</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/logs">
+                    <i class="align-middle" data-feather="clock"></i> <span class="align-middle">Activity Logs</span>
+                </a>
+            </li>
             @endif
             <li class="sidebar-item {{ (request()->is('issues/*')) ? 'active':'' }}">
                 <a class="sidebar-link" href="{{route('issues.index')}}">
