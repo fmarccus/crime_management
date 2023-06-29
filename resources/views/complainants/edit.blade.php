@@ -24,11 +24,11 @@
                         @else
                         <label for="user_id" class="form-label">Police Officer Assigned: <a href="{{route('users.edit', $issue->user->id)}}">({{$issue->user->name}} {{$issue->user->surname}})</a></label>
                         @endif
-                        <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id" value="{{$issue->user_id}}">
+                        <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id">
                         <datalist id="officers">
                             <option value="">Remove The Assigned Officer</option>
                             @foreach ($officers as $officer)
-                            <option selected value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
+                            <option value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
                             @endforeach
                         </datalist>
                         @error('user_id')
@@ -38,14 +38,18 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="complainant" class="form-label">Complainant <a href="{{route('complainants.edit', $issue->complainant->id)}}">({{$issue->complainant->name}} {{$issue->complainant->middlename}} {{$issue->complainant->surname}}, {{$issue->complainant->gender}}, {{$issue->complainant->age}})</a></label>
-                        <input class="form-select @error('complainant_id') is-invalid @enderror" list="complainants" name="complainant_id" id="complainant_id" value="{{$issue->complainant_id}}">
-                        <datalist id="complainants">
-                            @foreach ($complainants as $complainant)
-                            <option value="{{$complainant->id}}">{{$complainant->name}} {{$complainant->middlename}} {{$complainant->surname}} ({{$complainant->gender}}, {{$complainant->age}})</option>
-                            @endforeach
-                        </datalist>
-                        @error('complainant_id')
+                        <label for="complainant" class="form-label">Complainant</label>
+                        <input type="text" class="form-control @error('complainant') is-invalid @enderror" name="complainant" id="complainant" aria-describedby="helpId" placeholder="" value="{{$issue->complainant}}">
+                        @error('complainant')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" aria-describedby="helpId" placeholder="" value="{{$issue->phone}}">
+                        @error('phone')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>

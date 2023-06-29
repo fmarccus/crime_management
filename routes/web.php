@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComplainantController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\PoliceController;
 use Illuminate\Support\Facades\Route;
@@ -49,4 +50,13 @@ Route::controller(IssueController::class)->prefix('issues/')->group(function () 
     Route::get('edit/{id}', 'edit')->name('issues.edit')->middleware('admin');
     Route::post('update/{id}', 'update')->name('issues.update')->middleware('admin');
     Route::post('delete/{id}', 'delete')->name('issues.delete')->middleware('admin');
+});
+
+Route::controller(ComplainantController::class)->prefix('complainants/')->group(function () {
+    Route::get('index', 'index')->name('complainants.index');
+    Route::get('create', 'create')->name('complainants.create');
+    Route::post('store', 'store')->name('complainants.store');
+    Route::get('edit/{id}', 'edit')->name('complainants.edit');
+    Route::post('update/{id}', 'update')->name('complainants.update');
+    Route::post('delete/{id}', 'delete')->name('complainants.delete');
 });

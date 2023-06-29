@@ -14,11 +14,13 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-material-ui@5.0.15/material-ui.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- @vite(['resources/js/app.js']) -->
     <link href="https://cdn.datatables.net/v/ju/dt-1.13.4/datatables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
+
 </head>
 
 <body>

@@ -20,7 +20,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="user_id" class="form-label">Police Officer</label>
-                        <input class="form-select @error('user_id') is-invalid @enderror"  list="officers" name="user_id" id="user_id">
+                        <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id">
                         <datalist id="officers">
                             @foreach ($officers as $officer)
                             <option value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
@@ -34,22 +34,18 @@
                     </div>
                     <div class="mb-3">
                         <label for="complainant" class="form-label">Complainant</label>
-                        <input type="text" class="form-control @error('complainant') is-invalid @enderror" name="complainant" id="complainant" aria-describedby="helpId" placeholder="" value="{{old('complainant')}}">
-                        @error('complainant')
+                        <input class="form-select @error('complainant_id') is-invalid @enderror" list="complainants" name="complainant_id" id="complainant_id">
+                        <datalist id="complainants">
+                            @foreach ($complainants as $complainant)
+                            <option value="{{$complainant->id}}">{{$complainant->name}} {{$complainant->middlename}} {{$complainant->surname}} ({{$complainant->gender}}, {{$complainant->age}})</option>
+                            @endforeach
+                        </datalist>
+                        @error('complainant_id')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>
                         @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" aria-describedby="helpId" placeholder="" value="{{old('phone')}}">
-                        @error('phone')
-                        <div>
-                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
-                        </div>
-                        @enderror
-                    </div>
+                    </div>                    
                     <div class="mb-3">
                         <label for="issue" class="form-label">Issue</label>
                         <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8"></textarea>

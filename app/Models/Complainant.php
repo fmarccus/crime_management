@@ -6,16 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Haruncpi\LaravelUserActivity\Traits\Loggable;
 
-class Issue extends Model
+class Complainant extends Model
 {
     use HasFactory, Loggable;
 
-    public function user()
+    public function issues()
     {
-        return $this->belongsTo(User::class);
-    }
-    public function complainant()
-    {
-        return $this->belongsTo(Complainant::class);
+        return $this->hasMany(Issue::class);
     }
 }
