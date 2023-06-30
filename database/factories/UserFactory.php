@@ -18,6 +18,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'photo' => 'user.png',
             'name' => fake()->name(),
             'surname' => fake()->lastName(),
             'gender' => fake()->randomElement(["M", "F"]),

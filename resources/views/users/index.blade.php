@@ -40,7 +40,7 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <td><img class="img-fluid rounded" width="50" height="50" src="{{asset('images/'.$user->photo)}}" alt="n/a"></td>
+                            <td><img class="img-fluid rounded" width="30" height="30" src="{{asset('images/'.$user->photo)}}" alt="n/a"></td>
                             <td>{{$user->gender}}</td>
                             <td>{{$user->name}} {{$user->surname}}</td>
                             <td>{{$user->rank}}</td>
