@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -84,8 +85,13 @@ class AuthController extends Controller
     }
     public function delete($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return back()->with('deleted', '');
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            $confirmation = "deleted";
+        } catch (Exception $e) {
+            $confirmation = "unable";
+        }
+        return back()->with($confirmation, '');
     }
 }

@@ -8,6 +8,13 @@
         text: 'Complainant has been deleted',
     })
 </script>
+@elseif(session()->has('unable'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        text: 'You cannot delete this complainant. He/she has is assigned into a complaint.',
+    })
+</script>
 @endif
 <div class="row justify-content-center">
     <h3 class="mb-3">Complainants</h3>

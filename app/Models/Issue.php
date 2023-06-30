@@ -18,4 +18,12 @@ class Issue extends Model
     {
         return $this->belongsTo(Complainant::class);
     }
+    public function getFullNameComplainant()
+    {
+        return $this->complainant->name . ' ' . $this->complainant->middlename . ' ' . $this->complainant->surname;
+    }
+    public function getFullNameOfficer()
+    {
+        return $this->user->name . ' ' . $this->user->surname;
+    }
 }

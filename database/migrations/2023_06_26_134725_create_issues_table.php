@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate();
-            $table->string('complainant_id')->constrained()->cascadeOnUpdate();
+            $table->foreignId('complainant_id')->constrained()->cascadeOnUpdate();
             $table->text('issue');
             $table->string('severity');
             $table->string('status')->default('Open');

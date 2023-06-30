@@ -41,10 +41,10 @@
                                 @if ($issue->user === null)
                                 <span class="fw-bold text-muted"> No Police Officer Assigned Yet!</span>
                                 @else
-                                {{$issue->user->name}} {{$issue->user->surname}}
+                                {{$issue->getFullNameOfficer()}}
                                 @endif
                             </td>
-                            <td>{{$issue->complainant->name}} {{$issue->complainant->middlename}} {{$issue->complainant->surname}}</td>
+                            <td>{{$issue->getFullNameComplainant()}}</td>
 
                             <td>{{substr($issue->issue, 0, 50)}}...</td>
                             <td>

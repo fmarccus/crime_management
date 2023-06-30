@@ -22,7 +22,7 @@
                         @if ($issue->user === null)
                         <label for="user_id" class="form-label">No Police Officer Assigned For This Issue, <span class="text-danger fw-bold">Select Below</span></label>
                         @else
-                        <label for="user_id" class="form-label">Police Officer Assigned: <a href="{{route('users.edit', $issue->user->id)}}">({{$issue->user->name}} {{$issue->user->surname}})</a></label>
+                        <label for="user_id" class="form-label">Police Officer Assigned: <a href="{{route('users.edit', $issue->user->id)}}">({{$issue->getFullNameOfficer()}})</a></label>
                         @endif
                         <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id" value="{{$issue->user_id}}">
                         <datalist id="officers">
@@ -38,7 +38,9 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="complainant" class="form-label">Complainant <a href="{{route('complainants.edit', $issue->complainant->id)}}">({{$issue->complainant->name}} {{$issue->complainant->middlename}} {{$issue->complainant->surname}}, {{$issue->complainant->gender}}, {{$issue->complainant->age}})</a></label>
+                        <!-- <label for="complainant" class="form-label">Complainant <a href="{{route('complainants.edit', $issue->complainant->id)}}">({{$issue->complainant->name}} {{$issue->complainant->middlename}} {{$issue->complainant->surname}}, {{$issue->complainant->gender}}, {{$issue->complainant->age}})</a></label> -->
+                        <label for="complainant" class="form-label">Complainant <a href="{{route('complainants.edit', $issue->complainant->id)}}">({{$issue->getFullNameComplainant()}}, {{$issue->complainant->gender}}, {{$issue->complainant->age}})</a></label>
+
                         <input class="form-select @error('complainant_id') is-invalid @enderror" list="complainants" name="complainant_id" id="complainant_id" value="{{$issue->complainant_id}}">
                         <datalist id="complainants">
                             @foreach ($complainants as $complainant)

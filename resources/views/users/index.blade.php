@@ -8,6 +8,13 @@
         text: 'User has been deleted',
     })
 </script>
+@elseif(session()->has('unable'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        text: 'You cannot delete this police officer. He/she has is assigned into a complaint.',
+    })
+</script>
 @endif
 <div class="row justify-content-center">
 
