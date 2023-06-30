@@ -5,50 +5,77 @@
 <script>
     Swal.fire({
         icon: 'success',
-        text: 'Issue has been updated',
+        text: 'Complainant has been updated',
     })
 </script>
 @endif
 <div class="row">
-    <h3 class="mb-3">Edit this Issue</h3>
+    <h3 class="mb-3">Edit {{$complainant->getFullNameComplainant()}}</h3>
     <div class="col-sm-9">
         <div class="card">
             <div class="card-body">
-                <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
+                <a href="{{route('complainants.index')}}" class="btn btn-light mb-3">Back</a>
 
-                <form action="{{route('issues.update',$issue->id)}}" method="post">
+                <form action="{{route('complainants.update', $complainant->id)}}" method="post">
                     @csrf
-                    <div class="mb-3">
-                        @if ($issue->user === null)
-                        <label for="user_id" class="form-label">No Police Officer Assigned For This Issue, <span class="text-danger fw-bold">Select Below</span></label>
-                        @else
-                        <label for="user_id" class="form-label">Police Officer Assigned: <a href="{{route('users.edit', $issue->user->id)}}">({{$issue->user->name}} {{$issue->user->surname}})</a></label>
-                        @endif
-                        <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id">
-                        <datalist id="officers">
-                            <option value="">Remove The Assigned Officer</option>
-                            @foreach ($officers as $officer)
-                            <option value="{{$officer->id}}">{{$officer->name}} {{$officer->surname}}</option>
-                            @endforeach
-                        </datalist>
-                        @error('user_id')
-                        <div>
-                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" aria-describedby="helpId" placeholder="" value="{{$complainant->name}}">
+                                @error('name')
+                                <div>
+                                    <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                                </div>
+                                @enderror
+                            </div>
                         </div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="complainant" class="form-label">Complainant</label>
-                        <input type="text" class="form-control @error('complainant') is-invalid @enderror" name="complainant" id="complainant" aria-describedby="helpId" placeholder="" value="{{$issue->complainant}}">
-                        @error('complainant')
-                        <div>
-                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label for="middlename" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control @error('middlename') is-invalid @enderror" name="middlename" id="middlename" aria-describedby="helpId" placeholder="" value="{{$complainant->middlename}}">
+                                @error('middlename')
+                                <div>
+                                    <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                                </div>
+                                @enderror
+                            </div>
                         </div>
-                        @enderror
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label for="surname" class="form-label">Surname</label>
+                                <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" id="surname" aria-describedby="helpId" placeholder="" value="{{$complainant->surname}}">
+                                @error('surname')
+                                <div>
+                                    <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" step="1" min="1" max="120" class="form-control @error('age') is-invalid @enderror" name="age" id="age" aria-describedby="helpId" placeholder="" value="{{$complainant->age}}">
+                                @error('age')
+                                <div>
+                                    <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select class="form-select @error('gender') is-invalid @enderror" name="gender" id="gender">
+                                    <option @if($complainant->gender == "M") selected @endif value="M">Male</option>
+                                    <option @if($complainant->gender == "F") selected @endif value="F">Female</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" aria-describedby="helpId" placeholder="" value="{{$issue->phone}}">
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" aria-describedby="helpId" placeholder="" value="{{$complainant->phone}}">
                         @error('phone')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
@@ -56,30 +83,24 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="issue" class="form-label">Issue</label>
-                        <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8">{{$issue->issue}}</textarea>
-                        @error('issue')
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" aria-describedby="helpId" placeholder="" value="{{$complainant->email}}">
+                        @error('email')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="severity" class="form-label">Severity</label>
-                        <select class="form-select @error('severity') is-invalid @enderror" name="severity" id="severity">
-                            <option value="Normal" @if($issue->severity == 'Normal') selected @endif>Normal</option>
-                            <option value="Severe" @if($issue->severity == 'Severe') selected @endif>Severe</option>
-                            <option value="Critical" @if($issue->severity == 'Critical') selected @endif>Critical</option>
-                        </select>
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="helpId" placeholder="" value="{{$complainant->address}}">
+                        @error('address')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-select @error('status') is-invalid @enderror" name="status" id="status">
-                            <option value="Open" @if($issue->status == 'Open') selected @endif>Open</option>
-                            <option value="Processing" @if($issue->status == 'Processing') selected @endif>Processing</option>
-                            <option value="Completed" @if($issue->status == 'Completed') selected @endif>Completed</option>
-                        </select>
-                    </div>
+
                     <button class="btn btn-primary">Save</button>
                 </form>
             </div>

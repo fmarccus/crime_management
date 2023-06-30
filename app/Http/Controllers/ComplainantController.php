@@ -41,6 +41,35 @@ class ComplainantController extends Controller
         $complainant->save();
         return back()->with('success', '');
     }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'middlename' => 'required|max:255',
+            'surname' => 'required|max:255',
+            'age' => 'required|numeric|between:1,100',
+            'gender' => 'required|in:M,F',
+            'phone' => 'required|min:11|max:11',
+            'email' => 'required|max:255|email',
+            'address' => 'required|max:2500',
+        ]);
+        $complainant = Complainant::findOrFail($id);
+        $complainant->name = $request->name;
+        $complainant->middlename = $request->middlename;
+        $complainant->surname = $request->surname;
+        $complainant->age = $request->age;
+        $complainant->gender = $request->gender;
+        $complainant->phone = $request->phone;
+        $complainant->email = $request->email;
+        $complainant->address = $request->address;
+        $complainant->save();
+        return back()->with('success', '');
+    }
+    public function edit($id)
+    {
+        $complainant = Complainant::findOrFail($id);
+        return view('complainants.edit', compact('complainant'));
+    }
     public function delete($id)
     {
         try {

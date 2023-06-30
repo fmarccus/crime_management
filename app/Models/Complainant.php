@@ -14,4 +14,8 @@ class Complainant extends Model
     {
         return $this->hasMany(Issue::class);
     }
+    public function getFullNameComplainant()
+    {
+        return $this->name. ' '. $this->middlename.' '.$this->surname; 
+    }
 }
