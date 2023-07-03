@@ -53,10 +53,10 @@ Route::controller(IssueController::class)->prefix('issues/')->group(function () 
 });
 
 Route::controller(ComplainantController::class)->prefix('complainants/')->group(function () {
-    Route::get('index', 'index')->name('complainants.index');
-    Route::get('create', 'create')->name('complainants.create');
-    Route::post('store', 'store')->name('complainants.store');
-    Route::get('edit/{id}', 'edit')->name('complainants.edit');
-    Route::post('update/{id}', 'update')->name('complainants.update');
-    Route::post('delete/{id}', 'delete')->name('complainants.delete');
+    Route::get('index', 'index')->name('complainants.index')->middleware('admin');
+    Route::get('create', 'create')->name('complainants.create')->middleware('admin');
+    Route::post('store', 'store')->name('complainants.store')->middleware('admin');
+    Route::get('edit/{id}', 'edit')->name('complainants.edit')->middleware('admin');
+    Route::post('update/{id}', 'update')->name('complainants.update')->middleware('admin');
+    Route::post('delete/{id}', 'delete')->name('complainants.delete')->middleware('admin');
 });

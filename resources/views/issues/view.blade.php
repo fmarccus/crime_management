@@ -15,17 +15,24 @@
         <div class="card">
             <div class="card-body">
                 <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
-                <div class="mb-3">
-                    <label for="complainant" class="form-label">Complainant</label>
-                    <input type="text" class="form-control @error('complainant') is-invalid @enderror" name="complainant" id="complainant" aria-describedby="helpId" placeholder="" value="{{$issue->complainant}}" disabled>                  
-                </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Phone</label>
-                    <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" aria-describedby="helpId" placeholder="" value="{{$issue->phone}}" disabled>                
-                </div>
+                <p class="card-title">Complainant</p>
+                <!-- {{$issue->complainant}} -->
+                <p><span class="fw-bold">Name:</span> {{$issue->getFullNameComplainant()}}</p>
+                <p><span class="fw-bold">Age:</span> {{$issue->complainant->age}}</p>
+                <p><span class="fw-bold">Gender:</span> {{$issue->complainant->gender}}</p>
+                <p><span class="fw-bold">Phone:</span> {{$issue->complainant->phone}}</p>
+                <p><span class="fw-bold">Email:</span> {{$issue->complainant->email}}</p>
+                <p><span class="fw-bold">Address:</span> {{$issue->complainant->address}}</p>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Issue/Complaint Information</p>
+
                 <div class="mb-3">
                     <label for="issue" class="form-label">Issue</label>
-                    <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8" disabled>{{$issue->issue}}</textarea>                
+                    <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8" disabled>{{$issue->issue}}</textarea>
                 </div>
                 <div class="mb-3">
                     <label for="severity" class="form-label">Severity</label>

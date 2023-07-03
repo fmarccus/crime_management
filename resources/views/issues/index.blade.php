@@ -30,6 +30,7 @@
                         <th>Assigned Police Officer</th>
                         <th>Complainant</th>
                         <th>Issue</th>
+                        <th>Type</th>
                         <th>Severity</th>
                         <td>Status</td>
                         <td>Actions</td>
@@ -47,6 +48,7 @@
                             <td>{{$issue->getFullNameComplainant()}}</td>
 
                             <td>{{substr($issue->issue, 0, 50)}}...</td>
+                            <td>{{$issue->type}}</td>
                             <td>
                                 @if($issue->severity=='Normal')
                                 <span class="badge rounded-pill text-bg-primary">

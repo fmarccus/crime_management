@@ -40,7 +40,13 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <td><img class="img-fluid rounded" width="30" height="30" src="{{asset('images/'.$user->photo)}}" alt="n/a"></td>
+                            <td>
+                                @if ($user->photo)
+                                <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/' . $user->photo) }}" alt="User Photo">
+                                @else
+                                <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/user.png') }}" alt="Default User Photo">
+                                @endif
+                            </td>
                             <td>{{$user->gender}}</td>
                             <td>{{$user->name}} {{$user->surname}}</td>
                             <td>{{$user->rank}}</td>

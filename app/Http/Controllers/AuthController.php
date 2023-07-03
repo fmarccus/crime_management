@@ -25,7 +25,7 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             'name' => 'required|max:255',
             'surname' => 'required|max:255',
             'gender' => 'required|in:M,F',
@@ -36,9 +36,14 @@ class AuthController extends Controller
             'password' => 'required|min:8|max:55|confirmed'
         ]);
         $user = new User();
-        $imageName = time() . '.' . $request->photo->extension();
-        $request->photo->move(public_path('images'), $imageName);
-        $user->photo = $imageName;
+        if ($request->has('photo')) {
+            $imageName = time() . '.' . $request->photo->extension();
+            $request->photo->move(public_path('images'), $imageName);
+            $user->photo = $imageName;
+        } else {
+            $user->photo = NULL;
+        }
+
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->gender = $request->gender;
@@ -59,7 +64,7 @@ class AuthController extends Controller
     {
         $user = User::findOrFail($id);
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             'name' => 'required|max:255',
             'surname' => 'required|max:255',
             'gender' => 'required|in:M,F',
@@ -69,9 +74,13 @@ class AuthController extends Controller
             'email' => 'required|max:255|email|unique:users,email,' . $user->id,
             'password' => 'required|min:8|max:55|confirmed'
         ]);
-        $imageName = time() . '.' . $request->photo->extension();
-        $request->photo->move(public_path('images'), $imageName);
-        $user->photo = $imageName;
+        if ($request->has('photo')) {
+            $imageName = time() . '.' . $request->photo->extension();
+            $request->photo->move(public_path('images'), $imageName);
+            $user->photo = $imageName;
+        } else {
+            $user->photo = NULL;
+        }
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->gender = $request->gender;

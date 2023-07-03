@@ -36,12 +36,15 @@ class IssueController extends Controller
             'user_id' => 'nullable|exists:users,id',
             'complainant_id' => 'nullable|exists:complainants,id',
             'issue' => 'required|max:15000',
+            'type' => 'required',
             'severity' => 'required|in:Normal,Severe,Critical'
         ]);
         $issue = new Issue();
         $issue->user_id = $request->user_id;
         $issue->complainant_id = $request->complainant_id;
         $issue->issue = $request->issue;
+        $issue->type = $request->type;
+
         $issue->severity = $request->severity;
         if ($request->user_id != NULL) {
             $issue->status = "Processing";
@@ -62,6 +65,7 @@ class IssueController extends Controller
             'user_id' => 'nullable|exists:users,id',
             'complainant_id' => 'nullable|exists:complainants,id',
             'issue' => 'required|max:15000',
+            'type' => 'required',
             'severity' => 'required|in:Normal,Severe,Critical',
             'status' => 'required|in:Open,Processing,Completed'
         ]);
@@ -69,6 +73,7 @@ class IssueController extends Controller
         $issue->user_id = $request->user_id;
         $issue->complainant_id = $request->complainant_id;
         $issue->issue = $request->issue;
+        $issue->type = $request->type;
         $issue->severity = $request->severity;
         $issue->status = $request->status;
         $issue->save();

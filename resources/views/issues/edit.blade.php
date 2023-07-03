@@ -63,6 +63,31 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="type" class="form-label">Type of Issue</label>
+                        <select class="form-select @error('type') is-invalid @enderror" name="type" id="type">
+                            <option @if($issue->type == "Assault") selected @endif >Assault</option>
+                            <option @if($issue->type == "Burglary") selected @endif >Burglary</option>
+                            <option @if($issue->type == "Robbery") selected @endif >Robbery</option>
+                            <option @if($issue->type == "Theft") selected @endif >Theft</option>
+                            <option @if($issue->type == "Fraud") selected @endif >Fraud</option>
+                            <option @if($issue->type == "Vandalism") selected @endif >Vandalism</option>
+                            <option @if($issue->type == "Kidnapping") selected @endif >Kidnapping</option>
+                            <option @if($issue->type == "Homicide") selected @endif >Homicide</option>
+                            <option @if($issue->type == "Drug-related offenses") selected @endif >Drug-related offenses</option>
+                            <option @if($issue->type == "Cybercrime") selected @endif >Cybercrime</option>
+                            <option @if($issue->type == "Harassment") selected @endif >Harassment</option>
+                            <option @if($issue->type == "Domestic violence") selected @endif >Domestic violence</option>
+                            <option @if($issue->type == "Sexual assault") selected @endif >Sexual assault</option>
+                            <option @if($issue->type == "Arson") selected @endif >Arson</option>
+                            <option @if($issue->type == "Carjacking") selected @endif >Carjacking</option>
+                            <option @if($issue->type == "Human trafficking") selected @endif >Human trafficking</option>
+                            <option @if($issue->type == "Hate crime") selected @endif >Hate crime</option>
+                            <option @if($issue->type == "Money laundering") selected @endif >Money laundering</option>
+                            <option @if($issue->type == "Identity theft") selected @endif >Identity theft</option>
+                            <option @if($issue->type == "Embezzlement") selected @endif >Embezzlement</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="severity" class="form-label">Severity</label>
                         <select class="form-select @error('severity') is-invalid @enderror" name="severity" id="severity">
                             <option value="Normal" @if($issue->severity == 'Normal') selected @endif>Normal</option>

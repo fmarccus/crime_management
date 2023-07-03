@@ -23,7 +23,13 @@
             @else
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                   <img src="{{asset('images/'.Auth::user()->photo)}}" class="img-fluid rounded me-2" alt="Profile Photo" width="30" height="30"> {{ Auth::user()->name }}
+
+                    @if(Auth::user()->photo)
+                    <img src="{{asset('images/'.Auth::user()->photo)}}" class="img-fluid rounded me-2" alt="Profile Photo" width="30" height="30"> {{ Auth::user()->name }}
+                    @else
+                    <img src="{{asset('images/user.png')}}" class="img-fluid rounded me-2" alt="Profile Photo" width="30" height="30"> {{ Auth::user()->name }}
+
+                    @endif
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

@@ -45,7 +45,7 @@
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>
                         @enderror
-                    </div>                    
+                    </div>
                     <div class="mb-3">
                         <label for="issue" class="form-label">Issue</label>
                         <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8"></textarea>
@@ -54,6 +54,31 @@
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>
                         @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type of Issue</label>
+                        <select class="form-select @error('type') is-invalid @enderror" name="type" id="type">
+                            <option>Assault</option>
+                            <option>Burglary</option>
+                            <option>Robbery</option>
+                            <option>Theft</option>
+                            <option>Fraud</option>
+                            <option>Vandalism</option>
+                            <option>Kidnapping</option>
+                            <option>Homicide</option>
+                            <option>Drug-related offenses</option>
+                            <option>Cybercrime</option>
+                            <option>Harassment</option>
+                            <option>Domestic violence</option>
+                            <option>Sexual assault</option>
+                            <option>Arson</option>
+                            <option>Carjacking</option>
+                            <option>Human trafficking</option>
+                            <option>Hate crime</option>
+                            <option>Money laundering</option>
+                            <option>Identity theft</option>
+                            <option>Embezzlement</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="severity" class="form-label">Severity</label>
