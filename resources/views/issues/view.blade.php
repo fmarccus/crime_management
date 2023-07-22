@@ -35,6 +35,11 @@
                     <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8" disabled>{{$issue->issue}}</textarea>
                 </div>
                 <div class="mb-3">
+                    <label for="issue" class="form-label">Date the event happened</label>
+                    <p>{{$issue->date->format('M d, Y H:i:s A')}}</p>
+
+                </div>
+                <div class="mb-3">
                     <label for="severity" class="form-label">Severity</label>
                     <br>
                     @if($issue->severity=='Normal')

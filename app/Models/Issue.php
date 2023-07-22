@@ -26,4 +26,5 @@ class Issue extends Model
     {
         return $this->user->name . ' ' . $this->user->surname;
     }
+    protected $casts = ['date' => 'datetime'];
 }

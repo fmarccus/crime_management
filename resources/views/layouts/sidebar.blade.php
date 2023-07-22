@@ -26,12 +26,12 @@
                     <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">User Management</span>
                 </a>
             </li>
+            @endif
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/logs">
                     <i class="align-middle" data-feather="clock"></i> <span class="align-middle">Activity Logs</span>
                 </a>
             </li>
-            @endif
             <li class="sidebar-header">
                 Complaints Management System
             </li>

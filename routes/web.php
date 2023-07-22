@@ -20,9 +20,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::view('/home', 'home')->middleware(['auth', 'verified']);
-Route::view('/profile/edit', 'profile.edit')->middleware(['auth', 'verified'])->name('profile.edit');
-Route::view('/profile/password', 'profile.password')->middleware(['auth', 'verified']);
+
+// Route::view('/home', 'home')->middleware(['auth', 'verified']);
+// Route::view('/profile/edit', 'profile.edit')->middleware(['auth', 'verified'])->name('profile.edit');
+// Route::view('/profile/password', 'profile.password')->middleware(['auth', 'verified']);
+
+Route::view('/home', 'home')->middleware(['auth']);
+Route::view('/profile/edit', 'profile.edit')->middleware(['auth'])->name('profile.edit');
+Route::view('/profile/password', 'profile.password')->middleware(['auth']);
+
+
 
 // Route::controller(PoliceController::class)->prefix('police/')->group(function () {
 //     Route::get('index', 'index')->name('police.index');

@@ -2,7 +2,7 @@
 
 return [
     'activated'        => true, // active/inactive all logging
-    'middleware'       => ['web', 'useractivity'],
+    'middleware'       => ['web'],
     'route_path'       => 'logs',
     'admin_panel_path' => 'home',
     'delete_limit'     => 7, // default 7 days

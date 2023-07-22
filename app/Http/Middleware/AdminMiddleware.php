@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::id()) {
-            if (Auth::user()->user_type == 0  && Auth::user()->email_verified_at != NULL) {
+            if (Auth::user()->user_type == 0) {
                 return $next($request);
             } else {
                 return redirect('/home');

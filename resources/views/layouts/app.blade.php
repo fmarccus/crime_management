@@ -27,9 +27,7 @@
     <div class="wrapper">
         <!-- Sidebar -->
         @auth
-        @if(auth()->user()->email_verified_at!=null)
         @include('layouts.sidebar')
-        @endif
         @endauth
         <div class="main">
             <!-- Top Navigation Bar -->

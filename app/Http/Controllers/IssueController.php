@@ -36,6 +36,7 @@ class IssueController extends Controller
             'user_id' => 'nullable|exists:users,id',
             'complainant_id' => 'nullable|exists:complainants,id',
             'issue' => 'required|max:15000',
+            'date' => 'required',
             'type' => 'required',
             'severity' => 'required|in:Normal,Severe,Critical'
         ]);
@@ -43,12 +44,14 @@ class IssueController extends Controller
         $issue->user_id = $request->user_id;
         $issue->complainant_id = $request->complainant_id;
         $issue->issue = $request->issue;
+        $issue->date = $request->date;
         $issue->type = $request->type;
 
         $issue->severity = $request->severity;
         if ($request->user_id != NULL) {
             $issue->status = "Processing";
         }
+        // dd($issue);
         $issue->save();
         return back()->with('success', '');
     }
@@ -65,6 +68,8 @@ class IssueController extends Controller
             'user_id' => 'nullable|exists:users,id',
             'complainant_id' => 'nullable|exists:complainants,id',
             'issue' => 'required|max:15000',
+            'date' => 'required',
+
             'type' => 'required',
             'severity' => 'required|in:Normal,Severe,Critical',
             'status' => 'required|in:Open,Processing,Completed'
@@ -73,6 +78,8 @@ class IssueController extends Controller
         $issue->user_id = $request->user_id;
         $issue->complainant_id = $request->complainant_id;
         $issue->issue = $request->issue;
+        $issue->date = $request->date;
+
         $issue->type = $request->type;
         $issue->severity = $request->severity;
         $issue->status = $request->status;

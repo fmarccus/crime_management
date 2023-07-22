@@ -1090,8 +1090,12 @@
 
             <div class="top_content_right">
                 <div class="filter_item full_width_param user_list_box">
+                    @if (auth()->user()->user_type == 0)
+
                     <label>USER</label>
                     <input type="text" class="form-control" ng-model="filter.user_id" ng-model-options="{debounce:500}" ng-change="getUsers(filter.user_id)" placeholder="Type name or id">
+
+                    @endif
 
                     <div id="user_list" ng-show="userList.length && filter.user_id">
                         <!---->
@@ -1114,12 +1118,15 @@
                     </select>
                 </div>
                 <div class="filter_item">
+                    @if (auth()->user()->user_type == 0)
                     <label>TABLE</label>
                     <select class="form-select" ng-model="filter.table">
                         @foreach($tables as $table)
                         <option value="{{ $table}}">{{ $table}}</option>
                         @endforeach
                     </select>
+                    @endif
+
                 </div>
                 <div class="filter_item">
                     <label>FROM DATE</label>
