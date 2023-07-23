@@ -37,6 +37,7 @@ class IssueController extends Controller
             'complainant_id' => 'nullable|exists:complainants,id',
             'issue' => 'required|max:15000',
             'date' => 'required',
+            'area' => 'required|in:Aguho,Magtanggol,Martires del 96,Poblacion,San Pedro,San Roque,Santa Ana,Santo Rosario Kanluran,Santo Rosario Silangan,Tabacalera',
             'type' => 'required',
             'severity' => 'required|in:Normal,Severe,Critical'
         ]);
@@ -45,6 +46,8 @@ class IssueController extends Controller
         $issue->complainant_id = $request->complainant_id;
         $issue->issue = $request->issue;
         $issue->date = $request->date;
+        $issue->area = $request->area;
+
         $issue->type = $request->type;
 
         $issue->severity = $request->severity;
@@ -69,7 +72,7 @@ class IssueController extends Controller
             'complainant_id' => 'nullable|exists:complainants,id',
             'issue' => 'required|max:15000',
             'date' => 'required',
-
+            'area' => 'required|in:Aguho,Magtanggol,Martires del 96,Poblacion,San Pedro,San Roque,Santa Ana,Santo Rosario Kanluran,Santo Rosario Silangan,Tabacalera',
             'type' => 'required',
             'severity' => 'required|in:Normal,Severe,Critical',
             'status' => 'required|in:Open,Processing,Completed'
@@ -79,7 +82,7 @@ class IssueController extends Controller
         $issue->complainant_id = $request->complainant_id;
         $issue->issue = $request->issue;
         $issue->date = $request->date;
-
+        $issue->area = $request->area;
         $issue->type = $request->type;
         $issue->severity = $request->severity;
         $issue->status = $request->status;

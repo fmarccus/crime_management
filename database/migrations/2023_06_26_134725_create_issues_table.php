@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('complainant_id')->constrained()->cascadeOnUpdate();
             $table->text('issue');
             $table->timestamp('date');
+            $table->string('area');
             $table->string('type');
             $table->string('severity');
             $table->string('status')->default('Open');

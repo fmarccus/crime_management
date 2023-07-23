@@ -56,13 +56,28 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="date" class="form-label">Date the event happened</label>
+                        <label for="date" class="form-label">Date of Incident</label>
                         <input type="datetime-local" class="form-control @error('date') is-invalid @enderror" name="date" id="date">
                         @error('date')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>
                         @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="area" class="form-label">Area of Incident</label>
+                        <select class="form-select @error('area') is-invalid @enderror" name="area" id="area">
+                            <option>Aguho</option>
+                            <option>Magtanggol</option>
+                            <option>Martires del 96</option>
+                            <option>Poblacion</option>
+                            <option>San Pedro</option>
+                            <option>San Roque</option>
+                            <option>Santa Ana</option>
+                            <option>Santo Rosario Kanluran</option>
+                            <option>Santo Rosario Silangan</option>
+                            <option>Tabacalera</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="type" class="form-label">Type of Issue</label>

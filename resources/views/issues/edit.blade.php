@@ -63,13 +63,28 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="date" class="form-label">Date the event happened</label>
+                        <label for="date" class="form-label">Date of Incident</label>
                         <input type="datetime-local" class="form-control @error('date') is-invalid @enderror" name="date" id="date" value="{{$issue->date}}">
                         @error('date')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
                         </div>
                         @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="area" class="form-label">Area of Incident</label>
+                        <select class="form-select @error('area') is-invalid @enderror" name="area" id="area">
+                            <option @if($issue->area == "Aguho") selected @endif>Aguho</option>
+                            <option @if($issue->area == "Magtanggol") selected @endif>Magtanggol</option>
+                            <option @if($issue->area == "Martires del 96") selected @endif>Martires del 96</option>
+                            <option @if($issue->area == "Poblacion") selected @endif>Poblacion</option>
+                            <option @if($issue->area == "San Pedro") selected @endif>San Pedro</option>
+                            <option @if($issue->area == "San Roque") selected @endif>San Roque</option>
+                            <option @if($issue->area == "Santa Ana") selected @endif>Santa Ana</option>
+                            <option @if($issue->area == "Santo Rosario Kanluran") selected @endif>Santo Rosario Kanluran</option>
+                            <option @if($issue->area == "Santo Rosario Silangan") selected @endif>Santo Rosario Silangan</option>
+                            <option @if($issue->area == "Tabacalera") selected @endif>Tabacalera</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="type" class="form-label">Type of Issue</label>

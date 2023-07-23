@@ -31,6 +31,7 @@
                         <th>Complainant</th>
                         <th>Issue</th>
                         <th>Date</th>
+                        <th>Area</th>
                         <th>Type</th>
                         <th>Severity</th>
                         <td>Status</td>
@@ -50,6 +51,7 @@
 
                             <td>{{substr($issue->issue, 0, 50)}}...</td>
                             <td>{{$issue->date->format('M d, Y H:i:s A')}}</td>
+                            <td>{{$issue->area}}</td>
                             <td>{{$issue->type}}</td>
                             <td>
                                 @if($issue->severity=='Normal')
