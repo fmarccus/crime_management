@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    
+
     <div class="col-sm-6 mb-3">
         <div class="card">
             <div class="card-body">
@@ -145,7 +145,81 @@
         </div>
     </div>
 
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="crime_per_month">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
 
 </div>
+@endsection
+
+@php
+$recordCountsPerMonth = DB::table('issues')->selectRaw('COUNT(*) as count')->groupBy(DB::raw('DATE_FORMAT(date, "%Y-%m")'))->pluck('count')->toArray();
+@endphp
+@section('scripts')
+<script>
+    Highcharts.chart("crime_per_month", {
+        chart: {
+            type: "column",
+        },
+        title: {
+            text: "Number of Crimes Recorded Per Month",
+        },
+        subtitle: {},
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            crosshair: true,
+        },
+        yAxis: {
+            title: {
+                text: 'Number of Crimes', // Rename the y-axis label here
+            },
+        },
+        tooltip: {
+            formatter: function() {
+                return (
+                    this.point.category +
+                    "</b><br/>" +
+                    "Total number of crimes recorded: " +
+                    this.point.y
+                );
+            },
+
+        },
+        plotOptions: {
+            column: {
+                pointWidth: 100,
+                borderRadius: 1,
+                borderWidth: 3,
+                borderColor: "#deebf7",
+                colorByPoint: true,
+            },
+        },
+        series: [{
+            name: "Months",
+            data: <?php echo json_encode($recordCountsPerMonth); ?>
+        }, ],
+        colors: [
+            "#0F172A",
+            "#1E293B",
+            "#334155",
+            "#475569",
+            "#64748B",
+            "#94A3B8",
+            "#CBD5E1",
+            "#E2E8F0",
+        ],
+        credits: {
+            enabled: false,
+        },
+    });
+</script>
 @endsection
