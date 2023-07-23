@@ -25,9 +25,8 @@ class DatabaseSeeder extends Seeder
             'rank' => 'n/a',
             'email_verified_at' => now()
         ]);
-        \App\Models\User::factory(50)->create();
-        \App\Models\Complainant::factory(50)->create();
-
-
+        \App\Models\User::factory(200)->create();
+        \App\Models\Complainant::factory(2000)->create();
+        \App\Models\Issue::factory(1500)->create();
     }
 }
