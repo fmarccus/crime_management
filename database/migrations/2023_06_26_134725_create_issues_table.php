@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate();
-            $table->foreignId('complainant_id')->constrained()->cascadeOnUpdate();
+            $table->foreignId('complainant_id')->constrained('users')->cascadeOnUpdate();
+            $table->foreignId('investigator_id')->nullable()->constrained('users')->cascadeOnUpdate();
             $table->text('issue');
             $table->timestamp('date');
             $table->string('area');

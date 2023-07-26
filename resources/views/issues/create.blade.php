@@ -12,12 +12,15 @@
 <div class="row">
     <h3 class="mb-3">Add A New Issue</h3>
     <div class="col-sm-9">
-        <div class="card">
-            <div class="card-body">
-                <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
+        <form action="{{route('issues.store')}}" method="post">
+            @csrf
+            <div class="card mb-3">
+                <div class="card-body">
+                    <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
+                    <p class="card-title">Assigned Officers</p>
 
-                <form action="{{route('issues.store')}}" method="post">
-                    @csrf
+
+
                     <div class="mb-3">
                         <label for="user_id" class="form-label">Police Officer</label>
                         <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id">
@@ -32,6 +35,30 @@
                         </div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="investigator_id" class="form-label">Investigator</label>
+                        <input class="form-select @error('investigator_id') is-invalid @enderror" list="investigators" name="investigator_id" id="investigator_id">
+                        <datalist id="investigators">
+                            @foreach ($investigators as $investigator)
+                            <option value="{{$investigator->id}}">{{$investigator->name}} {{$investigator->surname}}</option>
+                            @endforeach
+                        </datalist>
+                        @error('investigator_id')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="card mb-3">
+
+                <div class="card-body">
+                    <p class="card-title">Incident Report</p>
                     <div class="mb-3">
                         <label for="complainant" class="form-label">Complainant</label>
                         <input class="form-select @error('complainant_id') is-invalid @enderror" list="complainants" name="complainant_id" id="complainant_id">
@@ -112,11 +139,11 @@
                             <option value="Critical">Critical</option>
                         </select>
                     </div>
-
-                    <button class="btn btn-primary">Save</button>
-                </form>
+                </div>
             </div>
-        </div>
+
+            <button class="btn btn-primary">Save</button>
+        </form>
     </div>
 </div>
 @endsection

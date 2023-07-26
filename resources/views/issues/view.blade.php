@@ -11,8 +11,8 @@
 @endif
 <div class="row">
     <h3 class="mb-3">Issue Information</h3>
-    <div class="col-sm-9">
-        <div class="card">
+    <div class="col-sm-9 mb-3">
+        <div class="card mb-3">
             <div class="card-body">
                 <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
                 <p class="card-title">Complainant</p>
@@ -23,12 +23,11 @@
                 <p><span class="fw-bold">Phone:</span> {{$issue->complainant->phone}}</p>
                 <p><span class="fw-bold">Email:</span> {{$issue->complainant->email}}</p>
                 <p><span class="fw-bold">Address:</span> {{$issue->complainant->address}}</p>
-
             </div>
         </div>
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
-                <p class="card-title">Issue/Complaint Information</p>
+                <p class="card-title">Incident Report</p>
 
                 <div class="mb-3">
                     <label for="issue" class="form-label">Issue</label>
@@ -77,5 +76,27 @@
             </div>
         </div>
     </div>
+    <div class="col-sm-3">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">Police Officer</h4>
+                <p><span class="fw-bold">Name:</span> {{$issue->getFullNameOfficer()}}</p>
+                <p><span class="fw-bold">Gender:</span> {{$issue->user->gender}}</p>
+                <p><span class="fw-bold">Phone:</span> {{$issue->user->phone}}</p>
+                <p><span class="fw-bold">Email:</span> {{$issue->user->email}}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Investigator</h4>
+                <p><span class="fw-bold">Name:</span> {{$issue->getFullNameInvestigator()}}</p>
+                <p><span class="fw-bold">Gender:</span> {{$issue->investigator->gender}}</p>
+                <p><span class="fw-bold">Phone:</span> {{$issue->investigator->phone}}</p>
+                <p><span class="fw-bold">Email:</span> {{$issue->investigator->email}}</p>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection

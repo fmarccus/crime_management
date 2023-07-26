@@ -30,7 +30,7 @@ class AuthController extends Controller
             'surname' => 'required|max:255',
             'gender' => 'required|in:M,F',
             'phone' => 'required|min:11|max:11',
-            'user_type' => 'integer|in:0,1',
+            'user_type' => 'integer|in:0,1,2,3',
             'rank' => 'required|in:n/a,Police General,Police Lieutenant General,Police Major General,Police Brigadier General,Police Colonel,Police Lieutenant Colonel,Police Major,Police Captain,Police Lieutenant,Police Executive Master Sergeant,Police Chief Master Sergeant,Police Senior Master Sergeant,Police Master Sergeant,Police Staff Sergeant,Police Corporal,Patrolman/Patrolwoman',
             'email' => 'required|max:255|email|unique:users,email',
             'password' => 'required|min:8|max:55|confirmed'
@@ -69,7 +69,7 @@ class AuthController extends Controller
             'surname' => 'required|max:255',
             'gender' => 'required|in:M,F',
             'phone' => 'required|min:11|max:11',
-            'user_type' => 'integer|in:0,1',
+            'user_type' => 'integer|in:0,1,2,3',
             'rank' => 'required|in:n/a,Police General,Police Lieutenant General,Police Major General,Police Brigadier General,Police Colonel,Police Lieutenant Colonel,Police Major,Police Captain,Police Lieutenant,Police Executive Master Sergeant,Police Chief Master Sergeant,Police Senior Master Sergeant,Police Master Sergeant,Police Staff Sergeant,Police Corporal,Patrolman/Patrolwoman',
             'email' => 'required|max:255|email|unique:users,email,' . $user->id,
             'password' => 'required|min:8|max:55|confirmed'

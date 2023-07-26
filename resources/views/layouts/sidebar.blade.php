@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li class="sidebar-header">
-                Complaints Management System
+                Incident Reporting
             </li>
             @if(Auth::user()->user_type == 0)
             <li class="sidebar-item {{ (request()->is('complainants/*')) ? 'active':'' }}">

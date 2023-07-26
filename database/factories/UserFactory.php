@@ -17,14 +17,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $userType = fake()->randomElement([1, 2, 3]);
         return [
             'photo' => 'user.png',
             'name' => fake()->name(),
             'surname' => fake()->lastName(),
             'gender' => fake()->randomElement(["M", "F"]),
+            'age' => fake()->numberBetween(18, 60),
             'phone' => '09' . fake()->randomNumber($nbDigits = 9, $strict = true),
-            'user_type' => 1,
-            'rank' => fake()->randomElement([
+            'address' => fake()->address(),
+            'user_type' => $userType,
+            'rank' => $userType === 3 ? 'n/a' : fake()->randomElement([
                 "n/a",
                 "Police General",
                 "Police Lieutenant General",

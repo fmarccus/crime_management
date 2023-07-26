@@ -12,14 +12,12 @@
 <div class="row">
     <h3 class="mb-3">Edit {{$user->name}} </h3>
     <div class="col-sm-9">
-        <div class="card">
-            <div class="card-body">
-                <a href="{{route('users.index')}}" class="btn btn-light mb-3">Back</a>
-
-                <form action="{{route('users.update',$user->id)}}" method="post" enctype="multipart/form-data">
-                    @csrf
+        <form action="{{route('users.update',$user->id)}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="card mb-3">
+                <div class="card-body">
+                    <a href="{{route('users.index')}}" class="btn btn-light mb-3">Back</a>
                     <p class="card-title">Personal Information</p>
-
                     <div class="mb-3">
                         <img class="img-fluid rounded" width="100" height="100" src="{{asset('images/'.$user->photo)}}" alt="No photo uploaded">
                     </div>
@@ -66,12 +64,31 @@
                         </div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="helpId" placeholder="" value="{{$user->address}}">
+                        @error('address')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
                     <p class="card-title">Account Credentials</p>
                     <div class="mb-3">
                         <label for="user_type" class="form-label">User Type</label>
                         <select class="form-select @error('user_type') is-invalid @enderror" name="user_type" id="user_type">
+                            <option @if($user->user_type == 2) selected @endif value="2">Investigator</option>
                             <option @if($user->user_type == 1) selected @endif value="1">Police Officer/System User</option>
+                            <option @if($user->user_type == 3) selected @endif value="3">Complainant</option>
+
                             <option @if($user->user_type == 0) selected @endif value="0">Admin/Master</option>
+
                         </select>
                         @error('user_type')
                         <div>
@@ -133,10 +150,10 @@
                         </div>
                         @enderror
                     </div>
-                    <button class="btn btn-primary">Save</button>
-                </form>
+                </div>
             </div>
-        </div>
+            <button class="btn btn-primary">Save</button>
+        </form>
     </div>
 </div>
 @endsection

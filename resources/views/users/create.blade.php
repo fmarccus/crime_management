@@ -12,12 +12,13 @@
 <div class="row">
     <h3 class="mb-3">Add A New User</h3>
     <div class="col-sm-9">
-        <div class="card">
-            <div class="card-body">
-                <a href="{{route('users.index')}}" class="btn btn-light mb-3">Back</a>
+        <form action="{{route('users.store')}}" enctype="multipart/form-data" method="post">
+            @csrf
+            <div class="card mb-3">
+                <div class="card-body">
+                    <a href="{{route('users.index')}}" class="btn btn-light mb-3">Back</a>
 
-                <form action="{{route('users.store')}}" enctype="multipart/form-data" method="post">
-                    @csrf
+
                     <p class="card-title">Personal Information</p>
                     <div class="mb-3">
                         <label for="photo" class="form-label">Photo</label>
@@ -47,6 +48,15 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" min="1" max="99" class="form-control @error('age') is-invalid @enderror" name="age" id="age" aria-describedby="helpId" placeholder="" value="{{old('age')}}">
+                        @error('age')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="gender" class="form-label">Gender</label>
                         <select class="form-select @error('gender') is-invalid @enderror" name="gender" id="gender">
                             <option value="M">Male</option>
@@ -62,12 +72,27 @@
                         </div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="helpId" placeholder="" value="{{old('address')}}">
+                        @error('address')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
                     <p class="card-title">Account Credentials</p>
                     <div class="mb-3">
                         <label for="user_type" class="form-label">User Type</label>
                         <select class="form-select @error('user_type') is-invalid @enderror" name="user_type" id="user_type">
+                            <option value="2">Investigator</option>
                             <option value="1">Police Officer/System User</option>
                             <option value="0">Admin/Master</option>
+                            <option value="3">Complainant</option>
                         </select>
                         @error('user_type')
                         <div>
@@ -129,10 +154,10 @@
                         </div>
                         @enderror
                     </div>
-                    <button class="btn btn-primary">Save</button>
-                </form>
+                </div>
             </div>
-        </div>
+            <button class="btn btn-primary">Save</button>
+        </form>
     </div>
 </div>
 @endsection

@@ -16,11 +16,19 @@ class Issue extends Model
     }
     public function complainant()
     {
-        return $this->belongsTo(Complainant::class);
+        return $this->belongsTo(User::class);
+    }
+    public function investigator()
+    {
+        return $this->belongsTo(User::class);
     }
     public function getFullNameComplainant()
     {
         return $this->complainant->name . ' ' . $this->complainant->middlename . ' ' . $this->complainant->surname;
+    }
+    public function getFullNameInvestigator()
+    {
+        return $this->investigator->name . ' ' . $this->investigator->middlename . ' ' . $this->investigator->surname;
     }
     public function getFullNameOfficer()
     {

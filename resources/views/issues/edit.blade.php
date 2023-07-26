@@ -12,12 +12,13 @@
 <div class="row">
     <h3 class="mb-3">Edit this Issue</h3>
     <div class="col-sm-9">
-        <div class="card">
-            <div class="card-body">
-                <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
+        <form action="{{route('issues.update',$issue->id)}}" method="post">
+            @csrf
+            <div class="card mb-3">
+                <div class="card-body">
+                    <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
 
-                <form action="{{route('issues.update',$issue->id)}}" method="post">
-                    @csrf
+
                     <div class="mb-3">
                         @if ($issue->user === null)
                         <label for="user_id" class="form-label">No Police Officer Assigned For This Issue, <span class="text-danger fw-bold">Select Below</span></label>
@@ -37,9 +38,32 @@
                         </div>
                         @enderror
                     </div>
+
                     <div class="mb-3">
-                        <!-- <label for="complainant" class="form-label">Complainant <a href="{{route('complainants.edit', $issue->complainant->id)}}">({{$issue->complainant->name}} {{$issue->complainant->middlename}} {{$issue->complainant->surname}}, {{$issue->complainant->gender}}, {{$issue->complainant->age}})</a></label> -->
-                        <label for="complainant" class="form-label">Complainant <a href="{{route('complainants.edit', $issue->complainant->id)}}">({{$issue->getFullNameComplainant()}}, {{$issue->complainant->gender}}, {{$issue->complainant->age}})</a></label>
+
+                        <label for="investigator_id" class="form-label">Investigator Assigned: <a href="{{route('users.edit', $issue->investigator->id)}}">({{$issue->getFullNameInvestigator()}})</a></label>
+                        <input class="form-select @error('investigator_id') is-invalid @enderror" list="investigators" name="investigator_id" id="investigator_id" value="{{$issue->investigator_id}}">
+                        <datalist id="investigators">
+                            <option value="">Remove The Assigned Investigator</option>
+                            @foreach ($investigators as $investigator)
+                            <option value="{{$investigator->id}}">{{$investigator->name}} {{$investigator->surname}}</option>
+                            @endforeach
+                        </datalist>
+                        @error('investigator_id')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Incident Report</h4>
+                    <div class="mb-3">
+                        <label for="complainant" class="form-label">Complainant <a href="{{route('users.edit', $issue->complainant->id)}}">({{$issue->getFullNameComplainant()}}, {{$issue->complainant->gender}}, {{$issue->complainant->age}})</a></label>
 
                         <input class="form-select @error('complainant_id') is-invalid @enderror" list="complainants" name="complainant_id" id="complainant_id" value="{{$issue->complainant_id}}">
                         <datalist id="complainants">
@@ -127,10 +151,10 @@
                             <option value="Completed" @if($issue->status == 'Completed') selected @endif>Completed</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary">Save</button>
-                </form>
+                </div>
             </div>
-        </div>
+            <button class="btn btn-primary">Save</button>
+        </form>
     </div>
 </div>
 @endsection

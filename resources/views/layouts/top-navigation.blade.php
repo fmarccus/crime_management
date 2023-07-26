@@ -26,8 +26,42 @@
 
                     @if(Auth::user()->photo)
                     <img src="{{asset('images/'.Auth::user()->photo)}}" class="img-fluid rounded me-2" alt="Profile Photo" width="30" height="30"> {{ Auth::user()->name }}
+                    @if(Auth::user()->user_type=='0')
+                    <span class="badge rounded-pill text-bg-primary">
+                        Master
+                    </span>
+                    @elseif(Auth::user()->user_type=='1')
+                    <span class="badge rounded-pill text-bg-info">
+                        Police Officer
+                    </span>
+                    @elseif(Auth::user()->user_type=='2')
+                    <span class="badge rounded-pill text-bg-warning">
+                        Investigator
+                    </span>
+                    @else
+                    <span class="badge rounded-pill text-bg-danger">
+                        Complainant
+                    </span>
+                    @endif
                     @else
                     <img src="{{asset('images/user.png')}}" class="img-fluid rounded me-2" alt="Profile Photo" width="30" height="30"> {{ Auth::user()->name }}
+                    @if(Auth::user()->user_type=='0')
+                    <span class="badge rounded-pill text-bg-primary">
+                        Master
+                    </span>
+                    @elseif(Auth::user()->user_type=='1')
+                    <span class="badge rounded-pill text-bg-info">
+                        Police Officer
+                    </span>
+                    @elseif(Auth::user()->user_type=='2')
+                    <span class="badge rounded-pill text-bg-warning">
+                        Investigator
+                    </span>
+                    @else
+                    <span class="badge rounded-pill text-bg-danger">
+                        Complainant
+                    </span>
+                    @endif
 
                     @endif
                 </a>

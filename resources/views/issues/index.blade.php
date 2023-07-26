@@ -11,9 +11,11 @@
 @endif
 <div class="row justify-content-center">
     @if (auth()->user()->user_type==0)
-    <h3 class="mb-3">Issues</h3>
+    <h3 class="mb-3">Incident Reports ({{$issues->count()}})</h3>
+    @elseif(auth()->user()->user_type==1 || auth()->user()->user_type==2)
+    <h3 class="mb-3">Incident Reports Assigned To You ({{$issues->count()}})</h3>
     @else
-    <h3 class="mb-3">Issues Assigned To You</h3>
+    <h3 class="mb-3">Incidents You Reported ({{$issues->count()}})</h3>
     @endif
     <div class="card">
         <div class="card-body">
@@ -28,9 +30,11 @@
                 <table id="issues" class="table" style="width:100%">
                     <thead>
                         <th>Assigned Police Officer</th>
+                        <th>Assigned Investigator</th>
                         <th>Complainant</th>
-                        <th>Issue</th>
-                        <th>Date</th>
+                        <th>Incident</th>
+                        <th>Incident Date</th>
+                        <th>Date Created</th>
                         <th>Area</th>
                         <th>Type</th>
                         <th>Severity</th>
@@ -47,10 +51,15 @@
                                 {{$issue->getFullNameOfficer()}}
                                 @endif
                             </td>
+                            <td>{{$issue->getFullNameInvestigator()}}</td>
+
                             <td>{{$issue->getFullNameComplainant()}}</td>
 
                             <td>{{substr($issue->issue, 0, 50)}}...</td>
                             <td>{{$issue->date->format('M d, Y H:i:s A')}}</td>
+
+                            <td>{{$issue->created_at->format('M d, Y H:i:s A')}}</td>
+
                             <td>{{$issue->area}}</td>
                             <td>{{$issue->type}}</td>
                             <td>

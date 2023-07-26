@@ -31,6 +31,7 @@
                         <th>Photo</th>
                         <th>Gender</th>
                         <th>Full Name</th>
+                        <th>Acc Type</th>
                         <th>Rank</th>
                         <th>Phone</th>
                         <th>Email</th>
@@ -49,6 +50,26 @@
                             </td>
                             <td>{{$user->gender}}</td>
                             <td>{{$user->name}} {{$user->surname}}</td>
+                            <td>
+                                @if($user->user_type=='0')
+                                <span class="badge rounded-pill text-bg-primary">
+                                    Master
+                                </span>
+                                @elseif($user->user_type=='1')
+                                <span class="badge rounded-pill text-bg-info">
+                                    Police Officer
+                                </span>
+                                @elseif($user->user_type=='2')
+                                <span class="badge rounded-pill text-bg-warning">
+                                    Investigator
+                                </span>
+                                @else
+                                <span class="badge rounded-pill text-bg-danger">
+                                    Complainant
+                                </span>
+                                @endif
+                            </td>
+
                             <td>{{$user->rank}}</td>
                             <td>{{$user->phone}}</td>
                             <td>{{$user->email}}</td>
