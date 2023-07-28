@@ -65,6 +65,9 @@ class IssueController extends Controller
             $issue->status = "Processing";
         }
         // dd($issue);
+        if ($request->status != "Completed") {
+            $issue->updated_at = NULL;
+        }
         $issue->save();
         return back()->with('success', '');
     }
@@ -102,6 +105,9 @@ class IssueController extends Controller
         $issue->type = $request->type;
         $issue->severity = $request->severity;
         $issue->status = $request->status;
+        if ($request->status == "Completed") {
+            $issue->updated_at = now();
+        }
         $issue->save();
         return back()->with('success', '');
     }

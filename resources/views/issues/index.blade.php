@@ -93,7 +93,7 @@
                                 </span>
                                 @endif
                             </td>
-                            <td> @if($issue->status == "Completed"){{$issue->updated_at->format('M d, Y H:i:s A')}} @endif</td>
+                            <td> @if($issue->status == "Completed"){{$issue->updated_at->format('M d, Y H:i:s A')}} @else Not Yet Completed @endif</td>
 
                             <td>
                                 @if (auth()->user()->user_type==0)
