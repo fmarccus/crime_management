@@ -39,7 +39,7 @@
                         <th>Type</th>
                         <th>Severity</th>
                         <th>Status</th>
-                        <th>Last Updated</th>
+                        <th>Complete Date</th>
                         <th>Actions</th>
                     </thead>
                     <tbody>
@@ -93,7 +93,7 @@
                                 </span>
                                 @endif
                             </td>
-                            <td>{{$issue->updated_at->format('M d, Y H:i:s A')}}</td>
+                            <td> @if($issue->status == "Completed"){{$issue->updated_at->format('M d, Y H:i:s A')}} @endif</td>
 
                             <td>
                                 @if (auth()->user()->user_type==0)
