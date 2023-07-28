@@ -9,15 +9,18 @@
     })
 </script>
 @endif
+
+
+
 <div class="row">
     <h3 class="mb-3">Add A New Issue</h3>
     <div class="col-sm-9">
-        <form action="{{route('issues.store')}}" method="post">
+        <form action="{{route('issues.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card mb-3">
                 <div class="card-body">
                     <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
-                    <p class="card-title">Assigned Officers</p>
+                    <p class="card-title">Dispatched Personnels</p>
 
 
 
@@ -138,6 +141,20 @@
                             <option value="Severe">Severe</option>
                             <option value="Critical">Critical</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Evidences</h4>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Attach Images</label>
+                        <input type="file" class="form-control" name="" id="" aria-describedby="helpId" multiple>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Attach Video Recordings</label>
+                        <input type="file" class="form-control" name="" id="" aria-describedby="helpId" multiple>
                     </div>
                 </div>
             </div>

@@ -18,6 +18,7 @@
                 <div class="card-body">
                     <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
 
+                    <p class="card-title">Dispatched Personnels</p>
 
                     <div class="mb-3">
                         @if ($issue->user === null)

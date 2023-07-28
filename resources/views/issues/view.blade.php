@@ -9,12 +9,34 @@
     })
 </script>
 @endif
-<div class="row">
-    <h3 class="mb-3">Issue Information</h3>
-    <div class="col-sm-9 mb-3">
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a href="{{route('issues.index')}}" class="btn btn-light me-1">Back</a>
+
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Complainant</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Incident Report</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Dispatched Personnels</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-evidences-tab" data-bs-toggle="pill" data-bs-target="#pills-evidences" type="button" role="tab" aria-controls="pills-evidences" aria-selected="false">Evidences</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-progress-tab" data-bs-toggle="pill" data-bs-target="#pills-progress" type="button" role="tab" aria-controls="pills-progress" aria-selected="false">Progress Tracking</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-suspects-tab" data-bs-toggle="pill" data-bs-target="#pills-suspects" type="button" role="tab" aria-controls="pills-suspects" aria-selected="false">Suspects & Witnesses</button>
+    </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
         <div class="card mb-3">
             <div class="card-body">
-                <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
                 <p class="card-title">Complainant</p>
                 <!-- {{$issue->complainant}} -->
                 <p><span class="fw-bold">Name:</span> {{$issue->getFullNameComplainant()}}</p>
@@ -25,6 +47,8 @@
                 <p><span class="fw-bold">Address:</span> {{$issue->complainant->address}}</p>
             </div>
         </div>
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
         <div class="card mb-3">
             <div class="card-body">
                 <p class="card-title">Incident Report</p>
@@ -76,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-3">
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
         <div class="card mb-3">
             <div class="card-body">
                 <h4 class="card-title">Police Officer</h4>
@@ -97,6 +121,7 @@
             </div>
         </div>
     </div>
-
+    <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
 </div>
+
 @endsection

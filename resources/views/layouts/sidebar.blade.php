@@ -47,7 +47,7 @@
             </li>
             <li class="sidebar-item {{ (request()->is('users/complainants')) ? 'active':'' }}">
                 <a class="sidebar-link" href="{{route('complainants.index')}}">
-                    <i class="align-middle" data-feather="user-minus"></i> <span class="align-middle">Complainants</span>
+                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Complainants</span>
                 </a>
             </li>
             @endif
