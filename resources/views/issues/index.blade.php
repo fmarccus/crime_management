@@ -29,8 +29,8 @@
 
                 <table id="issues" class="table" style="width:100%">
                     <thead>
-                        <th>Assigned Police Officer</th>
-                        <th>Assigned Investigator</th>
+                        <th>Assigned P.O.</th>
+                        <th>Investigator</th>
                         <th>Complainant</th>
                         <th>Incident</th>
                         <th>Incident Date</th>
@@ -38,8 +38,9 @@
                         <th>Area</th>
                         <th>Type</th>
                         <th>Severity</th>
-                        <td>Status</td>
-                        <td>Actions</td>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
                     </thead>
                     <tbody>
                         @foreach ($issues as $issue)
@@ -92,6 +93,8 @@
                                 </span>
                                 @endif
                             </td>
+                            <td>{{$issue->updated_at->format('M d, Y H:i:s A')}}</td>
+
                             <td>
                                 @if (auth()->user()->user_type==0)
 
@@ -121,7 +124,29 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#issues').DataTable();
+
+        var table = $('#issues').DataTable({
+            dom: 'Bfrtip',
+            stateSave: true,
+            colReorder: true,
+            buttons: [{
+                    extend: 'copy',
+                    split: [
+                        'print',
+                        'excel',
+                        'csv',
+                        'pdf',
+                    ]
+                },
+                {
+                    extend: 'colvis',
+                    postfixButtons: ['colvisRestore'],
+                    columnText: function(dt, idx, title) {
+                        return (idx + 1) + '. ' + title;
+                    }
+                },
+            ]
+        });
     });
 </script>
 @endsection

@@ -17,8 +17,8 @@
 </script>
 @endif
 <div class="row justify-content-center">
+    <h3 class="mb-3">System Users ({{$users->count()}})</h3>
 
-    <h3 class="mb-3">User Management</h3>
 
     <div class="card">
         <div class="card-body">
@@ -97,7 +97,28 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#users').DataTable();
+        var table = $('#users').DataTable({
+            dom: 'Bfrtip',
+            stateSave: true,
+            colReorder: true,
+            buttons: [{
+                    extend: 'copy',
+                    split: [
+                        'print',
+                        'excel',
+                        'csv',
+                        'pdf',
+                    ]
+                },
+                {
+                    extend: 'colvis',
+                    postfixButtons: ['colvisRestore'],
+                    columnText: function(dt, idx, title) {
+                        return (idx + 1) + '. ' + title;
+                    }
+                },
+            ]
+        });
     });
 </script>
 @endsection

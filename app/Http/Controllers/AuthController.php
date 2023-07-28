@@ -18,6 +18,21 @@ class AuthController extends Controller
         $users = User::all();
         return view('users.index', compact('users'));
     }
+    public function police()
+    {
+        $police = User::where('user_type', 1)->get();
+        return view('police.index', compact('police'));
+    }
+    public function investigators()
+    {
+        $investigators = User::where('user_type', 2)->get();
+        return view('investigators.index', compact('investigators'));
+    }
+    public function complainants()
+    {
+        $complainants = User::where('user_type', 3)->get();
+        return view('complainants.index', compact('complainants'));
+    }
     public function create()
     {
         return view('users.create');

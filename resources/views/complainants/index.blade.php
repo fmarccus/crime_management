@@ -5,57 +5,81 @@
 <script>
     Swal.fire({
         icon: 'error',
-        text: 'Complainant has been deleted',
+        text: 'User has been deleted',
     })
 </script>
 @elseif(session()->has('unable'))
 <script>
     Swal.fire({
         icon: 'error',
-        text: 'You cannot delete this complainant. He/she has is assigned into a complaint.',
+        text: 'You cannot delete this police officer. He/she has is assigned into a complaint.',
     })
 </script>
 @endif
 <div class="row justify-content-center">
-    <h3 class="mb-3">Complainants</h3>
+
+    <h3 class="mb-3">Complainants ({{$complainants->count()}})</h3>
+
     <div class="card">
         <div class="card-body">
-            @if (auth()->user()->user_type==0)
             <div class="text-end">
-                <a href="{{route('complainants.create')}}" class="btn btn-primary mb-3">Add A New Complainant</a>
             </div>
-
-            @endif
             <div class="table-responsive">
-
-                <table id="complainants" class="table" style="width:100%">
+                <table id="users" class="table" style="width:100%">
                     <thead>
-                        <th>Name</th>
-                        <th>Middle</th>
-                        <th>Last</th>
-                        <th>Age</th>
+                        <th>Photo</th>
                         <th>Gender</th>
+                        <th>Full Name</th>
+                        <th>Acc Type</th>
+                        <th>Rank</th>
                         <th>Phone</th>
-                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Last Updated</th>
                         <th>Actions</th>
-
                     </thead>
                     <tbody>
-                        @foreach ($complainants as $complainant)
+                        @foreach ($complainants as $user)
                         <tr>
-                            <td>{{$complainant->name}}</td>
-                            <td>{{$complainant->middlename}}</td>
-                            <td>{{$complainant->surname}}</td>
-                            <td>{{$complainant->age}}</td>
-                            <td>{{$complainant->gender}}</td>
-                            <td>{{$complainant->phone}}</td>
-                            <td>{{$complainant->address}}</td>
+                            <td>
+                                @if ($user->photo)
+                                <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/' . $user->photo) }}" alt="User Photo">
+                                @else
+                                <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/user.png') }}" alt="Default User Photo">
+                                @endif
+                            </td>
+                            <td>{{$user->gender}}</td>
+                            <td>{{$user->name}} {{$user->surname}}</td>
+                            <td>
+                                @if($user->user_type=='0')
+                                <span class="badge rounded-pill text-bg-primary">
+                                    Master
+                                </span>
+                                @elseif($user->user_type=='1')
+                                <span class="badge rounded-pill text-bg-info">
+                                    Police Officer
+                                </span>
+                                @elseif($user->user_type=='2')
+                                <span class="badge rounded-pill text-bg-warning">
+                                    Investigator
+                                </span>
+                                @else
+                                <span class="badge rounded-pill text-bg-danger">
+                                    Complainant
+                                </span>
+                                @endif
+                            </td>
+
+                            <td>{{$user->rank}}</td>
+                            <td>{{$user->phone}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->updated_at->format('M d, Y h:i A')}}</td>
+
                             <td>
                                 <div class="d-flex">
-                                    <a class="btn btn-secondary me-3" href="{{route('complainants.edit', $complainant->id)}}">Edit</a>
-                                    <form action="{{route('complainants.delete',$complainant->id)}}" method="post">
+                                    <a class="btn btn-secondary me-3" href="{{route('users.edit',$user->id)}}">Edit</a>
+                                    <form action="{{route('users.delete',$user->id)}}" method="post">
                                         @csrf
-                                        <button onclick="return confirm('Delete this complainant?')" type="submit" class="btn btn-danger">Delete</button>
+                                        <button onclick="return confirm('Delete this user account?')" type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                 </div>
                             </td>
@@ -72,7 +96,28 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#complainants').DataTable();
+        var table = $('#users').DataTable({
+            dom: 'Bfrtip',
+            stateSave: true,
+            colReorder: true,
+            buttons: [{
+                    extend: 'copy',
+                    split: [
+                        'print',
+                        'excel',
+                        'csv',
+                        'pdf',
+                    ]
+                },
+                {
+                    extend: 'colvis',
+                    postfixButtons: ['colvisRestore'],
+                    columnText: function(dt, idx, title) {
+                        return (idx + 1) + '. ' + title;
+                    }
+                },
+            ]
+        });
     });
 </script>
 @endsection

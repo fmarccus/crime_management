@@ -42,6 +42,9 @@ Route::view('/profile/password', 'profile.password')->middleware(['auth']);
 
 Route::controller(AuthController::class)->prefix('users/')->group(function () {
     Route::get('index', 'index')->name('users.index');
+    Route::get('police', 'police')->name('police.index');
+    Route::get('investigators', 'investigators')->name('investigators.index');
+    Route::get('complainants', 'complainants')->name('complainants.index');
     Route::get('create', 'create')->name('users.create');
     Route::post('store', 'store')->name('users.store');
     Route::get('edit/{id}', 'edit')->name('users.edit');
@@ -60,7 +63,7 @@ Route::controller(IssueController::class)->prefix('issues/')->group(function () 
 });
 
 Route::controller(ComplainantController::class)->prefix('complainants/')->group(function () {
-    Route::get('index', 'index')->name('complainants.index')->middleware('admin');
+    // Route::get('index', 'index')->name('complainants.index')->middleware('admin');
     Route::get('create', 'create')->name('complainants.create')->middleware('admin');
     Route::post('store', 'store')->name('complainants.store')->middleware('admin');
     Route::get('edit/{id}', 'edit')->name('complainants.edit')->middleware('admin');

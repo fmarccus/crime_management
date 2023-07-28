@@ -41,6 +41,6 @@
     cursor: pointer;
     color: #fff !important;
     border: 1px solid transparent;
-    border-radius: var(--bs-border-radius);
-    background: var(--bs-primary);
+    border-radius: var(--bs-border-radius) !important;
+    background: var(--bs-primary) !important;
 }
