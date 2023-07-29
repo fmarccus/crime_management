@@ -60,7 +60,7 @@
 
                 </div>
             </div>
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     <h4 class="card-title">Incident Report</h4>
                     <div class="mb-3">
@@ -152,6 +152,90 @@
                             <option value="Completed" @if($issue->status == 'Completed') selected @endif>Completed</option>
                         </select>
                     </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Suspects and Witnesses
+                    </h4>
+                    <div id="input-container">
+                        @php
+                        $index = 1;
+                        @endphp
+                        @foreach($issue->persons as $person)
+                        <h4 class="fw-bold">Person {{$index}}</h4>
+                        <div class="row">
+                            <input type="hidden" name="person_data[{{$index}}][personId]" value="{{$person->id}}">
+                            <div class="col-sm-9 mb-2">
+                                <label for="" class="form-label">Name</label>
+                                <input type="text" class="form-control" name="person_data[{{$index}}][person_name]" value="{{$person->person_name}}" />
+                            </div>
+                            <div class="col-sm-3 mb-2">
+                                <label for="" class="form-label">Status</label>
+                                <select class="form-select" name="person_data[{{$index}}][person_type]">
+                                    <option @if($person->person_type == 'witness') selected @endif" value="witness">Witness</option>
+                                    <option @if($person->person_type == 'suspect') selected @endif" value="suspect">Suspect</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label for="" class="form-label">Gender</label>
+                                <select class="form-select" name="person_data[{{$index}}][gender]">
+                                    <option @if($person->gender == 'Male') selected @endif value="Male">Male</option>
+                                    <option @if($person->gender == 'Female') selected @endif value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label for="" class="form-label">Date of Birth</label>
+                                <input class="form-control" type="date" name="person_data[{{$index}}][dob]" id="" value="{{$person->dob}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Address</label>
+                                <input class="form-control" type="text" name="person_data[{{$index}}][address]" value="{{$person->address}}" id="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Contact Information</label>
+                                <input class="form-control" type="text" name="person_data[{{$index}}][contact]" value="{{$person->contact}}" id="">
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label for="" class="form-label">Height</label>
+                                <input class="form-control" min="1" type="number" name="person_data[{{$index}}][height]" value="{{$person->height}}" id="">
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label for="" class="form-label">Weight</label>
+                                <input class="form-control" min="1" type="number" name="person_data[{{$index}}][weight]" value="{{$person->weight}}" id="">
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label for="" class="form-label">Hair Color</label>
+                                <input type="text" class="form-control" name="person_data[{{$index}}][hair]" value="{{$person->hair}}" />
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label for="" class="form-label">Eye Color</label>
+                                <input type="text" class="form-control" name="person_data[{{$index}}][eye]" value="{{$person->eye}}" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Ethnicity</label>
+                                <input type="text" class="form-control" name="person_data[{{$index}}][ethnicity]" value="{{$person->ethnicity}}" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Photograph/Identification</label>
+                                <input type="file" class="form-control" name="person_data[{{$index}}][identification]" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Statement</label>
+                                <textarea class="form-control" name="person_data[{{$index}}][statement]" id="" cols="30" rows="10">{{$person->statement}}</textarea>
+                            </div>
+                        </div>
+                        <hr>
+                        @php
+                        $index++;
+                        @endphp
+
+
+                        @endforeach
+                    </div>
+
+
                 </div>
             </div>
             <button class="btn btn-primary">Save</button>

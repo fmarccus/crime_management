@@ -129,6 +129,23 @@ class IssueController extends Controller
             $issue->updated_at = now();
         }
         $issue->save();
+        $personData = $request->input('person_data');
+        foreach ($personData as $data) {
+            $person = Person::findOrFail($data['personId']);
+            $person->person_name = $data['person_name'];
+            $person->person_type = $data['person_type'];
+            $person->gender = $data['gender'];
+            $person->dob = $data['dob'];
+            $person->address = $data['address'];
+            $person->contact = $data['contact'];
+            $person->height = $data['height'];
+            $person->weight = $data['weight'];
+            $person->hair = $data['hair'];
+            $person->eye = $data['eye'];
+            $person->ethnicity = $data['ethnicity'];
+            $person->statement = $data['statement'];
+            $person->save();
+        }
         return back()->with('success', '');
     }
 
