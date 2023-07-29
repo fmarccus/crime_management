@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('severity');
             $table->string('status')->default('Open');
+            
             $table->timestamps();
         });
     }

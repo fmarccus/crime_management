@@ -31,7 +31,6 @@
                         <th>Gender</th>
                         <th>Full Name</th>
                         <th>Acc Type</th>
-                        <th>Rank</th>
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Last Updated</th>
@@ -68,8 +67,6 @@
                                 </span>
                                 @endif
                             </td>
-
-                            <td>{{$user->rank}}</td>
                             <td>{{$user->phone}}</td>
                             <td>{{$user->email}}</td>
                             <td>{{$user->updated_at->format('M d, Y h:i A')}}</td>

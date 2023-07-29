@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Issue;
+use App\Models\Person;
 use App\Models\Police;
 use App\Models\Complainant;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class IssueController extends Controller
     }
     public function store(Request $request)
     {
+
         $request->validate([
             'user_id' => 'nullable|exists:users,id',
             'complainant_id' => 'nullable|exists:users,id',
@@ -64,11 +66,29 @@ class IssueController extends Controller
         if ($request->user_id != NULL) {
             $issue->status = "Processing";
         }
-        // dd($issue);
         if ($request->status != "Completed") {
             $issue->updated_at = NULL;
         }
         $issue->save();
+
+        $personData = $request->input('person_data');
+        foreach ($personData as $data) {
+            $person = new Person();
+            $person->issue_id = $issue->id;
+            $person->person_name = $data['person_name'];
+            $person->person_type = $data['person_type'];
+            $person->gender = $data['gender'];
+            $person->dob = $data['dob'];
+            $person->address = $data['address'];
+            $person->contact = $data['contact'];
+            $person->height = $data['height'];
+            $person->weight = $data['weight'];
+            $person->hair = $data['hair'];
+            $person->eye = $data['eye'];
+            $person->ethnicity = $data['ethnicity'];
+            $person->statement = $data['statement'];
+            $person->save();
+        }
         return back()->with('success', '');
     }
     public function edit($id)

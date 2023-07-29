@@ -22,6 +22,10 @@ class Issue extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function persons()
+    {
+        return $this->hasMany(Person::class);
+    }
     public function getFullNameComplainant()
     {
         return $this->complainant->name . ' ' . $this->complainant->middlename . ' ' . $this->complainant->surname;

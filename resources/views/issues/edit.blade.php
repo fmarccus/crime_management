@@ -10,7 +10,7 @@
 </script>
 @endif
 <div class="row">
-    <h3 class="mb-3">Edit this Issue</h3>
+    <h3 class="mb-3">Edit this Incident</h3>
     <div class="col-sm-9">
         <form action="{{route('issues.update',$issue->id)}}" method="post">
             @csrf

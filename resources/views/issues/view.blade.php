@@ -121,7 +121,61 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
+    <div class="tab-pane fade" id="pills-suspects" role="tabpanel" aria-labelledby="pills-suspects-tab" tabindex="0">
+        <div class="row">
+            @foreach ($issue->persons as $person)
+            <div class="col-sm-6 mb-3">
+                <div class="card border-start @if($person->person_type == 'witness') border-primary  @else border-danger @endif">
+                    <div class="card-body">
+                        <img class="img-fluid mb-3" height=100 width=100 src="{{asset('images/'. $person->identification)}}" alt="" srcset="">
+
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+
+                                <p class="card-title">Status</p>
+                                @if($person->person_type == "witness")
+                                <span class="badge rounded-pill text-bg-primary">Witness</span>
+                                @else
+                                <span class="badge rounded-pill text-bg-danger">Suspect</span>
+                                @endif
+                                <p class="mt-3 card-title">Name</p>
+                                <p>{{$person->person_name}}</p>
+                                <p class="card-title">Gender</p>
+                                <p>{{$person->gender}}</p>
+                                <p class="card-title">Date of Birth</p>
+                                <p>{{$person->dob}}</p>
+                                <p class="card-title">Address</p>
+                                <p>{{$person->address}}</p>
+                                <p class="card-title">Contact</p>
+                                <p>{{$person->contact}}</p>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <p class="card-title">Height</p>
+                                <p>{{$person->height}}</p>
+                                <p class="card-title">Weight</p>
+                                <p>{{$person->weight}}</p>
+                                <p class="card-title">Hair Color</p>
+                                <p>{{$person->hair}}</p>
+                                <p class="card-title">Eye Color</p>
+                                <p>{{$person->eye}}</p>
+                                <p class="card-title">Ethnicity</p>
+                                <p>{{$person->ethnicity}}</p>
+                                <p class="card-title">Statement</p>
+                                <p>{{$person->statement}}</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            @endforeach
+
+        </div>
+
+
+    </div>
+
 </div>
 
 @endsection

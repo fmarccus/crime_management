@@ -21,7 +21,7 @@
         <div class="card-body">
             @if (auth()->user()->user_type==0)
             <div class="text-end">
-                <a href="{{route('issues.create')}}" class="btn btn-primary mb-3">Add A New Issue</a>
+                <a href="{{route('issues.create')}}" class="btn btn-primary mb-3">Add A New Incident Report</a>
             </div>
 
             @endif
@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                         @foreach ($issues as $issue)
-                        <tr>
+                        <tr class="@if($issue->status=='Open') tb-bg-open @elseif($issue->status=='Processing') tb-bg-processing @else  @endif">
                             <td>
                                 @if ($issue->user === null)
                                 <span class="fw-bold text-muted"> No Police Officer Assigned Yet!</span>

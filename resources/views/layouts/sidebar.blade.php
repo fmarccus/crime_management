@@ -1,3 +1,17 @@
+@php
+$all = App\Models\User::count();
+$officers = App\Models\User::where('user_type', 1)->count();
+$investigators = App\Models\User::where('user_type', 2)->count();
+$complainants = App\Models\User::where('user_type', 3)->count();
+$issues = App\Models\Issue::count();
+
+$user_type = auth()->user()->user_type;
+
+$issuesAssignedOfficer = App\Models\Issue::where('user_id', auth()->user()->id)->count();
+$issuesAssignedInvestigator = App\Models\Issue::where('investigator_id', auth()->user()->id)->count();
+$issuesAssignedComplainant = App\Models\Issue::where('complainant_id', auth()->user()->id)->count();
+
+@endphp
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="/home">
@@ -32,22 +46,22 @@
             </li>
             <li class="sidebar-item {{ (request()->is('users/index')) || (request()->is('users/edit/*')) ? 'active':'' }}">
                 <a class="sidebar-link" href="{{route('users.index')}}">
-                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">System Users</span>
+                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">System Users <span class="badge rounded-pill text-bg-primary">{{$all}}</span>
                 </a>
             </li>
             <li class="sidebar-item {{ (request()->is('users/police')) ? 'active':'' }}">
                 <a class="sidebar-link" href="{{route('police.index')}}">
-                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Police Officers</span>
+                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Police Officers <span class="badge rounded-pill text-bg-info">{{$officers}}</span> </span>
                 </a>
             </li>
             <li class="sidebar-item {{ (request()->is('users/investigators')) ? 'active':'' }}">
                 <a class="sidebar-link" href="{{route('investigators.index')}}">
-                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Investigators</span>
+                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Investigators <span class="badge rounded-pill text-bg-warning">{{$investigators}}</span></span>
                 </a>
             </li>
             <li class="sidebar-item {{ (request()->is('users/complainants')) ? 'active':'' }}">
                 <a class="sidebar-link" href="{{route('complainants.index')}}">
-                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Complainants</span>
+                    <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Complainants <span class="badge rounded-pill text-bg-danger">{{$complainants}}</span></span>
                 </a>
             </li>
             @endif
@@ -57,7 +71,17 @@
 
             <li class="sidebar-item {{ (request()->is('issues/*')) ? 'active':'' }}">
                 <a class="sidebar-link" href="{{route('issues.index')}}">
-                    <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">Issues/Complaints</span>
+                    <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">Incidents
+                        @if(Auth::user()->user_type == 0)
+                        <span class="badge rounded-pill text-bg-light">{{$issues}}</span>
+                        @elseif(Auth::user()->user_type == 1)
+                        <span class="badge rounded-pill text-bg-light">{{$issuesAssignedOfficer}}</span>
+                        @elseif(Auth::user()->user_type == 2)
+                        <span class="badge rounded-pill text-bg-light">{{$issuesAssignedInvestigator}}</span>
+                        @else
+                        <span class="badge rounded-pill text-bg-light">{{$issuesAssignedComplainant}}</span>
+                        @endif
+                    </span>
                 </a>
             </li>
         </ul>
