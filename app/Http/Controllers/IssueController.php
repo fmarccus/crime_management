@@ -72,6 +72,7 @@ class IssueController extends Controller
         $issue->save();
 
         $personData = $request->input('person_data');
+
         foreach ($personData as $data) {
             $person = new Person();
             $person->issue_id = $issue->id;
@@ -144,6 +145,11 @@ class IssueController extends Controller
             $person->eye = $data['eye'];
             $person->ethnicity = $data['ethnicity'];
             $person->statement = $data['statement'];
+            if ($request->has('identification')) {
+                $imageName = time() . $data['person_name'] . '' . '.' . $request->identification->extension();
+                $request->photo->move(public_path('people'), $imageName);
+                $person->identification = $imageName;
+            }
             $person->save();
         }
         return back()->with('success', '');

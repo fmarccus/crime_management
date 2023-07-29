@@ -182,7 +182,7 @@
                             <div class="col-sm-6 mb-3">
                                 <label for="" class="form-label">Gender</label>
                                 <select class="form-select" name="person_data[0][gender]">
-                                <option value="Male">Male</option>
+                                    <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
@@ -259,9 +259,13 @@
             newRow.html(`
             <div class="row"> 
                 <div class="col-sm-9 mb-3"> 
+                <label for="" class="form-label">Name</label>
+
                     <input type="text" class="form-control" name="person_data[${rowCount}][person_name]" />
                 </div>
                 <div class="col-sm-3 mb-3">
+                <label for="" class="form-label">Status</label>
+
                     <select class="form-select" name="person_data[${rowCount}][person_type]">
                         <option value="witness">Witness</option>
                         <option value="suspect">Suspect</option>
