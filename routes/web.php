@@ -55,8 +55,8 @@ Route::controller(AuthController::class)->prefix('users/')->group(function () {
 Route::controller(IssueController::class)->prefix('issues/')->group(function () {
     Route::get('index', 'index')->name('issues.index');
     Route::get('view/{id}', 'view')->name('issues.view');
-    Route::get('create', 'create')->name('issues.create')->middleware('admin');
-    Route::post('store', 'store')->name('issues.store')->middleware('admin');
+    Route::get('create', 'create')->name('issues.create');
+    Route::post('store', 'store')->name('issues.store');
     Route::get('edit/{id}', 'edit')->name('issues.edit')->middleware('admin');
     Route::post('update/{id}', 'update')->name('issues.update')->middleware('admin');
     Route::post('delete/{id}', 'delete')->name('issues.delete')->middleware('admin');

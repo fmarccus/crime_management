@@ -17,13 +17,14 @@
     <div class="col-sm-9">
         <form action="{{route('issues.store')}}" method="post" enctype="multipart/form-data">
             @csrf
+            @if (auth()->user()->user_type==3)
+            <a href="{{route('issues.index')}}" class="btn btn-secondary mb-3">Back</a>
+
+            @else
             <div class="card mb-3">
                 <div class="card-body">
                     <a href="{{route('issues.index')}}" class="btn btn-light mb-3">Back</a>
                     <p class="card-title">Dispatched Personnels</p>
-
-
-
                     <div class="mb-3">
                         <label for="user_id" class="form-label">Police Officer</label>
                         <input class="form-select @error('user_id') is-invalid @enderror" list="officers" name="user_id" id="user_id">
@@ -52,16 +53,16 @@
                         </div>
                         @enderror
                     </div>
-
-
-
                 </div>
             </div>
+            @endif
 
             <div class="card mb-3">
 
                 <div class="card-body">
                     <p class="card-title">Incident Report</p>
+                    @if (auth()->user()->user_type==0)
+
                     <div class="mb-3">
                         <label for="complainant" class="form-label">Complainant</label>
                         <input class="form-select @error('complainant_id') is-invalid @enderror" list="complainants" name="complainant_id" id="complainant_id">
@@ -76,9 +77,10 @@
                         </div>
                         @enderror
                     </div>
+                    @endif
                     <div class="mb-3">
                         <label for="issue" class="form-label">Issue</label>
-                        <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8"></textarea>
+                        <textarea name="issue" id="issue" rows="8"></textarea>
                         @error('issue')
                         <div>
                             <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
@@ -230,15 +232,7 @@
                         <hr>
                     </div>
 
-                    <!-- <div id="input-container">
-                        <div>
-                            <input type="text" class="form-control" name="person_data[0][person_name]" />
-                            <select name="person_data[0][person_type]">
-                                <option value="witness">Witness</option>
-                                <option value="suspect">Suspect</option>
-                            </select>
-                        </div>
-                    </div> -->
+
 
                 </div>
             </div>
@@ -324,6 +318,21 @@
 
             $("#input-container").append(newRow);
             rowCount++; // Increment the row count for the next row
+        });
+
+        tinymce.init({
+            selector: '#issue',
+            plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+            imagetools_cors_hosts: ['picsum.photos'],
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: '30s',
+            autosave_prefix: '{path}{query}-{id}-',
+            autosave_restore_when_empty: false,
+            autosave_retention: '2m',
+            image_advtab: true,            
         });
     });
 </script>

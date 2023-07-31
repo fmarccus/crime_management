@@ -52,6 +52,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/cr-1.7.0/sr-1.3.0/datatables.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdn.tiny.cloud/1/kogos4e3i28a6tb2dnuq31kw6wnycc1tc6pbredig4ew514h/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
     @yield('scripts')
 
 </body>

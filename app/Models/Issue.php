@@ -36,11 +36,18 @@ class Issue extends Model
     }
     public function getFullNameInvestigator()
     {
-        return $this->investigator->name . ' ' . $this->investigator->middlename . ' ' . $this->investigator->surname;
+        $name = $this->investigator->name ?? '';
+        $middlename = $this->investigator->middlename ?? '';
+        $surname = $this->investigator->surname ?? '';
+
+        return $name . ' ' . $middlename . ' ' . $surname;
     }
     public function getFullNameOfficer()
     {
-        return $this->user->name . ' ' . $this->user->surname;
+        $name = $this->user->name ?? '';
+        $middlename = $this->user->middlename ?? '';
+        $surname = $this->user->surname ?? '';
+        return $name . ' ' . $surname;
     }
     protected $casts = ['date' => 'datetime'];
 }

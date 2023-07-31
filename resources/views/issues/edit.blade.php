@@ -61,8 +61,12 @@
                             </div>
 
                             <div class="mb-3">
+                                @if ($issue->investigator === null)
+                                <label for="investigator_id" class="form-label">No Investigator Assigned For This Issue, <span class="text-danger fw-bold">Select Below</span></label>
 
+                                @else
                                 <label for="investigator_id" class="form-label">Investigator Assigned: <a href="{{route('users.edit', $issue->investigator->id)}}">({{$issue->getFullNameInvestigator()}})</a></label>
+                                @endif
                                 <input class="form-select @error('investigator_id') is-invalid @enderror" list="investigators" name="investigator_id" id="investigator_id" value="{{$issue->investigator_id}}">
                                 <datalist id="investigators">
                                     <option value="">Remove The Assigned Investigator</option>
@@ -100,7 +104,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="issue" class="form-label">Issue</label>
-                                <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8">{{$issue->issue}}</textarea>
+                                <textarea name="issue" id="issue" rows="8">{!!$issue->issue!!}</textarea>
                                 @error('issue')
                                 <div>
                                     <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
@@ -315,4 +319,22 @@
 
 
 </div>
+@endsection
+@section('scripts')
+<script>
+    tinymce.init({
+        selector: '#issue',
+        plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+        imagetools_cors_hosts: ['picsum.photos'],
+        menubar: 'file edit view insert format tools table help',
+        toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+        toolbar_sticky: true,
+        autosave_ask_before_unload: true,
+        autosave_interval: '30s',
+        autosave_prefix: '{path}{query}-{id}-',
+        autosave_restore_when_empty: false,
+        autosave_retention: '2m',
+        image_advtab: true,
+    });
+</script>
 @endsection

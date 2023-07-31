@@ -5,7 +5,7 @@
 <div class="row">
 
     <h3 class="mb-3">Dashboard</h3>
-    <div class="col-sm-9 mb-3">
+    <div class="@if(auth()->user()->user_type ==3) col-sm-9 @else col-sm-9  @endif mb-3">
         <div class="row">
             <div class="col-sm-6 mb-3">
                 <div class="card">
@@ -235,7 +235,7 @@
             </div>
         </div>
     </div>
-
+    @if(auth()->user()->user_type != 3)
     <div class="col-sm-3 mb-3">
 
         <div class="card mb-3">
@@ -322,7 +322,7 @@
             </div>
         </div>
     </div>
-
+    @endif
 
 
 

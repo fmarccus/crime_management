@@ -54,8 +54,7 @@
                 <p class="card-title">Incident Report</p>
 
                 <div class="mb-3">
-                    <label for="issue" class="form-label">Issue</label>
-                    <textarea class="form-control @error('issue') is-invalid @enderror" name="issue" id="issue" rows="8" disabled>{{$issue->issue}}</textarea>
+                    {!! $issue->issue !!}
                 </div>
                 <div class="mb-3">
                     <label for="date" class="form-label">Date of Incident</label>
@@ -104,20 +103,30 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h4 class="card-title">Police Officer</h4>
+                @if($issue->user === null)
+                <span class="fw-bold text-muted"> No Police Officer Assigned Yet</span>
+
+                @else
                 <p><span class="fw-bold">Name:</span> {{$issue->getFullNameOfficer()}}</p>
                 <p><span class="fw-bold">Gender:</span> {{$issue->user->gender}}</p>
                 <p><span class="fw-bold">Phone:</span> {{$issue->user->phone}}</p>
                 <p><span class="fw-bold">Email:</span> {{$issue->user->email}}</p>
+                @endif
             </div>
         </div>
 
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Investigator</h4>
+                @if($issue->user === null)
+                <span class="fw-bold text-muted"> No Investigator Assigned Yet</span>
+                @else
                 <p><span class="fw-bold">Name:</span> {{$issue->getFullNameInvestigator()}}</p>
                 <p><span class="fw-bold">Gender:</span> {{$issue->investigator->gender}}</p>
                 <p><span class="fw-bold">Phone:</span> {{$issue->investigator->phone}}</p>
                 <p><span class="fw-bold">Email:</span> {{$issue->investigator->email}}</p>
+                @endif
+
             </div>
         </div>
     </div>

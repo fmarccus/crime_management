@@ -19,11 +19,10 @@
     @endif
     <div class="card">
         <div class="card-body">
-            @if (auth()->user()->user_type==0)
+            @if (auth()->user()->user_type==0 || auth()->user()->user_type == 3)
             <div class="text-end">
                 <a href="{{route('issues.create')}}" class="btn btn-primary mb-3">Add A New Incident Report</a>
             </div>
-
             @endif
             <div class="table-responsive">
 
@@ -32,11 +31,11 @@
                         <th>Assigned P.O.</th>
                         <th>Investigator</th>
                         <th>Complainant</th>
-                        <th>Incident</th>
+                        <th>Type</th>
+
                         <th>Incident Date</th>
                         <th>Date Created</th>
                         <th>Area</th>
-                        <th>Type</th>
                         <th>Severity</th>
                         <th>Status</th>
                         <th>Complete Date</th>
@@ -47,22 +46,27 @@
                         <tr class="@if($issue->status=='Open') tb-bg-open @elseif($issue->status=='Processing') tb-bg-processing @else  @endif">
                             <td>
                                 @if ($issue->user === null)
-                                <span class="fw-bold text-muted"> No Police Officer Assigned Yet!</span>
+                                <span class="fw-bold text-muted"> No Police Officer Assigned Yet</span>
                                 @else
                                 {{$issue->getFullNameOfficer()}}
                                 @endif
                             </td>
-                            <td>{{$issue->getFullNameInvestigator()}}</td>
+                            <td>
+                                @if ($issue->investigator === null)
+                                <span class="fw-bold text-muted"> No Investigator Assigned Yet</span>
+                                @else
+                                {{$issue->getFullNameInvestigator()}}
+                                @endif
+                            </td>
 
                             <td>{{$issue->getFullNameComplainant()}}</td>
+                            <td>{{$issue->type}}</td>
 
-                            <td>{{substr($issue->issue, 0, 50)}}...</td>
                             <td>{{$issue->date->format('M d, Y H:i:s A')}}</td>
 
                             <td>{{$issue->created_at->format('M d, Y H:i:s A')}}</td>
 
                             <td>{{$issue->area}}</td>
-                            <td>{{$issue->type}}</td>
                             <td>
                                 @if($issue->severity=='Normal')
                                 <span class="badge rounded-pill text-bg-primary">
