@@ -26,6 +26,10 @@ class Issue extends Model
     {
         return $this->hasMany(Person::class);
     }
+    public function progresses()
+    {
+        return $this->hasMany(Progress::class);
+    }
     public function getFullNameComplainant()
     {
         return $this->complainant->name . ' ' . $this->complainant->middlename . ' ' . $this->complainant->surname;

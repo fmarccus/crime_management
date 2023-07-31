@@ -7,6 +7,7 @@ use App\Models\Issue;
 use App\Models\Person;
 use App\Models\Police;
 use App\Models\Complainant;
+use App\Models\Progress;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller
@@ -27,7 +28,8 @@ class IssueController extends Controller
     public function view($id)
     {
         $issue = Issue::findOrFail($id);
-        return view('issues.view', compact('issue'));
+        $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
+        return view('issues.view', compact('issue', 'progresses'));
     }
     public function create()
     {
@@ -99,8 +101,8 @@ class IssueController extends Controller
         $complainants = User::where('user_type', 3)->get();
 
         $investigators = User::where('user_type', 2)->get();
-
-        return view('issues.edit', compact('issue', 'officers', 'complainants', 'investigators'));
+        $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
+        return view('issues.edit', compact('issue', 'officers', 'complainants', 'investigators', 'progresses'));
     }
     public function update(Request $request, $id)
     {
@@ -160,5 +162,19 @@ class IssueController extends Controller
         $issue = Issue::findOrFail($id);
         $issue->delete();
         return back()->with('deleted', '');
+    }
+    public function storeProgress(Request $request, $id)
+    {
+        $request->validate([
+            'issue_id' => 'nullable|exists:issues,id',
+            'subject' => 'required|max:255',
+            'note' => 'required|max:15000',
+        ]);
+        $progress = new Progress();
+        $progress->issue_id = $id;
+        $progress->subject = $request->subject;
+        $progress->note = $request->note;
+        $progress->save();
+        return back()->with('progress', '');
     }
 }

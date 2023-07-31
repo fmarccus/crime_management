@@ -27,10 +27,10 @@
         <button class="nav-link" id="pills-evidences-tab" data-bs-toggle="pill" data-bs-target="#pills-evidences" type="button" role="tab" aria-controls="pills-evidences" aria-selected="false">Evidences</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-progress-tab" data-bs-toggle="pill" data-bs-target="#pills-progress" type="button" role="tab" aria-controls="pills-progress" aria-selected="false">Progress Tracking</button>
+        <button class="nav-link" id="pills-progress-tab" data-bs-toggle="pill" data-bs-target="#pills-progress" type="button" role="tab" aria-controls="pills-progress" aria-selected="false">Progress Tracking <span class="badge rounded-pill text-bg-warning">{{$progresses->count()}}</span></button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-suspects-tab" data-bs-toggle="pill" data-bs-target="#pills-suspects" type="button" role="tab" aria-controls="pills-suspects" aria-selected="false">Suspects & Witnesses</button>
+        <button class="nav-link" id="pills-suspects-tab" data-bs-toggle="pill" data-bs-target="#pills-suspects" type="button" role="tab" aria-controls="pills-suspects" aria-selected="false"> Suspects & Witnesses <span class="badge rounded-pill text-bg-danger">{{$issue->persons->count()}}</span></button>
     </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
@@ -127,8 +127,12 @@
             <div class="col-sm-6 mb-3">
                 <div class="card border-start @if($person->person_type == 'witness') border-primary  @else border-danger @endif">
                     <div class="card-body">
+                        @if($person->identification == NULL)
+                        <img class="img-fluid mb-3" height=100 width=100 src="{{asset('images/user.png')}}" alt="" srcset="">
+                        @else
                         <img class="img-fluid mb-3" height=100 width=100 src="{{asset('images/'. $person->identification)}}" alt="" srcset="">
 
+                        @endif
                         <div class="row">
                             <div class="col-sm-6 mb-3">
 
@@ -174,6 +178,21 @@
         </div>
 
 
+    </div>
+    <div class="tab-pane fade" id="pills-progress" role="tabpanel" aria-labelledby="pills-progress-tab" tabindex="0">
+
+        <h3 class="mb-3">Progress Logs</h3>
+
+        @foreach ($progresses as $progress)
+        <div class="col-sm-9 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{$progress->subject}} <span class="float-end">{{$progress->created_at->format('M d, Y H:i:s A')}}</span></h4>
+                    <p class="card-text">{{$progress->note}}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 
 </div>
