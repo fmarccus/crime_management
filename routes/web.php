@@ -57,6 +57,8 @@ Route::controller(IssueController::class)->prefix('issues/')->group(function () 
     Route::get('view/{id}', 'view')->name('issues.view');
     Route::get('create', 'create')->name('issues.create');
     Route::post('store', 'store')->name('issues.store');
+    Route::post('storeEvidence/{id}', 'storeEvidence')->name('store.evidence');
+
     Route::get('edit/{id}', 'edit')->name('issues.edit')->middleware('admin');
     Route::post('update/{id}', 'update')->name('issues.update')->middleware('admin');
     Route::post('delete/{id}', 'delete')->name('issues.delete')->middleware('admin');

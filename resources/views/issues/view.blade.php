@@ -211,17 +211,36 @@
         @endphp
         @endforeach
         <div class="row">
+            <div class="col-sm-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{route('store.evidence', $issue->id)}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <label for="" class="form-label">Attach Your Evidences Here</label>
+                            <input type="file" class="form-control" name="imageFile[]" id="images" aria-describedby="helpId" multiple>
+                            <div class="evidence-image mb-3 text-center">
+                                <div class="imgPreview"> </div>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit"> Add Evidence</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             @if(!empty($images))
             @foreach ($images as $image)
 
-            <div class="col-sm-6 mb-3">
+            <div class="col-sm-4 mb-3">
                 <img data-enlargable class="img-fluid" src="{{asset('evidences/'.$image)}}">
-
             </div>
             @endforeach
+
             @endif
         </div>
     </div>
+</div>
 
 
 </div>
@@ -229,6 +248,21 @@
 @endsection
 @section('scripts')
 <script>
+    var multiImgPreview = function(input, imgPreviewPlaceholder) {
+        if (input.files) {
+            var filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    $($.parseHTML('<img class="img-fluid me-2 mb-2 mt-2" height="480" width="360">')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                }
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    };
+    $('#images').on('change', function() {
+        multiImgPreview(this, 'div.imgPreview');
+    });
     $('img[data-enlargable]').addClass('img-enlargable').click(function() {
         var src = $(this).attr('src');
         $('<div>').css({

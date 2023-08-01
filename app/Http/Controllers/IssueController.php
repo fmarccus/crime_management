@@ -32,7 +32,7 @@ class IssueController extends Controller
         $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
         $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->get();
 
-        return view('issues.view', compact('issue', 'progresses','evidences'));
+        return view('issues.view', compact('issue', 'progresses', 'evidences'));
     }
     public function create()
     {
@@ -42,6 +42,25 @@ class IssueController extends Controller
             $investigators = User::where('user_type', 2)->get();
             return view('issues.create', compact('officers', 'investigators', 'complainants'));
         } else {
+            return redirect()->back();
+        }
+    }
+    public function storeEvidence(Request $request, $id)
+    {
+        $request->validate([
+            'imageFile.*' => 'mimes:jpeg,jpg,png,gif|max:10000'
+
+        ]);
+        if ($request->hasfile('imageFile')) {
+            foreach ($request->file('imageFile') as $file) {
+                $name = md5(rand(1000, 10000)) . '_' . $file->getClientOriginalName();
+                $file->move(public_path('evidences'), $name);
+                $imgData[] = $name;
+            }
+            $evidence = new Evidence();
+            $evidence->issue_id = $id;
+            $evidence->image = json_encode($imgData);
+            $evidence->save();
             return redirect()->back();
         }
     }
