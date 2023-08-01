@@ -13,14 +13,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-material-ui@5.0.15/material-ui.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- @vite(['resources/js/app.js']) -->
-    <link href="https://cdn.datatables.net/v/ju/dt-1.13.4/datatables.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/cr-1.7.0/sr-1.3.0/datatables.min.css" rel="stylesheet">
-
+    <script src="{{asset('scripts/sweetalert2@11.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
 
 </head>
@@ -47,12 +41,21 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/cr-1.7.0/sr-1.3.0/datatables.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://cdn.tiny.cloud/1/kogos4e3i28a6tb2dnuq31kw6wnycc1tc6pbredig4ew514h/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="{{asset('scripts/adminkit.js')}}"></script>
+    <script src="{{asset('scripts/pdfmake.min.js')}}"></script>
+    <script src="{{asset('scripts/vfs_fonts.min.js')}}"></script>
+    <script src="{{asset('scripts/datatables.min.js')}}"></script>
+    <script src="{{asset('scripts/highcharts.js')}}"></script>
+    <script src="{{asset('scripts/tinymce.min.js')}}"></script>
+
+
+
+
+
+
+
+
+    
 
     @yield('scripts')
 

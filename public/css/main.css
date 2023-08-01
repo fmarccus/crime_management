@@ -1,3 +1,10 @@
+@import url('adminkit.css');
+@import url('material-ui.min.css');
+@import url('datatables.min.css');
+@import url('datatables-libraries.min.css');
+
+
+
 @import url('datatables.css');
 @import url('forms.css');
 @import url('tables.css');
