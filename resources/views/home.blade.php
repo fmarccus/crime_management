@@ -652,7 +652,7 @@ $policeRanksCount = DB::table('users')->selectRaw('rank, COUNT(*) as count')->gr
             },
         },
         series: [{
-            name: "Crimes",
+            name: "Crimes in that barangay",
             data: <?php echo json_encode($barangayFrequency); ?>,
         }],
         colors: [
@@ -691,7 +691,7 @@ $policeRanksCount = DB::table('users')->selectRaw('rank, COUNT(*) as count')->gr
         },
         yAxis: {
             title: {
-                text: 'Number of Crimes', // Rename the y-axis label here
+                text: 'Number of Police Officers and Investigators', // Rename the y-axis label here
             },
         },
         tooltip: {
@@ -714,7 +714,7 @@ $policeRanksCount = DB::table('users')->selectRaw('rank, COUNT(*) as count')->gr
             },
         },
         series: [{
-            name: "Crimes",
+            name: "Officer/Investigator Ranks",
             data: <?php echo json_encode($policeRanksCount); ?>,
         }],
         colors: [
