@@ -30,8 +30,22 @@ class IssueController extends Controller
     {
         $issue = Issue::where('complainant_id', auth()->user()->id)->findOrFail($id);
         $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
-        $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->get();
+        $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->pluck('image');
 
+
+        $itemsArray = $evidences->map(function ($item) {
+            return json_decode($item, true) ?? [];
+        })->toArray();
+
+        $evidences = [];
+
+        foreach ($itemsArray as $innerArray) {
+            foreach ($innerArray as $file) {
+                if (strpos($file, ".png") !== false) {
+                    $evidences[] = $file;
+                }
+            }
+        }
         return view('issues.view', compact('issue', 'progresses', 'evidences'));
     }
     public function create()
@@ -150,10 +164,26 @@ class IssueController extends Controller
         $issue = Issue::findOrFail($id);
         $officers = User::where('user_type', 1)->get();
         $complainants = User::where('user_type', 3)->get();
-
         $investigators = User::where('user_type', 2)->get();
         $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
-        $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->get();
+        $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->pluck('image');
+        // Assuming $items is the array retrieved from the database, which contains Laravel Collections
+        $itemsArray = $evidences->map(function ($item) {
+            return json_decode($item, true) ?? [];
+        })->toArray();
+
+        $evidences = [];
+
+        foreach ($itemsArray as $innerArray) {
+            foreach ($innerArray as $file) {
+                if (strpos($file, ".png") !== false) {
+                    $evidences[] = $file;
+                }
+            }
+        }
+
+        // Now $pngFiles contains all the PNG files from the Laravel array.
+
         return view('issues.edit', compact('issue', 'officers', 'complainants', 'investigators', 'progresses', 'evidences'));
     }
     public function update(Request $request, $id)

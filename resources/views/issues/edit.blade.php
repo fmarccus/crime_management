@@ -336,17 +336,15 @@
                     </div>
                 </div>
             </div>
-            @foreach ($evidences as $evidence)
-            @php
-            $images = json_decode($evidence->image);
-            @endphp
-            @endforeach
+
+
+
             <div class="row">
-                @if(!empty($images))
-                @foreach ($images as $image)
+                @if(!empty($evidences))
+                @foreach ($evidences as $evidence)
 
                 <div class="col-sm-4 mb-3">
-                    <img data-enlargable class="img-fluid" src="{{asset('evidences/'.$image)}}">
+                    <img data-enlargable class="img-fluid" src="{{asset('evidences/'.$evidence)}}">
 
                 </div>
                 @endforeach

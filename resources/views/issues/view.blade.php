@@ -205,11 +205,7 @@
     </div>
 
     <div class="tab-pane fade" id="pills-evidences" role="tabpanel" aria-labelledby="pills-evidences-tab" tabindex="0">
-        @foreach ($evidences as $evidence)
-        @php
-        $images = json_decode($evidence->image);
-        @endphp
-        @endforeach
+        
         <div class="row">
             <div class="col-sm-6 mb-3">
                 <div class="card">
@@ -228,15 +224,16 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            @if(!empty($images))
-            @foreach ($images as $image)
+            @if(!empty($evidences))
+            @foreach ($evidences as $evidence)
 
             <div class="col-sm-4 mb-3">
-                <img data-enlargable class="img-fluid" src="{{asset('evidences/'.$image)}}">
+                <img data-enlargable class="img-fluid" src="{{asset('evidences/'.$evidence)}}">
+
             </div>
             @endforeach
-
             @endif
         </div>
     </div>
