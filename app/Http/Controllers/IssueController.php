@@ -7,6 +7,7 @@ use App\Models\Issue;
 use App\Models\Person;
 use App\Models\Police;
 use App\Models\Complainant;
+use App\Models\Evidence;
 use App\Models\Progress;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,9 @@ class IssueController extends Controller
     {
         $issue = Issue::where('complainant_id', auth()->user()->id)->findOrFail($id);
         $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
-        return view('issues.view', compact('issue', 'progresses'));
+        $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->get();
+
+        return view('issues.view', compact('issue', 'progresses','evidences'));
     }
     public function create()
     {
@@ -53,7 +56,8 @@ class IssueController extends Controller
                 'date' => 'required',
                 'area' => 'required|in:Aguho,Magtanggol,Martires del 96,Poblacion,San Pedro,San Roque,Santa Ana,Santo Rosario Kanluran,Santo Rosario Silangan,Tabacalera',
                 'type' => 'required',
-                'severity' => 'required|in:Normal,Severe,Critical'
+                'severity' => 'required|in:Normal,Severe,Critical',
+                'imageFile.*' => 'mimes:jpeg,jpg,png,gif|max:10000'
             ]);
             $issue = new Issue();
             $issue->user_id = $request->user_id;
@@ -79,7 +83,24 @@ class IssueController extends Controller
                 $issue->status = "Open";
                 $issue->complainant_id = auth()->user()->id;
             }
+
+
+
+
             $issue->save();
+
+            if ($request->hasfile('imageFile')) {
+                foreach ($request->file('imageFile') as $file) {
+                    $name = md5(rand(1000, 10000)) . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('evidences'), $name);
+                    $imgData[] = $name;
+                }
+                $evidence = new Evidence();
+                $evidence->issue_id = $issue->id;
+                $evidence->image = json_encode($imgData);
+                // dd($evidence);
+                $evidence->save();
+            }
 
             $personData = $request->input('person_data');
 
@@ -113,7 +134,8 @@ class IssueController extends Controller
 
         $investigators = User::where('user_type', 2)->get();
         $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
-        return view('issues.edit', compact('issue', 'officers', 'complainants', 'investigators', 'progresses'));
+        $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->get();
+        return view('issues.edit', compact('issue', 'officers', 'complainants', 'investigators', 'progresses', 'evidences'));
     }
     public function update(Request $request, $id)
     {

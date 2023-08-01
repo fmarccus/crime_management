@@ -152,7 +152,10 @@
                     <h4 class="card-title">Evidences</h4>
                     <div class="mb-3">
                         <label for="" class="form-label">Attach Images</label>
-                        <input type="file" class="form-control" name="" id="" aria-describedby="helpId" multiple>
+                        <input type="file" class="form-control" name="imageFile[]" id="images" aria-describedby="helpId" multiple>
+                        <div class="evidence-image mb-3 text-center">
+                            <div class="imgPreview"> </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Attach Video Recordings</label>
@@ -332,7 +335,23 @@
             autosave_prefix: '{path}{query}-{id}-',
             autosave_restore_when_empty: false,
             autosave_retention: '2m',
-            image_advtab: true,            
+            image_advtab: true,
+        });
+
+        var multiImgPreview = function(input, imgPreviewPlaceholder) {
+            if (input.files) {
+                var filesAmount = input.files.length;
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        $($.parseHTML('<img class="img-fluid me-2 mb-2 mt-2" height="480" width="360">')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+        };
+        $('#images').on('change', function() {
+            multiImgPreview(this, 'div.imgPreview');
         });
     });
 </script>

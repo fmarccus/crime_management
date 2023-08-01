@@ -4,7 +4,7 @@
 
 <div class="row">
 
-    <h3 class="mb-3">Dashboard</h3>
+    <h3 class="mb-3">User Data</h3>
     <div class="@if(auth()->user()->user_type ==3) col-sm-9 @else col-sm-9  @endif mb-3">
         <div class="row">
             <div class="col-sm-6 mb-3">
@@ -52,6 +52,8 @@
                 </div>
             </div>
 
+
+
             <div class="col-sm-6 mb-3">
                 <div class="card">
                     <div class="card-body">
@@ -93,6 +95,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="officerRanks">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="mb-3">Incident Reports Summary</h3>
 
             <div class="col-sm-6 mb-3">
                 <div class="card">
@@ -204,6 +217,9 @@
                     </div>
                 </div>
             </div>
+
+            <h3 class="mb-3"> Incident Reports Frequency</h3>
+
             <div class="col-sm-12 mb-3">
                 <div class="card">
                     <div class="card-body">
@@ -233,6 +249,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     @if(auth()->user()->user_type != 3)
@@ -337,7 +354,8 @@ $count = DB::table('issues')->selectRaw('status, COUNT(*) as count')->groupBy('s
 $barangayFrequency = DB::table('issues')->selectRaw('area, COUNT(*) as count')->groupBy('area')->get()->pluck('count')->toArray();
 $barangayNames = DB::table('issues')->selectRaw('area, COUNT(*) as count')->groupBy('area')->get()->pluck('area')->toArray();
 $issueSeverity = DB::table('issues')->selectRaw('severity, COUNT(*) as count')->groupBy('severity')->get()->pluck('count')->toArray();
-
+$policeRanks = DB::table('users')->distinct()->pluck('rank')->toArray();
+$policeRanksCount = DB::table('users')->selectRaw('rank, COUNT(*) as count')->groupBy('rank')->get()->pluck('count')->toArray();
 
 @endphp
 @section('scripts')
@@ -636,6 +654,68 @@ $issueSeverity = DB::table('issues')->selectRaw('severity, COUNT(*) as count')->
         series: [{
             name: "Crimes",
             data: <?php echo json_encode($barangayFrequency); ?>,
+        }],
+        colors: [
+            "#3d85c6",
+            "#3677b2",
+            "#306a9e",
+            "#2a5d8a",
+            "#244f76",
+            "#1e4263",
+            "#18354f",
+            "#12273b",
+            "#0c1a27",
+            "#060d13",
+            "#000000",
+        ],
+        credits: {
+            enabled: false,
+        },
+        legend: {
+            enabled: true, // Show the legend
+        },
+    });
+</script>
+<script>
+    Highcharts.chart("officerRanks", {
+        chart: {
+            type: "bar",
+        },
+        title: {
+            text: "Officer & Investigator Ranks",
+        },
+        subtitle: {},
+        xAxis: {
+            categories: <?php echo json_encode($policeRanks); ?>,
+            crosshair: true,
+        },
+        yAxis: {
+            title: {
+                text: 'Number of Crimes', // Rename the y-axis label here
+            },
+        },
+        tooltip: {
+            formatter: function() {
+                return (
+                    this.point.category +
+                    "</b><br/>" +
+                    "Police ranks: " +
+                    this.point.y
+                );
+            },
+        },
+        plotOptions: {
+            column: {
+                pointWidth: 100,
+                borderRadius: 1,
+                borderWidth: 3,
+                borderColor: "#deebf7",
+                colorByPoint: true,
+            },
+        },
+        series: [{
+            name: "Crimes",
+            data: <?php echo json_encode($policeRanksCount); ?>,
         }],
         colors: [
             "#3d85c6",

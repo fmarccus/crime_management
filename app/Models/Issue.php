@@ -22,6 +22,10 @@ class Issue extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function evidence()
+    {
+        return $this->hasMany(Evidence::class);
+    }
     public function persons()
     {
         return $this->hasMany(Person::class);

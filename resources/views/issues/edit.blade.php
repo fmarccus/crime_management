@@ -28,6 +28,9 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Progress Tracking <span class="badge rounded-pill text-bg-warning">{{$progresses->count()}}</span></button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-evidences-tab" data-bs-toggle="pill" data-bs-target="#pills-evidences" type="button" role="tab" aria-controls="pills-evidences" aria-selected="false">Evidences</button>
+        </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
@@ -314,6 +317,27 @@
 
 
         </div>
+        <div class="tab-pane fade" id="pills-evidences" role="tabpanel" aria-labelledby="pills-evidences-tab" tabindex="0">
+
+            @foreach ($evidences as $evidence)
+            @php
+            $images = json_decode($evidence->image);
+            @endphp
+            @endforeach
+            <div class="row">
+                @if(!empty($images))
+                @foreach ($images as $image)
+
+                <div class="col-sm-6 mb-3">
+                    <img data-enlargable class="img-fluid" src="{{asset('evidences/'.$image)}}">
+
+                </div>
+                @endforeach
+                @endif
+            </div>
+
+
+        </div>
 
     </div>
 
@@ -335,6 +359,22 @@
         autosave_restore_when_empty: false,
         autosave_retention: '2m',
         image_advtab: true,
+    });
+    $('img[data-enlargable]').addClass('img-enlargable').click(function() {
+        var src = $(this).attr('src');
+        $('<div>').css({
+            background: 'RGBA(0,0,0,.5) url(' + src + ') no-repeat center',
+            backgroundSize: 'contain',
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            zIndex: '10000',
+            top: '0',
+            left: '0',
+            cursor: 'zoom-out'
+        }).click(function() {
+            $(this).remove();
+        }).appendTo('body');
     });
 </script>
 @endsection

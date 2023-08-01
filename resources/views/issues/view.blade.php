@@ -204,6 +204,46 @@
         @endforeach
     </div>
 
+    <div class="tab-pane fade" id="pills-evidences" role="tabpanel" aria-labelledby="pills-evidences-tab" tabindex="0">
+        @foreach ($evidences as $evidence)
+        @php
+        $images = json_decode($evidence->image);
+        @endphp
+        @endforeach
+        <div class="row">
+            @if(!empty($images))
+            @foreach ($images as $image)
+
+            <div class="col-sm-6 mb-3">
+                <img data-enlargable class="img-fluid" src="{{asset('evidences/'.$image)}}">
+
+            </div>
+            @endforeach
+            @endif
+        </div>
+    </div>
+
+
 </div>
 
+@endsection
+@section('scripts')
+<script>
+    $('img[data-enlargable]').addClass('img-enlargable').click(function() {
+        var src = $(this).attr('src');
+        $('<div>').css({
+            background: 'RGBA(0,0,0,.5) url(' + src + ') no-repeat center',
+            backgroundSize: 'contain',
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            zIndex: '10000',
+            top: '0',
+            left: '0',
+            cursor: 'zoom-out'
+        }).click(function() {
+            $(this).remove();
+        }).appendTo('body');
+    });
+</script>
 @endsection
