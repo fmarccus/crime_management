@@ -16,13 +16,13 @@ class IssueController extends Controller
     public function index()
     {
         if (auth()->user()->user_type == 1) {
-            $issues = Issue::where('user_id', auth()->user()->id)->get();
+            $issues = Issue::with(['investigator', 'complainant', 'user'])->where('user_id', auth()->user()->id)->get();
         } elseif (auth()->user()->user_type == 2) {
-            $issues = Issue::where('investigator_id', auth()->user()->id)->get();
+            $issues = Issue::with(['investigator', 'complainant', 'user'])->where('investigator_id', auth()->user()->id)->get();
         } elseif (auth()->user()->user_type == 3) {
-            $issues = Issue::where('complainant_id', auth()->user()->id)->get();
+            $issues = Issue::with(['investigator', 'complainant', 'user'])->where('complainant_id', auth()->user()->id)->get();
         } else {
-            $issues = Issue::all();
+            $issues = Issue::with(['investigator', 'complainant', 'user'])->get();
         }
         return view('issues.index', compact('issues'));
     }
