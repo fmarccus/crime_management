@@ -355,387 +355,386 @@ $barangayFrequency = DB::table('issues')->selectRaw('area, COUNT(*) as count')->
 $barangayNames = DB::table('issues')->selectRaw('area, COUNT(*) as count')->groupBy('area')->get()->pluck('area')->toArray();
 $issueSeverity = DB::table('issues')->selectRaw('severity, COUNT(*) as count')->groupBy('severity')->get()->pluck('count')->toArray();
 $policeRanks = DB::table('users')->distinct()->pluck('rank')->toArray();
-$policeRanksCount = DB::table('users')->selectRaw('rank, COUNT(*) as count')->groupBy('rank')->get()->pluck('count')->toArray();
-
-@endphp
-@section('scripts')
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script>
-    Highcharts.chart("crime_per_month", {
-        chart: {
-            type: "column",
-        },
-        title: {
-            text: "Number of Crimes Recorded Per Month",
-        },
-        subtitle: {},
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            crosshair: true,
-        },
-        yAxis: {
+$policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw('rank, COUNT(*) as count')->groupBy('rank')->get()->pluck('count')->toArray();
+    @endphp
+    @section('scripts')
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script>
+        Highcharts.chart("crime_per_month", {
+            chart: {
+                type: "column",
+            },
             title: {
-                text: 'Number of Crimes', // Rename the y-axis label here
+                text: "Number of Crimes Recorded Per Month",
             },
-        },
-        tooltip: {
-            formatter: function() {
-                return (
-                    this.point.category +
-                    "</b><br/>" +
-                    "Total number of crimes recorded: " +
-                    this.point.y
-                );
+            subtitle: {},
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                crosshair: true,
             },
+            yAxis: {
+                title: {
+                    text: 'Number of Crimes', // Rename the y-axis label here
+                },
+            },
+            tooltip: {
+                formatter: function() {
+                    return (
+                        this.point.category +
+                        "</b><br/>" +
+                        "Total number of crimes recorded: " +
+                        this.point.y
+                    );
+                },
 
-        },
-        plotOptions: {
-            column: {
-                pointWidth: 100,
-                borderRadius: 1,
-                borderWidth: 3,
-                borderColor: "#deebf7",
-                colorByPoint: true,
             },
-        },
-        series: [{
-            name: "Months",
-            data: <?php echo json_encode($recordCountsPerMonth); ?>
-        }, ],
-        colors: [
-            "#3d85c6",
-            "#3677b2",
-            "#306a9e",
-            "#2a5d8a",
-            "#244f76",
-            "#1e4263",
-            "#18354f",
-            "#12273b",
-            "#0c1a27",
-            "#060d13",
-            "#000000",
-        ],
-        credits: {
-            enabled: false,
-        },
-    });
-</script>
-<script>
-    Highcharts.chart("crime_frequency", {
-        chart: {
-            type: "bar",
-        },
-        title: {
-            text: "Number of Recorded Crimes",
-        },
-        subtitle: {},
-        xAxis: {
-            categories: <?php echo json_encode($crimeNames); ?>,
-            crosshair: true,
-        },
-        yAxis: {
+            plotOptions: {
+                column: {
+                    pointWidth: 100,
+                    borderRadius: 1,
+                    borderWidth: 3,
+                    borderColor: "#deebf7",
+                    colorByPoint: true,
+                },
+            },
+            series: [{
+                name: "Months",
+                data: <?php echo json_encode($recordCountsPerMonth); ?>
+            }, ],
+            colors: [
+                "#3d85c6",
+                "#3677b2",
+                "#306a9e",
+                "#2a5d8a",
+                "#244f76",
+                "#1e4263",
+                "#18354f",
+                "#12273b",
+                "#0c1a27",
+                "#060d13",
+                "#000000",
+            ],
+            credits: {
+                enabled: false,
+            },
+        });
+    </script>
+    <script>
+        Highcharts.chart("crime_frequency", {
+            chart: {
+                type: "bar",
+            },
             title: {
-                text: 'Number of Crimes', // Rename the y-axis label here
+                text: "Number of Recorded Crimes",
             },
-        },
-        tooltip: {
-            formatter: function() {
-                return (
-                    this.point.category +
-                    "</b><br/>" +
-                    "Total number of crimes recorded: " +
-                    this.point.y
-                );
+            subtitle: {},
+            xAxis: {
+                categories: <?php echo json_encode($crimeNames); ?>,
+                crosshair: true,
             },
-        },
-        plotOptions: {
-            column: {
-                pointWidth: 100,
-                borderRadius: 1,
-                borderWidth: 3,
-                borderColor: "#deebf7",
-                colorByPoint: true,
+            yAxis: {
+                title: {
+                    text: 'Number of Crimes', // Rename the y-axis label here
+                },
             },
-        },
-        series: [{
-            name: "Crimes",
-            data: <?php echo json_encode($crimeFrequency); ?>,
-        }],
-        colors: [
-            "#3d85c6",
-            "#3677b2",
-            "#306a9e",
-            "#2a5d8a",
-            "#244f76",
-            "#1e4263",
-            "#18354f",
-            "#12273b",
-            "#0c1a27",
-            "#060d13",
-            "#000000",
-        ],
-        credits: {
-            enabled: false,
-        },
-        legend: {
-            enabled: true, // Show the legend
-        },
-    });
-</script>
-<script>
-    const colors = Highcharts.getOptions().colors.map((c, i) =>
-        // Start out with a darkened base color (negative brighten), and end
-        // up with a much brighter color
-        Highcharts.color(Highcharts.getOptions().colors[0])
-        .brighten((i - 3) / 7)
-        .get()
-    );
-    Highcharts.chart('issueStatusPie', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: 'Incident Reports Completion Status',
-            align: 'center'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
-            }
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                colors,
-                borderRadius: 5,
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
-                    distance: -50,
-                    filter: {
-                        property: 'percentage',
-                        operator: '>',
-                        value: 4
+            tooltip: {
+                formatter: function() {
+                    return (
+                        this.point.category +
+                        "</b><br/>" +
+                        "Total number of crimes recorded: " +
+                        this.point.y
+                    );
+                },
+            },
+            plotOptions: {
+                column: {
+                    pointWidth: 100,
+                    borderRadius: 1,
+                    borderWidth: 3,
+                    borderColor: "#deebf7",
+                    colorByPoint: true,
+                },
+            },
+            series: [{
+                name: "Crimes",
+                data: <?php echo json_encode($crimeFrequency); ?>,
+            }],
+            colors: [
+                "#3d85c6",
+                "#3677b2",
+                "#306a9e",
+                "#2a5d8a",
+                "#244f76",
+                "#1e4263",
+                "#18354f",
+                "#12273b",
+                "#0c1a27",
+                "#060d13",
+                "#000000",
+            ],
+            credits: {
+                enabled: false,
+            },
+            legend: {
+                enabled: true, // Show the legend
+            },
+        });
+    </script>
+    <script>
+        const colors = Highcharts.getOptions().colors.map((c, i) =>
+            // Start out with a darkened base color (negative brighten), and end
+            // up with a much brighter color
+            Highcharts.color(Highcharts.getOptions().colors[0])
+            .brighten((i - 3) / 7)
+            .get()
+        );
+        Highcharts.chart('issueStatusPie', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Incident Reports Completion Status',
+                align: 'center'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    colors,
+                    borderRadius: 5,
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
+                        distance: -50,
+                        filter: {
+                            property: 'percentage',
+                            operator: '>',
+                            value: 4
+                        }
                     }
                 }
-            }
-        },
-        series: [{
-            name: 'Share',
-            data: [{
-                    name: 'Open',
-                    y: <?php echo json_encode($count[1]); ?>
-                },
-                {
-                    name: 'Processing',
-                    y: <?php echo json_encode($count[2]); ?>
-                },
-                {
-                    name: 'Completed',
-                    y: <?php echo json_encode($count[0]); ?>
+            },
+            series: [{
+                name: 'Share',
+                data: [{
+                        name: 'Open',
+                        y: <?php echo json_encode($count[1]); ?>
+                    },
+                    {
+                        name: 'Processing',
+                        y: <?php echo json_encode($count[2]); ?>
+                    },
+                    {
+                        name: 'Completed',
+                        y: <?php echo json_encode($count[0]); ?>
+                    }
+                ]
+            }],
+            credits: {
+                enabled: false,
+            },
+        });
+    </script>
+    <script>
+        Highcharts.chart('issueSeverity', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Crime Severity',
+                align: 'center'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
                 }
-            ]
-        }],
-        credits: {
-            enabled: false,
-        },
-    });
-</script>
-<script>
-    Highcharts.chart('issueSeverity', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: 'Crime Severity',
-            align: 'center'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
-            }
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                borderRadius: 5,
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
-                    distance: -50,
-                    filter: {
-                        property: 'percentage',
-                        operator: '>',
-                        value: 4
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    borderRadius: 5,
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
+                        distance: -50,
+                        filter: {
+                            property: 'percentage',
+                            operator: '>',
+                            value: 4
+                        }
                     }
                 }
-            }
-        },
-        series: [{
-            name: 'Share',
-            data: [{
-                    name: 'Normal',
-                    y: <?php echo json_encode($issueSeverity[1]); ?>
-                },
-                {
-                    name: 'Severe',
-                    y: <?php echo json_encode($issueSeverity[2]); ?>
-                },
-                {
-                    name: 'Critical',
-                    y: <?php echo json_encode($issueSeverity[0]); ?>
-                }
-            ]
-        }],
-        colors: [
-            "#3b7ddd",
-            "#fcb92c",
-            "#dc3545",
-        ],
-        credits: {
-            enabled: false,
-        },
-    });
-</script>
-<script>
-    Highcharts.chart("barangayFrequency", {
-        chart: {
-            type: "bar",
-        },
-        title: {
-            text: "Incident Reports in Different Barangays",
-        },
-        subtitle: {},
-        xAxis: {
-            categories: <?php echo json_encode($barangayNames); ?>,
-            crosshair: true,
-        },
-        yAxis: {
+            },
+            series: [{
+                name: 'Share',
+                data: [{
+                        name: 'Normal',
+                        y: <?php echo json_encode($issueSeverity[1]); ?>
+                    },
+                    {
+                        name: 'Severe',
+                        y: <?php echo json_encode($issueSeverity[2]); ?>
+                    },
+                    {
+                        name: 'Critical',
+                        y: <?php echo json_encode($issueSeverity[0]); ?>
+                    }
+                ]
+            }],
+            colors: [
+                "#3b7ddd",
+                "#fcb92c",
+                "#dc3545",
+            ],
+            credits: {
+                enabled: false,
+            },
+        });
+    </script>
+    <script>
+        Highcharts.chart("barangayFrequency", {
+            chart: {
+                type: "bar",
+            },
             title: {
-                text: 'Number of Crimes', // Rename the y-axis label here
+                text: "Incident Reports in Different Barangays",
             },
-        },
-        tooltip: {
-            formatter: function() {
-                return (
-                    this.point.category +
-                    "</b><br/>" +
-                    "Total number of crimes recorded: " +
-                    this.point.y
-                );
+            subtitle: {},
+            xAxis: {
+                categories: <?php echo json_encode($barangayNames); ?>,
+                crosshair: true,
             },
-        },
-        plotOptions: {
-            column: {
-                pointWidth: 100,
-                borderRadius: 1,
-                borderWidth: 3,
-                borderColor: "#deebf7",
-                colorByPoint: true,
+            yAxis: {
+                title: {
+                    text: 'Number of Crimes', // Rename the y-axis label here
+                },
             },
-        },
-        series: [{
-            name: "Crimes in that barangay",
-            data: <?php echo json_encode($barangayFrequency); ?>,
-        }],
-        colors: [
-            "#3d85c6",
-            "#3677b2",
-            "#306a9e",
-            "#2a5d8a",
-            "#244f76",
-            "#1e4263",
-            "#18354f",
-            "#12273b",
-            "#0c1a27",
-            "#060d13",
-            "#000000",
-        ],
-        credits: {
-            enabled: false,
-        },
-        legend: {
-            enabled: true, // Show the legend
-        },
-    });
-</script>
-<script>
-    Highcharts.chart("officerRanks", {
-        chart: {
-            type: "bar",
-        },
-        title: {
-            text: "Officer & Investigator Ranks",
-        },
-        subtitle: {},
-        xAxis: {
-            categories: <?php echo json_encode($policeRanks); ?>,
-            crosshair: true,
-        },
-        yAxis: {
+            tooltip: {
+                formatter: function() {
+                    return (
+                        this.point.category +
+                        "</b><br/>" +
+                        "Total number of crimes recorded: " +
+                        this.point.y
+                    );
+                },
+            },
+            plotOptions: {
+                column: {
+                    pointWidth: 100,
+                    borderRadius: 1,
+                    borderWidth: 3,
+                    borderColor: "#deebf7",
+                    colorByPoint: true,
+                },
+            },
+            series: [{
+                name: "Crimes in that barangay",
+                data: <?php echo json_encode($barangayFrequency); ?>,
+            }],
+            colors: [
+                "#3d85c6",
+                "#3677b2",
+                "#306a9e",
+                "#2a5d8a",
+                "#244f76",
+                "#1e4263",
+                "#18354f",
+                "#12273b",
+                "#0c1a27",
+                "#060d13",
+                "#000000",
+            ],
+            credits: {
+                enabled: false,
+            },
+            legend: {
+                enabled: true, // Show the legend
+            },
+        });
+    </script>
+    <script>
+        Highcharts.chart("officerRanks", {
+            chart: {
+                type: "bar",
+            },
             title: {
-                text: 'Number of Police Officers and Investigators', // Rename the y-axis label here
+                text: "Officer & Investigator Ranks",
             },
-        },
-        tooltip: {
-            formatter: function() {
-                return (
-                    this.point.category +
-                    "</b><br/>" +
-                    "Police ranks: " +
-                    this.point.y
-                );
+            subtitle: {},
+            xAxis: {
+                categories: <?php echo json_encode($policeRanks); ?>,
+                crosshair: true,
             },
-        },
-        plotOptions: {
-            column: {
-                pointWidth: 100,
-                borderRadius: 1,
-                borderWidth: 3,
-                borderColor: "#deebf7",
-                colorByPoint: true,
+            yAxis: {
+                title: {
+                    text: 'Number of Police Officers and Investigators', // Rename the y-axis label here
+                },
             },
-        },
-        series: [{
-            name: "Officer/Investigator Ranks",
-            data: <?php echo json_encode($policeRanksCount); ?>,
-        }],
-        colors: [
-            "#3d85c6",
-            "#3677b2",
-            "#306a9e",
-            "#2a5d8a",
-            "#244f76",
-            "#1e4263",
-            "#18354f",
-            "#12273b",
-            "#0c1a27",
-            "#060d13",
-            "#000000",
-        ],
-        credits: {
-            enabled: false,
-        },
-        legend: {
-            enabled: true, // Show the legend
-        },
-    });
-</script>
-@endsection
+            tooltip: {
+                formatter: function() {
+                    return (
+                        this.point.category +
+                        "</b><br/>" +
+                        "Police ranks: " +
+                        this.point.y
+                    );
+                },
+            },
+            plotOptions: {
+                column: {
+                    pointWidth: 100,
+                    borderRadius: 1,
+                    borderWidth: 3,
+                    borderColor: "#deebf7",
+                    colorByPoint: true,
+                },
+            },
+            series: [{
+                name: "Officer/Investigator Ranks",
+                data: <?php echo json_encode($policeRanksCount); ?>,
+            }],
+            colors: [
+                "#3d85c6",
+                "#3677b2",
+                "#306a9e",
+                "#2a5d8a",
+                "#244f76",
+                "#1e4263",
+                "#18354f",
+                "#12273b",
+                "#0c1a27",
+                "#060d13",
+                "#000000",
+            ],
+            credits: {
+                enabled: false,
+            },
+            legend: {
+                enabled: true, // Show the legend
+            },
+        });
+    </script>
+    @endsection
