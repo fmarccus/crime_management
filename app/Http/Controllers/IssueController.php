@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IssueStoreRequest;
+use App\Http\Requests\IssueUpdateRequest;
 use App\Models\User;
 use App\Models\Issue;
 use App\Models\Person;
@@ -78,20 +80,9 @@ class IssueController extends Controller
             return redirect()->back();
         }
     }
-    public function store(Request $request)
+    public function store(IssueStoreRequest $request)
     {
         if (auth()->user()->user_type == 0 || auth()->user()->user_type == 3) {
-            $request->validate([
-                'user_id' => 'nullable|exists:users,id',
-                'complainant_id' => 'nullable|exists:users,id',
-                'investigator_id' => 'nullable|exists:users,id',
-                'issue' => 'required|max:15000',
-                'date' => 'required',
-                'area' => 'required|in:Aguho,Magtanggol,Martires del 96,Poblacion,San Pedro,San Roque,Santa Ana,Santo Rosario Kanluran,Santo Rosario Silangan,Tabacalera',
-                'type' => 'required',
-                'severity' => 'required|in:Normal,Severe,Critical',
-                'imageFile.*' => 'mimes:jpeg,jpg,png,gif|max:10000'
-            ]);
             $issue = new Issue();
             $issue->user_id = $request->user_id;
             $issue->complainant_id = $request->complainant_id;
@@ -167,7 +158,6 @@ class IssueController extends Controller
         $investigators = User::where('user_type', 2)->get();
         $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
         $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->pluck('image');
-        // Assuming $items is the array retrieved from the database, which contains Laravel Collections
         $itemsArray = $evidences->map(function ($item) {
             return json_decode($item, true) ?? [];
         })->toArray();
@@ -186,24 +176,12 @@ class IssueController extends Controller
 
         return view('issues.edit', compact('issue', 'officers', 'complainants', 'investigators', 'progresses', 'evidences'));
     }
-    public function update(Request $request, $id)
+    public function update(IssueUpdateRequest $request, $id)
     {
-        $request->validate([
-            'user_id' => 'nullable|exists:users,id',
-            'complainant_id' => 'nullable|exists:users,id',
-            'investigator_id' => 'nullable|exists:users,id',
-            'issue' => 'required|max:15000',
-            'date' => 'required',
-            'area' => 'required|in:Aguho,Magtanggol,Martires del 96,Poblacion,San Pedro,San Roque,Santa Ana,Santo Rosario Kanluran,Santo Rosario Silangan,Tabacalera',
-            'type' => 'required',
-            'severity' => 'required|in:Normal,Severe,Critical',
-            'status' => 'required|in:Open,Processing,Completed'
-        ]);
         $issue = Issue::findOrFail($id);
         $issue->user_id = $request->user_id;
         $issue->complainant_id = $request->complainant_id;
         $issue->investigator_id = $request->investigator_id;
-
         $issue->issue = $request->issue;
         $issue->date = $request->date;
         $issue->area = $request->area;
