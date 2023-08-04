@@ -30,10 +30,22 @@ class IssueController extends Controller
     }
     public function view($id)
     {
-        $issue = Issue::where('complainant_id', auth()->user()->id)->findOrFail($id);
+        if (auth()->user()->user_type == 0) {
+            $issue = Issue::where('user_id', auth()->user()->id)->findOrFail($id);
+
+        } elseif (auth()->user()->user_type == 1) {
+            $issue = Issue::where('user_id', auth()->user()->id)->findOrFail($id);
+
+        } elseif (auth()->user()->user_type == 2) {
+            $issue = Issue::where('investigator_id', auth()->user()->id)->findOrFail($id);
+        } else {
+            $issue = Issue::where('complainant_id', auth()->user()->id)->findOrFail($id);
+        }
+
+
+        
         $progresses = Progress::where('issue_id', $id)->orderByDesc('created_at')->get();
         $evidences = Evidence::where('issue_id', $id)->orderByDesc('created_at')->pluck('image');
-
 
         $itemsArray = $evidences->map(function ($item) {
             return json_decode($item, true) ?? [];
