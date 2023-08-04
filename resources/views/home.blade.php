@@ -350,10 +350,10 @@
 $recordCountsPerMonth = DB::table('issues')->selectRaw('COUNT(*) as count')->groupBy(DB::raw('DATE_FORMAT(date, "%Y-%m")'))->pluck('count')->toArray();
 $crimeNames = DB::table('issues')->distinct()->pluck('type')->toArray();
 $crimeFrequency = DB::table('issues')->selectRaw('type, COUNT(*) as count')->groupBy('type')->get()->pluck('count')->toArray();
-$count = DB::table('issues')->selectRaw('status, COUNT(*) as count')->groupBy('status')->get()->pluck('count')->toArray();
+$count = DB::table('issues')->selectRaw('status, COUNT(*) as count')->groupBy('status')->get()->pluck('count','status')->toArray();
 $barangayFrequency = DB::table('issues')->selectRaw('area, COUNT(*) as count')->groupBy('area')->get()->pluck('count')->toArray();
 $barangayNames = DB::table('issues')->selectRaw('area, COUNT(*) as count')->groupBy('area')->get()->pluck('area')->toArray();
-$issueSeverity = DB::table('issues')->selectRaw('severity, COUNT(*) as count')->groupBy('severity')->get()->pluck('count')->toArray();
+$issueSeverity = DB::table('issues')->selectRaw('severity, COUNT(*) as count')->groupBy('severity')->get()->pluck('count','severity')->toArray();
 $policeRanks = DB::table('users')->distinct()->pluck('rank')->toArray();
 $policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw('rank, COUNT(*) as count')->groupBy('rank')->get()->pluck('count')->toArray();
     @endphp
@@ -533,15 +533,15 @@ $policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw(
                 name: 'Share',
                 data: [{
                         name: 'Open',
-                        y: <?php echo json_encode($count[1] ?? 0); ?>
+                        y: <?php echo json_encode($count['Open'] ?? 0); ?>
                     },
                     {
                         name: 'Processing',
-                        y: <?php echo json_encode($count[2] ?? 0); ?>
+                        y: <?php echo json_encode($count['Processing'] ?? 0); ?>
                     },
                     {
                         name: 'Completed',
-                        y: <?php echo json_encode($count[0] ?? 0); ?>
+                        y: <?php echo json_encode($count['Completed'] ?? 0); ?>
                     }
                 ]
             }],
@@ -591,15 +591,15 @@ $policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw(
                 name: 'Share',
                 data: [{
                         name: 'Normal',
-                        y: <?php echo json_encode($issueSeverity[1] ?? 0); ?>
+                        y: <?php echo json_encode($issueSeverity['Normal'] ?? 0); ?>
                     },
                     {
                         name: 'Severe',
-                        y: <?php echo json_encode($issueSeverity[2] ?? 0); ?>
+                        y: <?php echo json_encode($issueSeverity['Severe'] ?? 0); ?>
                     },
                     {
                         name: 'Critical',
-                        y: <?php echo json_encode($issueSeverity[0] ?? 0); ?>
+                        y: <?php echo json_encode($issueSeverity['Critical'] ?? 0); ?>
                     }
                 ]
             }],
