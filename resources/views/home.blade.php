@@ -533,15 +533,15 @@ $policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw(
                 name: 'Share',
                 data: [{
                         name: 'Open',
-                        y: <?php echo json_encode($count[1]); ?>
+                        y: <?php echo json_encode($count[1] ?? 0); ?>
                     },
                     {
                         name: 'Processing',
-                        y: <?php echo json_encode($count[2]); ?>
+                        y: <?php echo json_encode($count[2] ?? 0); ?>
                     },
                     {
                         name: 'Completed',
-                        y: <?php echo json_encode($count[0]); ?>
+                        y: <?php echo json_encode($count[0] ?? 0); ?>
                     }
                 ]
             }],
@@ -591,15 +591,15 @@ $policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw(
                 name: 'Share',
                 data: [{
                         name: 'Normal',
-                        y: <?php echo json_encode($issueSeverity[1]); ?>
+                        y: <?php echo json_encode($issueSeverity[1] ?? 0); ?>
                     },
                     {
                         name: 'Severe',
-                        y: <?php echo json_encode($issueSeverity[2]); ?>
+                        y: <?php echo json_encode($issueSeverity[2] ?? 0); ?>
                     },
                     {
                         name: 'Critical',
-                        y: <?php echo json_encode($issueSeverity[0]); ?>
+                        y: <?php echo json_encode($issueSeverity[0] ?? 0); ?>
                     }
                 ]
             }],

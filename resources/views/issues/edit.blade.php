@@ -325,7 +325,7 @@
                             <form action="{{route('store.evidence', $issue->id)}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <label for="" class="form-label">Attach Your Evidences Here</label>
-                                <input type="file" class="form-control" name="imageFile[]" id="images" aria-describedby="helpId" multiple>
+                                <input type="file" class="form-control @error('imageFile.*') is-invalid @enderror" name="imageFile[]" id="images" aria-describedby="helpId" multiple>
                                 <div class="evidence-image mb-3 text-center">
                                     <div class="imgPreview"> </div>
                                 </div>
