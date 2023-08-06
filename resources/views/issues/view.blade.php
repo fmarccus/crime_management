@@ -15,6 +15,13 @@
         text: 'Progress has been logged',
     })
 </script>
+@elseif(session()->has('person'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        text: 'A new person of interest has been added',
+    })
+</script>
 @endif
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -138,7 +145,9 @@
         </div>
     </div>
     <div class="tab-pane fade" id="pills-suspects" role="tabpanel" aria-labelledby="pills-suspects-tab" tabindex="0">
+
         <div class="row">
+
             @foreach ($issue->persons as $person)
             <div class="col-sm-6 mb-3">
                 <div class="card border-start @if($person->person_type == 'witness') border-primary  @else border-danger @endif">
@@ -192,6 +201,95 @@
             @endforeach
 
         </div>
+        @if(auth()->user()->user_type !=3)
+        <h3 class="mb-3">Add Witnesses and Suspects</h3>
+        <div class="row">
+            <div class="col-sm-9">
+                <form action="{{route('person.store', $issue->id)}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Suspects and Witnesses
+                            </h4>
+                            <div class="text-end">
+                                <button class="btn btn-primary" type="button" id="add-row-btn"><i class="align-middle" data-feather="user-plus"></i></button>
+                            </div>
+                            <div id="input-container">
+                                <div class="row">
+
+                                    <div class="col-sm-9 mb-2">
+                                        <label for="" class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="person_data[0][person_name]" />
+                                    </div>
+                                    <div class="col-sm-3 mb-2">
+                                        <label for="" class="form-label">Status</label>
+                                        <select class="form-select" name="person_data[0][person_type]">
+                                            <option value="witness">Witness</option>
+                                            <option value="suspect">Suspect</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <label for="" class="form-label">Gender</label>
+                                        <select class="form-select" name="person_data[0][gender]">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <label for="" class="form-label">Date of Birth</label>
+                                        <input class="form-control" type="date" name="person_data[0][dob]" id="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Address</label>
+                                        <input class="form-control" type="text" name="person_data[0][address]" id="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Contact Information</label>
+                                        <input class="form-control" type="text" name="person_data[0][contact]" id="">
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <label for="" class="form-label">Height</label>
+                                        <input class="form-control" min="1" type="number" name="person_data[0][height]" id="">
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <label for="" class="form-label">Weight</label>
+                                        <input class="form-control" min="1" type="number" name="person_data[0][weight]" id="">
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <label for="" class="form-label">Hair Color</label>
+                                        <input type="text" class="form-control" name="person_data[0][hair]" />
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <label for="" class="form-label">Eye Color</label>
+                                        <input type="text" class="form-control" name="person_data[0][eye]" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Ethnicity</label>
+                                        <input type="text" class="form-control" name="person_data[0][ethnicity]" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Photograph/Identification</label>
+                                        <input type="file" class="form-control" name="person_data[0][identification]" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Statement</label>
+                                        <textarea class="form-control" name="person_data[0][statement]" id="" cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit"> Submit</button>
+                </form>
+            </div>
+        </div>
+        @endif
+
+
 
 
     </div>
@@ -282,6 +380,80 @@
 @endsection
 @section('scripts')
 <script>
+    let rowCount = 1; // To keep track of the current row count
+
+    // Function to add a new row when the button is clicked
+    $("#add-row-btn").click(function() {
+        var newRow = $("<div>");
+        newRow.html(`
+    <div class="row"> 
+        <div class="col-sm-9 mb-3"> 
+        <label for="" class="form-label">Name</label>
+
+            <input type="text" class="form-control" name="person_data[${rowCount}][person_name]" />
+        </div>
+        <div class="col-sm-3 mb-3">
+        <label for="" class="form-label">Status</label>
+
+            <select class="form-select" name="person_data[${rowCount}][person_type]">
+                <option value="witness">Witness</option>
+                <option value="suspect">Suspect</option>
+            </select>
+        </div>
+        <div class="col-sm-6 mb-3">
+                        <label for="" class="form-label">Gender</label>
+                        <select class="form-select" name="person_data[${rowCount}][gender]">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="" class="form-label">Date of Birth</label>
+                        <input class="form-control" type="date" name="person_data[${rowCount}][dob]" id="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Address</label>
+                        <input class="form-control" type="text" name="person_data[${rowCount}][address]" id="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Contact Information</label>
+                        <input class="form-control" type="text" name="person_data[${rowCount}][contact]" id="">
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="" class="form-label">Height</label>
+                        <input class="form-control" min="1" type="number" name="person_data[${rowCount}][height]" id="">
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="" class="form-label">Weight</label>
+                        <input class="form-control" min="1" type="number" name="person_data[${rowCount}][weight]" id="">
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="" class="form-label">Hair Color</label>
+                        <input type="text" class="form-control" name="person_data[${rowCount}][hair]" />
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="" class="form-label">Eye Color</label>
+                        <input type="text" class="form-control" name="person_data[${rowCount}][eye]" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Ethnicity</label>
+                        <input type="text" class="form-control" name="person_data[${rowCount}][ethnicity]" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Photograph/Identification</label>
+                        <input type="file" class="form-control" name="person_data[${rowCount}][identification]" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Statement</label>
+                        <textarea class="form-control" name="person_data[${rowCount}][statement]" id="" cols="30" rows="10"></textarea>
+                    </div>
+    </div>
+    <hr>
+`);
+
+        $("#input-container").append(newRow);
+        rowCount++; // Increment the row count for the next row
+    });
     var multiImgPreview = function(input, imgPreviewPlaceholder) {
         if (input.files) {
             var filesAmount = input.files.length;

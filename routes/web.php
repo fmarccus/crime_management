@@ -49,4 +49,6 @@ Route::controller(IssueController::class)->prefix('issues/')->group(function () 
     Route::post('update/{id}', 'update')->name('issues.update')->middleware('admin');
     Route::post('delete/{id}', 'delete')->name('issues.delete')->middleware('admin');
     Route::post('progress/store/{id}', 'storeProgress')->name('progress.store');
+    Route::post('person/store/{id}', 'storePerson')->name('person.store');
+
 });
