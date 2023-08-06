@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    dd("hello");
+});
+
 Route::view('/home', 'home')->middleware(['auth']);
 Route::view('/profile/edit', 'profile.edit')->middleware(['auth'])->name('profile.edit');
 Route::view('/profile/password', 'profile.password')->middleware(['auth']);
@@ -44,9 +48,8 @@ Route::controller(IssueController::class)->prefix('issues/')->group(function () 
     Route::get('create', 'create')->name('issues.create');
     Route::post('store', 'store')->name('issues.store');
     Route::post('storeEvidence/{id}', 'storeEvidence')->name('store.evidence');
-
     Route::get('edit/{id}', 'edit')->name('issues.edit')->middleware('admin');
     Route::post('update/{id}', 'update')->name('issues.update')->middleware('admin');
     Route::post('delete/{id}', 'delete')->name('issues.delete')->middleware('admin');
-    Route::post('progress/store/{id}', 'storeProgress')->name('progress.store')->middleware('admin');
+    Route::post('progress/store/{id}', 'storeProgress')->name('progress.store');
 });

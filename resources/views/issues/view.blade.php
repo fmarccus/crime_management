@@ -8,6 +8,13 @@
         text: 'Issue has been updated',
     })
 </script>
+@elseif(session()->has('progress'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        text: 'Progress has been logged',
+    })
+</script>
 @endif
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -189,7 +196,34 @@
 
     </div>
     <div class="tab-pane fade" id="pills-progress" role="tabpanel" aria-labelledby="pills-progress-tab" tabindex="0">
-
+        <div class="card mb-3">
+            <div class="card-body">
+                <form action="{{route('progress.store', $issue->id)}}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control @error('subject') is-invalid @enderror" name="subject" id="" aria-describedby="helpId" placeholder="">
+                        @error('subject')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="note" class="form-label">Note</label>
+                        <textarea class="form-control @error('note') is-invalid @enderror" name="note" id="" rows="10" placeholder="You may add your note here"></textarea>
+                        @error('note')
+                        <div>
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="text-end">
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <h3 class="mb-3">Progress Logs</h3>
 
         @foreach ($progresses as $progress)
@@ -205,7 +239,7 @@
     </div>
 
     <div class="tab-pane fade" id="pills-evidences" role="tabpanel" aria-labelledby="pills-evidences-tab" tabindex="0">
-        
+
         <div class="row">
             <div class="col-sm-6 mb-3">
                 <div class="card">

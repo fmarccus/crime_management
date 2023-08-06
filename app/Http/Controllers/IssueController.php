@@ -235,16 +235,21 @@ class IssueController extends Controller
     }
     public function storeProgress(Request $request, $id)
     {
-        $request->validate([
-            'issue_id' => 'nullable|exists:issues,id',
-            'subject' => 'required|max:255',
-            'note' => 'required|max:15000',
-        ]);
-        $progress = new Progress();
-        $progress->issue_id = $id;
-        $progress->subject = $request->subject;
-        $progress->note = $request->note;
-        $progress->save();
-        return back()->with('progress', '');
+        dd(auth()->user()->user_type);
+        if (auth()->user()->user_type != 3) {
+            $request->validate([
+                'issue_id' => 'nullable|exists:issues,id',
+                'subject' => 'required|max:255',
+                'note' => 'required|max:15000',
+            ]);
+            $progress = new Progress();
+            $progress->issue_id = $id;
+            $progress->subject = $request->subject;
+            $progress->note = $request->note;
+            $progress->save();
+            return back()->with('progress', '');
+        } else {
+            return redirect()->back();
+        }
     }
 }
