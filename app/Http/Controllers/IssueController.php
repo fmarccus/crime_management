@@ -235,7 +235,6 @@ class IssueController extends Controller
     }
     public function storeProgress(Request $request, $id)
     {
-        dd(auth()->user()->user_type);
         if (auth()->user()->user_type != 3) {
             $request->validate([
                 'issue_id' => 'nullable|exists:issues,id',

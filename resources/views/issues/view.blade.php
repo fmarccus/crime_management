@@ -196,6 +196,7 @@
 
     </div>
     <div class="tab-pane fade" id="pills-progress" role="tabpanel" aria-labelledby="pills-progress-tab" tabindex="0">
+        @if (auth()->user()->user_type != 3)
         <div class="card mb-3">
             <div class="card-body">
                 <form action="{{route('progress.store', $issue->id)}}" method="POST">
@@ -224,6 +225,8 @@
                 </form>
             </div>
         </div>
+        @endif
+
         <h3 class="mb-3">Progress Logs</h3>
 
         @foreach ($progresses as $progress)
