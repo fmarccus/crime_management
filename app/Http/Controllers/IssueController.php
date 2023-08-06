@@ -74,8 +74,8 @@ class IssueController extends Controller
     public function storeEvidence(Request $request, $id)
     {
         $request->validate([
-            'imageFile.*' => 'mimes:jpeg,jpg,png,gif|max:10000'
-
+            'imageFile' => 'required',
+            'imageFile.*' => 'required|mimes:jpeg,JPEG,jpg,JPG,png,PNG,gif,GIF,svg,SVG,webp,WEBP|max:10000'
         ]);
         if ($request->hasfile('imageFile')) {
             foreach ($request->file('imageFile') as $file) {
@@ -87,7 +87,7 @@ class IssueController extends Controller
             $evidence->issue_id = $id;
             $evidence->image = json_encode($imgData);
             $evidence->save();
-            return redirect()->back();
+            return back()->with('evidence', '');
         }
     }
     public function store(IssueStoreRequest $request)

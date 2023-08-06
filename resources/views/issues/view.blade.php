@@ -22,6 +22,13 @@
         text: 'A new person of interest has been added',
     })
 </script>
+@elseif(session()->has('evidence'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        text: 'Evidence has been added',
+    })
+</script>
 @endif
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -348,7 +355,10 @@
                         <form action="{{route('store.evidence', $issue->id)}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <label for="" class="form-label">Attach Your Evidences Here</label>
-                            <input type="file" class="form-control" name="imageFile[]" id="images" aria-describedby="helpId" multiple>
+                            <input type="file" class="form-control @error('imageFile') is-invalid @enderror" name="imageFile[]" id="images" aria-describedby="helpId" multiple>
+                            @error('imageFile')
+                            <p class="text-danger bg-light mt-3 py-1">{{$message}}</p>
+                            @enderror
                             <div class="evidence-image mb-3 text-center">
                                 <div class="imgPreview"> </div>
                             </div>
