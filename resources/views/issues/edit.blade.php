@@ -15,6 +15,13 @@
         text: 'Progress has been logged',
     })
 </script>
+@elseif(session()->has('evidence'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        text: 'Evidence has been added',
+    })
+</script>
 @endif
 <div class="row">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
