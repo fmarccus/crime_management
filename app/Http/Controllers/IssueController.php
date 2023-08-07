@@ -53,9 +53,9 @@ class IssueController extends Controller
 
         foreach ($itemsArray as $innerArray) {
             foreach ($innerArray as $file) {
-                if (strpos($file, ".png") !== false) {
+                // if (strpos($file, ".png") !== false) {
                     $evidences[] = $file;
-                }
+                // }
             }
         }
         return view('issues.view', compact('issue', 'progresses', 'evidences'));
@@ -74,7 +74,7 @@ class IssueController extends Controller
     public function storeEvidence(Request $request, $id)
     {
         $request->validate([
-            'imageFile' => 'required',
+            // 'imageFile' => 'required',
             'imageFile.*' => 'required|mimes:jpeg,JPEG,jpg,JPG,png,PNG,gif,GIF,svg,SVG,webp|max:10000'
         ]);
         if ($request->hasfile('imageFile')) {
@@ -176,9 +176,9 @@ class IssueController extends Controller
 
         foreach ($itemsArray as $innerArray) {
             foreach ($innerArray as $file) {
-                if (strpos($file, ".png") !== false) {
-                    $evidences[] = $file;
-                }
+                // if (strpos($file, ".png") !== false) {
+                $evidences[] = $file;
+                // }
             }
         }
 
