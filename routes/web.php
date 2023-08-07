@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComplainantController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\PoliceController;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +51,7 @@ Route::controller(IssueController::class)->prefix('issues/')->group(function () 
     Route::post('delete/{id}', 'delete')->name('issues.delete')->middleware('admin');
     Route::post('progress/store/{id}', 'storeProgress')->name('progress.store');
     Route::post('person/store/{id}', 'storePerson')->name('person.store');
-
 });
+
+Route::post('/get-barangay-crime-data', 'DashboardController@getBarangayCrimeData')->name('getBarangayCrimeData');
+Route::post('/get-barangay-crime-data', [DashboardController::class, 'getBarangayCrimeData'])->name('getBarangayCrimeData');

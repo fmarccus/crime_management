@@ -229,6 +229,34 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="" method="POST" id="selectBarangay">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="" class="form-label">Select Barangay</label>
+                                <select class="form-select" name="area" id="area">
+                                    <option value="Aguho">Aguho</option>
+                                    <option value="Magtanggol">Magtanggol</option>
+                                    <option value="Martires del 96">Martires del 96</option>
+                                    <option value="Poblacion">Poblacion</option>
+                                    <option value="San Pedro">San Pedro</option>
+                                    <option value="San Roque">San Roque</option>
+                                    <option value="Santa Ana">Santa Ana</option>
+                                    <option value="Santo Rosario Kanluran">Santo Rosario Kanluran</option>
+                                    <option value="Santo Rosario Silangan">Santo Rosario Silangan</option>
+                                    <option value="Tabacalera">Tabacalera</option>
+                                </select>
+                            </div>
+                        </form>
+
+                        <div id="crime_per_barangay">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-sm-12 mb-3">
                 <div class="card">
@@ -356,6 +384,9 @@ $barangayNames = DB::table('issues')->selectRaw('area, COUNT(*) as count')->grou
 $issueSeverity = DB::table('issues')->selectRaw('severity, COUNT(*) as count')->groupBy('severity')->get()->pluck('count','severity')->toArray();
 $policeRanks = DB::table('users')->distinct()->pluck('rank')->toArray();
 $policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw('rank, COUNT(*) as count')->groupBy('rank')->get()->pluck('count')->toArray();
+
+
+
     @endphp
     @section('scripts')
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -420,6 +451,94 @@ $policeRanksCount = DB::table('users') ->where('user_type', '<>', 3)->selectRaw(
             credits: {
                 enabled: false,
             },
+        });
+    </script>
+
+    <script>
+        function renderCrimeChart(barangayName, barangayCount) {
+            Highcharts.chart("crime_per_barangay", {
+                chart: {
+                    type: "column",
+                },
+                title: {
+                    text: "Number of Crimes Recorded Per Barangay",
+                },
+                subtitle: {},
+                xAxis: {
+                    categories: barangayName,
+                    crosshair: true,
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number of Crimes', // Rename the y-axis label here
+                    },
+                },
+                tooltip: {
+                    formatter: function() {
+                        return (
+                            this.point.category +
+                            "</b><br/>" +
+                            "Total number of crimes recorded: " +
+                            this.point.y
+                        );
+                    },
+
+                },
+                plotOptions: {
+                    column: {
+                        pointWidth: 100,
+                        borderRadius: 1,
+                        borderWidth: 3,
+                        borderColor: "#deebf7",
+                        colorByPoint: true,
+                    },
+                },
+                series: [{
+                    name: "Type of crime",
+                    data: barangayCount
+                }, ],
+                colors: [
+                    "#3d85c6",
+                    "#3677b2",
+                    "#306a9e",
+                    "#2a5d8a",
+                    "#244f76",
+                    "#1e4263",
+                    "#18354f",
+                    "#12273b",
+                    "#0c1a27",
+                    "#060d13",
+                    "#000000",
+                ],
+                credits: {
+                    enabled: false,
+                },
+            });
+        }
+
+
+        const defaultBarangayCount = [0]; // Change to a default count if needed
+        const defaultBarangayName = ['No Data']; // Change to a default name if needed
+        renderCrimeChart(defaultBarangayName, defaultBarangayCount);
+
+        $("#area").on("change", function() {
+            const selectedBarangay = $(this).val();
+            $.ajax({
+                url: "{{ route('getBarangayCrimeData') }}", // Replace with the route that fetches the crime data based on the selected barangay
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    area: selectedBarangay
+                },
+                dataType: "json",
+                success: function(response) {
+                    console.log(response.barangayName);
+                    renderCrimeChart(response.barangayName, response.barangayCount);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
     </script>
     <script>
