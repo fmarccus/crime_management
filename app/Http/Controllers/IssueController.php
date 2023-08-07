@@ -75,7 +75,7 @@ class IssueController extends Controller
     {
         $request->validate([
             'imageFile' => 'required',
-            'imageFile.*' => 'required|mimes:jpeg,JPEG,jpg,JPG,png,PNG,gif,GIF,svg,SVG,webp,WEBP|max:10000'
+            'imageFile.*' => 'required|mimes:jpeg,JPEG,jpg,JPG,png,PNG,gif,GIF,svg,SVG,webp|max:10000'
         ]);
         if ($request->hasfile('imageFile')) {
             foreach ($request->file('imageFile') as $file) {
