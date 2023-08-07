@@ -156,11 +156,7 @@
                         <div class="evidence-image mb-3 text-center">
                             <div class="imgPreview"> </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="" class="form-label">Attach Video Recordings</label>
-                        <input type="file" class="form-control" name="" id="" aria-describedby="helpId" multiple>
-                    </div>
+                    </div>                    
                 </div>
             </div>
 
