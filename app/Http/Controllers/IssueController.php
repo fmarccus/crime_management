@@ -54,7 +54,7 @@ class IssueController extends Controller
         foreach ($itemsArray as $innerArray) {
             foreach ($innerArray as $file) {
                 // if (strpos($file, ".png") !== false) {
-                    $evidences[] = $file;
+                $evidences[] = $file;
                 // }
             }
         }
@@ -203,27 +203,31 @@ class IssueController extends Controller
         }
         $issue->save();
         $personData = $request->input('person_data');
-        foreach ($personData as $data) {
-            $person = Person::findOrFail($data['personId']);
-            $person->person_name = $data['person_name'];
-            $person->person_type = $data['person_type'];
-            $person->gender = $data['gender'];
-            $person->dob = $data['dob'];
-            $person->address = $data['address'];
-            $person->contact = $data['contact'];
-            $person->height = $data['height'];
-            $person->weight = $data['weight'];
-            $person->hair = $data['hair'];
-            $person->eye = $data['eye'];
-            $person->ethnicity = $data['ethnicity'];
-            $person->statement = $data['statement'];
-            if ($request->has('identification')) {
-                $imageName = time() . $data['person_name'] . '' . '.' . $request->identification->extension();
-                $request->photo->move(public_path('people'), $imageName);
-                $person->identification = $imageName;
+
+        if ($personData) {
+            foreach ($personData as $data) {
+                $person = Person::findOrFail($data['personId']);
+                $person->person_name = $data['person_name'];
+                $person->person_type = $data['person_type'];
+                $person->gender = $data['gender'];
+                $person->dob = $data['dob'];
+                $person->address = $data['address'];
+                $person->contact = $data['contact'];
+                $person->height = $data['height'];
+                $person->weight = $data['weight'];
+                $person->hair = $data['hair'];
+                $person->eye = $data['eye'];
+                $person->ethnicity = $data['ethnicity'];
+                $person->statement = $data['statement'];
+                if ($request->has('identification')) {
+                    $imageName = time() . $data['person_name'] . '' . '.' . $request->identification->extension();
+                    $request->photo->move(public_path('people'), $imageName);
+                    $person->identification = $imageName;
+                }
+                $person->save();
             }
-            $person->save();
         }
+
         return back()->with('success', '');
     }
 
