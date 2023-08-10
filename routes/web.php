@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComplainantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IssueController;
+use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PoliceController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,13 @@ Route::controller(AuthController::class)->prefix('users/')->group(function () {
     Route::post('update/{id}', 'update')->name('users.update');
     Route::post('delete/{id}', 'delete')->name('users.delete');
 });
+
+Route::controller(PersonController::class)->group(function () {
+    Route::get('witnesses/index', 'getWitnesses')->name('witnesses.index')->middleware('admin');
+    Route::get('suspects/index', 'getSuspects')->name('suspects.index')->middleware('admin');
+    Route::get('person/view/{id}', 'view')->name('person.view')->middleware('admin');
+});
+
 
 Route::controller(IssueController::class)->prefix('issues/')->group(function () {
     Route::get('index', 'index')->name('issues.index');

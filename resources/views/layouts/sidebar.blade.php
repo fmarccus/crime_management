@@ -11,6 +11,10 @@ $issuesAssignedOfficer = App\Models\Issue::where('user_id', auth()->user()->id)-
 $issuesAssignedInvestigator = App\Models\Issue::where('investigator_id', auth()->user()->id)->count();
 $issuesAssignedComplainant = App\Models\Issue::where('complainant_id', auth()->user()->id)->count();
 
+$suspects = App\Models\Person::where('person_type','suspect')->count();
+$witnesses = App\Models\Person::where('person_type','witness')->count();
+
+
 @endphp
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
@@ -83,7 +87,16 @@ $issuesAssignedComplainant = App\Models\Issue::where('complainant_id', auth()->u
                         @endif
                     </span>
                 </a>
+
             </li>
+            @if(Auth::user()->user_type == 0)
+            <li class="sidebar-item {{ (request()->is('witnesses/*')) ? 'active':'' }}">
+                <a class="sidebar-link" href="{{route('witnesses.index')}}"><i class="align-middle" data-feather="user-check"></i>Witnesses <span class="badge rounded-pill text-bg-primary">{{$witnesses}}</span></a>
+            </li>
+            <li class="sidebar-item {{ (request()->is('suspects/*')) ? 'active':'' }}">
+                <a class="sidebar-link" href="{{route('suspects.index')}}"><i class="align-middle" data-feather="user-x"></i>Suspects <span class="badge rounded-pill text-bg-danger">{{$suspects}}</span></a>
+            </li>
+            @endif
         </ul>
     </div>
 </nav>

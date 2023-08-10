@@ -1,0 +1,79 @@
+@extends('layouts.app')
+
+@section('content')
+@if(session()->has('deleted'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        text: 'Issue has been deleted',
+    })
+</script>
+@endif
+<div class="row justify-content-center">
+
+    <h3 class="mb-3">Witnesses ({{$people->count()}})</h3>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="people" class="table" style="width:100%">
+                    <thead>
+                        <th>Identification</th>
+                        <th>Incident Report #</th>
+                        <th>Full Name</th>
+                        <th>Gender</th>
+                        <th>Contact</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($people as $person)
+                        <tr>
+                            <td> @if ($person->identification)
+                                <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/' . $person->identification) }}" alt="User Photo">
+                                @else
+                                <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/user.png') }}" alt="Default User Photo">
+                                @endif
+                            </td>
+                            <td><a href="{{route('issues.edit', $person->issue_id)}}">{{$person->issue_id}}</a></td>
+                            <td>{{$person->person_name}}</td>
+                            <td>{{$person->gender}}</td>
+                            <td>{{$person->contact}}</td>
+
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+
+        var table = $('#people').DataTable({
+            dom: 'Bfrtip',
+            stateSave: true,
+            colReorder: true,
+            buttons: [{
+                    extend: 'copy',
+                    split: [
+                        'print',
+                        'excel',
+                        'csv',
+                        'pdf',
+                    ]
+                },
+                {
+                    extend: 'colvis',
+                    postfixButtons: ['colvisRestore'],
+                    columnText: function(dt, idx, title) {
+                        return (idx + 1) + '. ' + title;
+                    }
+                },
+            ]
+        });
+    });
+</script>
+@endsection
