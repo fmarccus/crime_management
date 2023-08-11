@@ -38,7 +38,7 @@
                             </td>
                             @if(auth()->user()->user_type == 1 || auth()->user()->user_type == 2)
                             <td data-order="{{$person->issue_id}}"><a href="{{route('issues.view', $person->issue_id)}}">INC-{{$person->issue_id}}</a></td>
-                            @elseif(auth()->user()->user_type == 3)
+                            @elseif(auth()->user()->user_type == 0)
                             <td data-order="{{$person->issue_id}}"><a href="{{route('issues.edit', $person->issue_id)}}">INC-{{$person->issue_id}}</a></td>
                             @endif
                             <td>{{$person->person_name}}</td>

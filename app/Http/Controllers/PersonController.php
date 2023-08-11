@@ -11,22 +11,32 @@ class PersonController extends Controller
 
     public function getWitnesses()
     {
-        $people = Issue::with(['persons' => function ($query) {
+        $query = Issue::with(['persons' => function ($query) {
             $query->where('person_type', 'witness');
-        }])
-            ->where($this->getUserType(), $this->getUserId())
-            ->get()
+        }]);
+
+        $userType = $this->getUserType();
+        if (!empty($userType)) {
+            $query->where($userType, $this->getUserId());
+        }
+
+        $people = $query->get()
             ->pluck('persons')
             ->flatten();
         return view('people.witnesses', compact('people'));
     }
     public function getSuspects()
     {
-        $people = Issue::with(['persons' => function ($query) {
+        $query = Issue::with(['persons' => function ($query) {
             $query->where('person_type', 'suspect');
-        }])
-            ->where($this->getUserType(), $this->getUserId())
-            ->get()
+        }]);
+
+        $userType = $this->getUserType();
+        if (!empty($userType)) {
+            $query->where($userType, $this->getUserId());
+        }
+
+        $people = $query->get()
             ->pluck('persons')
             ->flatten();
         return view('people.suspects', compact('people'));
@@ -50,6 +60,8 @@ class PersonController extends Controller
             $var = 'user_id';
         } elseif ($type == 2) {
             $var = 'investigator_id';
+        } elseif ($type == 0) {
+            $var = '';
         }
         return $var;
     }
