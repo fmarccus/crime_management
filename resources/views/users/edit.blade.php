@@ -10,7 +10,17 @@
 </script>
 @endif
 <div class="row">
-    <h3 class="mb-3">Edit {{$user->name}} </h3>
+    @if($user->user_type == 0)
+    <h3 class="mb-3">Edit {{$user->name}} (USR-{{$user->id}}) </h3>
+    @elseif($user->user_type == 1)
+    <h3 class="mb-3">Edit {{$user->name}} (POL-{{$user->id}}) </h3>
+    @elseif($user->user_type == 2)
+    <h3 class="mb-3">Edit {{$user->name}} (INV-{{$user->id}}) </h3>
+    @elseif($user->user_type == 3)
+    <h3 class="mb-3">Edit {{$user->name}} (COM-{{$user->id}}) </h3>
+    @endif
+
+
     <div class="col-sm-9">
         <form action="{{route('users.update',$user->id)}}" method="post" enctype="multipart/form-data">
             @csrf

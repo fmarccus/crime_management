@@ -28,6 +28,8 @@
 
                 <table id="issues" class="table" style="width:100%">
                     <thead>
+                    <th>ID</th>
+
                         <th>Assigned P.O.</th>
                         <th>Investigator</th>
                         <th>Complainant</th>
@@ -43,7 +45,10 @@
                     </thead>
                     <tbody>
                         @foreach ($issues as $issue)
+
                         <tr class="@if($issue->status=='Open') tb-bg-open @elseif($issue->status=='Processing') tb-bg-processing @else  @endif">
+                        <td data-order="{{$issue->id}}" class="bg-light">INC-{{$issue->id}}</td>
+
                             <td>
                                 @if ($issue->user === null)
                                 <span class="fw-bold text-muted"> No Police Officer Assigned Yet</span>
@@ -130,6 +135,10 @@
     $(document).ready(function() {
 
         var table = $('#issues').DataTable({
+            "columnDefs": [{
+                "type": "numeric",
+                "targets": "ID"
+            }],
             dom: 'Bfrtip',
             stateSave: true,
             colReorder: true,

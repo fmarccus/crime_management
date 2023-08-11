@@ -18,6 +18,7 @@
             <div class="table-responsive">
                 <table id="people" class="table" style="width:100%">
                     <thead>
+                        <th>ID</th>
                         <th>Identification</th>
                         <th>Incident Report #</th>
                         <th>Full Name</th>
@@ -27,13 +28,15 @@
                     <tbody>
                         @foreach ($people as $person)
                         <tr>
+                            <td data-order="{{$person->id}}" class="bg-light">WIT-{{$person->id}}</td>
+
                             <td> @if ($person->identification)
                                 <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/' . $person->identification) }}" alt="User Photo">
                                 @else
                                 <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/user.png') }}" alt="Default User Photo">
                                 @endif
                             </td>
-                            <td><a href="{{route('issues.edit', $person->issue_id)}}">{{$person->issue_id}}</a></td>
+                            <td><a href="{{route('issues.edit', $person->issue_id)}}">INC-{{$person->issue_id}}</a></td>
                             <td>{{$person->person_name}}</td>
                             <td>{{$person->gender}}</td>
                             <td>{{$person->contact}}</td>
@@ -53,6 +56,10 @@
     $(document).ready(function() {
 
         var table = $('#people').DataTable({
+            "columnDefs": [{
+                "type": "numeric",
+                "targets": "ID"
+            }],
             dom: 'Bfrtip',
             stateSave: true,
             colReorder: true,

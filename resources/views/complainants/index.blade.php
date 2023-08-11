@@ -27,6 +27,8 @@
             <div class="table-responsive">
                 <table id="users" class="table" style="width:100%">
                     <thead>
+                    <th>ID</th>
+
                         <th>Photo</th>
                         <th>Gender</th>
                         <th>Full Name</th>
@@ -39,6 +41,8 @@
                     <tbody>
                         @foreach ($complainants as $user)
                         <tr>
+                        <td data-order="{{$user->id}}" class="bg-light">COM-{{$user->id}}</td>
+
                             <td>
                                 @if ($user->photo)
                                 <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/' . $user->photo) }}" alt="User Photo">
@@ -94,6 +98,10 @@
 <script>
     $(document).ready(function() {
         var table = $('#users').DataTable({
+            "columnDefs": [{
+                "type": "numeric",
+                "targets": "ID"
+            }],
             dom: 'Bfrtip',
             stateSave: true,
             colReorder: true,
