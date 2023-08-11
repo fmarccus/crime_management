@@ -28,7 +28,7 @@
                     <tbody>
                         @foreach ($people as $person)
                         <tr>
-                        <td data-order="{{$person->id}}" class="bg-light">SUS-{{$person->id}}</td>
+                            <td data-order="{{$person->id}}" class="bg-light">SUS-{{$person->id}}</td>
 
                             <td> @if ($person->identification)
                                 <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/' . $person->identification) }}" alt="User Photo">
@@ -36,11 +36,15 @@
                                 <img class="img-fluid rounded" width="30" height="30" src="{{ asset('images/user.png') }}" alt="Default User Photo">
                                 @endif
                             </td>
-                            <td><a href="{{route('issues.edit', $person->issue_id)}}">INC-{{$person->issue_id}}</a></td>
+                            @if(auth()->user()->user_type == 1 || auth()->user()->user_type == 2)
+                            <td data-order="{{$person->issue_id}}"><a href="{{route('issues.view', $person->issue_id)}}">INC-{{$person->issue_id}}</a></td>
+                            @elseif(auth()->user()->user_type == 3)
+                            <td data-order="{{$person->issue_id}}"><a href="{{route('issues.edit', $person->issue_id)}}">INC-{{$person->issue_id}}</a></td>
+                            @endif
                             <td>{{$person->person_name}}</td>
                             <td>{{$person->gender}}</td>
                             <td>{{$person->contact}}</td>
-                            
+
                         </tr>
                         @endforeach
                     </tbody>

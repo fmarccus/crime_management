@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Issue;
 use App\Models\Person;
 use Illuminate\Http\Request;
 
@@ -10,12 +11,24 @@ class PersonController extends Controller
 
     public function getWitnesses()
     {
-        $people = Person::with('issue')->where('person_type', 'witness')->get();
+        $people = Issue::with(['persons' => function ($query) {
+            $query->where('person_type', 'witness');
+        }])
+            ->where($this->getUserType(), $this->getUserId())
+            ->get()
+            ->pluck('persons')
+            ->flatten();
         return view('people.witnesses', compact('people'));
     }
     public function getSuspects()
     {
-        $people = Person::with('issue')->where('person_type', 'suspect')->get();
+        $people = Issue::with(['persons' => function ($query) {
+            $query->where('person_type', 'suspect');
+        }])
+            ->where($this->getUserType(), $this->getUserId())
+            ->get()
+            ->pluck('persons')
+            ->flatten();
         return view('people.suspects', compact('people'));
     }
     public function view($id)
@@ -24,5 +37,20 @@ class PersonController extends Controller
         return response()->json([
             'person' => $person
         ]);
+    }
+    private function getUserId()
+    {
+        $id = auth()->user()->id;
+        return $id;
+    }
+    private function getUserType()
+    {
+        $type = auth()->user()->user_type;
+        if ($type == 1) {
+            $var = 'user_id';
+        } elseif ($type == 2) {
+            $var = 'investigator_id';
+        }
+        return $var;
     }
 }

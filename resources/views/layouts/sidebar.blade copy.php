@@ -11,11 +11,12 @@ $issuesAssignedOfficer = App\Models\Issue::where('user_id', auth()->user()->id)-
 $issuesAssignedInvestigator = App\Models\Issue::where('investigator_id', auth()->user()->id)->count();
 $issuesAssignedComplainant = App\Models\Issue::where('complainant_id', auth()->user()->id)->count();
 
-if(auth()->user()->user_type == 0)
-{
+
+
 $suspects = App\Models\Issue::with(['persons' => function ($query) {
 $query->where('person_type', 'suspect');
 }])
+->where(getUserType(), getUserId())
 ->get()
 ->pluck('persons')
 ->flatten()->count();
@@ -23,15 +24,19 @@ $query->where('person_type', 'suspect');
 $witnesses = App\Models\Issue::with(['persons' => function ($query) {
 $query->where('person_type', 'witness');
 }])
+->where(getUserType(), getUserId())
 ->get()
 ->pluck('persons')
 ->flatten()->count();
-} else {
+
+
+
 function getUserId()
 {
 $id = auth()->user()->id;
 return $id;
 }
+
 function getUserType()
 {
 $type = auth()->user()->user_type;
@@ -39,30 +44,11 @@ if ($type == 1) {
 $var = 'user_id';
 } elseif ($type == 2) {
 $var = 'investigator_id';
+} elseif($type == 0) {
+$var = '';
 }
 return $var;
 }
-$witnesses = App\Models\Issue::with(['persons' => function ($query) {
-$query->where('person_type', 'witness');
-}])
-->where(getUserType(), getUserId())
-->get()
-->pluck('persons')
-->flatten()->count();
-
-$suspects = App\Models\Issue::with(['persons' => function ($query) {
-$query->where('person_type', 'suspect');
-}])
-->where(getUserType(), getUserId())
-->get()
-->pluck('persons')
-->flatten()->count();
-
-
-
-}
-
-
 
 @endphp
 <nav id="sidebar" class="sidebar js-sidebar">

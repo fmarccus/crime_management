@@ -11,6 +11,7 @@ use App\Models\Police;
 use App\Models\Complainant;
 use App\Models\Evidence;
 use App\Models\Progress;
+use Exception;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller

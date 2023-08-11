@@ -41,8 +41,8 @@ Route::controller(AuthController::class)->prefix('users/')->group(function () {
 });
 
 Route::controller(PersonController::class)->group(function () {
-    Route::get('witnesses/index', 'getWitnesses')->name('witnesses.index')->middleware('admin');
-    Route::get('suspects/index', 'getSuspects')->name('suspects.index')->middleware('admin');
+    Route::get('witnesses/index', 'getWitnesses')->name('witnesses.index');
+    Route::get('suspects/index', 'getSuspects')->name('suspects.index');
     Route::get('person/view/{id}', 'view')->name('person.view')->middleware('admin');
 });
 
